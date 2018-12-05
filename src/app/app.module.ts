@@ -3,12 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
+// Animations
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+// Global Modulos Angular Material
+import {MaterialModule} from './componetMaterial';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
