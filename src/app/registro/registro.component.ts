@@ -22,6 +22,7 @@ export class RegistroComponent implements OnInit {
   name="";
   firstLastN="";
   secondLastN="";
+  telefono="";
 
   ngOnInit() {
   }
@@ -58,7 +59,8 @@ export class RegistroComponent implements OnInit {
           apellido1:this.firstLastN,
           apellido2:this.secondLastN,
           email:this.email,
-          contraseña:this.password
+          contraseña:this.password,
+          telefono:this.telefono
         }
         console.log("Registro ", this.user);
 

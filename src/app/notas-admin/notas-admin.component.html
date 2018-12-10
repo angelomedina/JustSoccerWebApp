@@ -1,0 +1,29 @@
+<div class="main-content body">
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <button type="button" class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
+                    <button type="button" class="btn btn-dark" (click)="veNotas()" style="margin-left:5%">Ver Notas    </button>
+                    <button type="button" class="btn btn-dark" style="margin-left:5%">Modificar Nota    </button>
+                    <button type="button" class="btn btn-dark" style="margin-left:5%">Eliminar Nota    </button>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <br>
+
+        <div class="card" *ngIf="readNote">
+
+            <h3>Mostraria todas las notas creadas..... </h3>
+
+        </div>
+        <div class="card" *ngIf="createNote">
+
+            <h3>Crearia una nota </h3>
+
+        </div>
+
+    </div>
+</div>
