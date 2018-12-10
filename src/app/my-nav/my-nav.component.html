@@ -1,0 +1,73 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+        <!-- <mat-toolbar>Menu</mat-toolbar> -->
+        <!-- <span><img src="./assets/imgs/jsLOGO.jpg" width="95%" height="40%"></span> -->
+        <mat-nav-list>
+            <a mat-list-item [routerLink]="['/home']" style="font-family:'Lucida Console', Monaco, monospace">Inicio</a>
+            <a mat-list-item [routerLink]="['/authUser']" style="font-family:'Lucida Console', Monaco, monospace">Registro</a>
+            <a mat-list-item href="#" style="font-family:'Lucida Console', Monaco, monospace">Link 3</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+            <span><img src="./assets/imgs/nav.jpg" width="100%" height="60px"></span>
+            <button *ngIf="!logueado" type="button" class="btn btn-success" [routerLink]="['/authUser']">Login/Registro</button>
+            <!-- <span>Titulo :v</span> -->
+        </mat-toolbar>
+        <br>
+        <!-- BODY del navbar global -->
+        <router-outlet></router-outlet>
+        <!-- Footer -->
+        <hr>
+        <footer class="page-footer font-small teal pt-4">
+
+            <!-- Footer Text -->
+            <div class="container-fluid text-center text-md-left" style="background-color:rgb(74, 141, 196)">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-6 mt-md-0 mt-3">
+
+                        <!-- Content -->
+                        <h6 class="text-uppercase font-weight-bold">Footer text 1</h6>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nrupti animi sequi</p>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <hr class="clearfix w-100 d-md-none pb-3">
+
+                    <!-- Grid column -->
+                    <div class="col-md-6 mb-md-0 mb-3">
+
+                        <!-- Content -->
+                        <h6 class="text-uppercase font-weight-bold">Footer text 2</h6>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisiciullam omnis quos ipsam, aspernatur id excepturi hic.</p>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                Grid row
+
+            </div>
+            <!-- Footer Text -->
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3" style="background-color:rgb(74, 141, 196)">© 2018 Copyright:
+                <span style="color:blue ">Wilfred Alvarado </span>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+        <!-- Footer -->
+
+    </mat-sidenav-content>
+
+
+</mat-sidenav-container>
