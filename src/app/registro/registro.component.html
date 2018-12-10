@@ -25,10 +25,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
+
                             <form id="login-form" role="form" style="display: block;" *ngIf="login">
                                 <div class="form-group">
                                     <input type="text" name="email" id="email" [(ngModel)]="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="">
                                 </div>
+                                <br>
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" [(ngModel)]="password" tabindex="2" class="form-control" placeholder="Contraseña">
                                 </div>
@@ -36,6 +38,8 @@
                                     <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
                                     <label for="remember"> Remember Me</label>
                                 </div> -->
+                                <br>
+                                <br>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
@@ -53,6 +57,8 @@
                                     </div>
                                 </div>
                             </form>
+                            <br>
+                            <br>
                             <form id="register-form" role="form" *ngIf="registro">
                                 <!-- <div class="form-group">
                                     <input type="text" name="name" tabindex="1" class="form-control" placeholder="Nombre" value="">
@@ -76,6 +82,9 @@
                                     <input type="text" name="email" tabindex="1" [(ngModel)]="email" class="form-control" placeholder="Correo Eléctrónico">
                                 </div>
                                 <div class="form-group">
+                                    <input type="number" name="telefono" tabindex="2" [(ngModel)]="telefono" class="form-control" placeholder="Número de telefono">
+                                </div>
+                                <div class="form-group">
                                     <input type="password" name="password" [(ngModel)]="password" tabindex="2" class="form-control" placeholder="Contraseña">
                                 </div>
                                 <div class="form-group">
@@ -84,7 +93,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <button type="button" name="register-submit" id="register-submit" tabindex="4" (click)="registerUser()" class="form-control btn btn-register">Registrar!!</button>
+                                            <button type="button" name="register-submit" class="btn btn-dark" tabindex="4" (click)="registerUser()">Registrar!!</button>
                                         </div>
                                     </div>
                                 </div>

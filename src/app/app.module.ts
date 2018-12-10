@@ -25,6 +25,11 @@ import { FooterComponent } from './footer/footer.component';
 import { MyNavComponent } from './my-nav/my-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { JornadasComponent } from './jornadas/jornadas.component';
+import { TorneosComponent } from './torneos/torneos.component';
+import { EstadisticaAdminComponent } from './estadistica-admin/estadistica-admin.component';
+import { EquiposAdminComponent } from './equipos-admin/equipos-admin.component';
+import { NotasAdminComponent } from './notas-admin/notas-admin.component';
 
 
 
@@ -35,7 +40,12 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
     HomeComponent,
     RegistroComponent,
     FooterComponent,
-    MyNavComponent
+    MyNavComponent,
+    JornadasComponent,
+    TorneosComponent,
+    EstadisticaAdminComponent,
+    EquiposAdminComponent,
+    NotasAdminComponent
   ],
   imports: [
     BrowserModule,
