@@ -4,6 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import {Http } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+// Conexion con FireBase
+import {environment} from '../environments/environment';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {AngularFireModule} from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 import { AppComponent } from './app.component';
 
 // Animations
@@ -30,6 +36,7 @@ import { TorneosComponent } from './torneos/torneos.component';
 import { EstadisticaAdminComponent } from './estadistica-admin/estadistica-admin.component';
 import { EquiposAdminComponent } from './equipos-admin/equipos-admin.component';
 import { NotasAdminComponent } from './notas-admin/notas-admin.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -45,7 +52,8 @@ import { NotasAdminComponent } from './notas-admin/notas-admin.component';
     TorneosComponent,
     EstadisticaAdminComponent,
     EquiposAdminComponent,
-    NotasAdminComponent
+    NotasAdminComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +70,10 @@ import { NotasAdminComponent } from './notas-admin/notas-admin.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig,'JustSoccerWebApp')
   ],
   providers: [],
   bootstrap: [AppComponent]

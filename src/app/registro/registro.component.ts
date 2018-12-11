@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { Router } from "@angular/router";
+import { UsersService } from '../services/users.service';
+
+import {userModel} from '../models/user';
+
 
 @Component({
   selector: 'app-registro',
@@ -8,11 +13,16 @@ import Swal from 'sweetalert2';
 })
 export class RegistroComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userServ:UsersService,private router: Router) { }
 
   // Banderas *ngIf
   registro:boolean= false;
   login:boolean= true;
+
+  //Lista de Datos
+  //usersList : userModel[]=[];
+  listaIntermedia:any=[];
+  usersList:any=[];
 
   // Variables NGModel
   user={}
@@ -25,6 +35,27 @@ export class RegistroComponent implements OnInit {
   telefono="";
 
   ngOnInit() {
+    this.userServ.getUsers().snapshotChanges()
+    .subscribe(
+      User =>{
+        this.usersList=[]; // Resetea arreglo
+        this.listaIntermedia=[];
+        this.listaIntermedia.push(User);
+        for(var i=0; i<this.listaIntermedia[0].length;i++){
+          let userI={
+             key: this.listaIntermedia[0][i].key,
+             data:this.listaIntermedia[0][i].payload.toJSON()
+          }
+
+          this.usersList.push(userI);
+        }
+        //this.usersList.push(User); // Inserta los users en array
+      }
+    )
+
+
+
+
   }
 
   pressLogin(){  // Validar opcion elegida por User
@@ -41,7 +72,14 @@ export class RegistroComponent implements OnInit {
     if(this.email =="" || this.password==""){
       Swal('Oops...', 'No se permiten valores vacíos', 'error');
     }else{
-      alert("LOGIN :"+ this.email+" "+this.password);
+      let success = this.verificaLogin(this.email, this.password);
+      if(success==true){
+        Swal("Bien!", "Login realizado Correctamente", "success");
+      }else{
+        Swal('Oops...', 'Credenciales Incorrecatas', 'error');
+        this.router.navigate(['home']);
+      }
+
     }
 
   }
@@ -55,18 +93,42 @@ export class RegistroComponent implements OnInit {
         Swal('Oops...', 'Las contraseñas ingresadas no coinciden.', 'error');
        }else{
         this.user={
-          nombre:this.name,
-          apellido1:this.firstLastN,
-          apellido2:this.secondLastN,
+          name:this.name,
+          surnameI:this.firstLastN,
+          surnameII:this.secondLastN,
           email:this.email,
-          contraseña:this.password,
-          telefono:this.telefono
+          password:this.password,
+          telephone:this.telefono,
+          type:"publicUser"
         }
-        console.log("Registro ", this.user);
+        this.userServ.addUser(this.user);
+        Swal("Bien!", "Usuario registrado Correctamente!", "success");
+        //console.log("Registro ", this.user);
+        this.resetForm();
+        this.router.navigate(['/authUser']);
 
        }
      }
+  }
 
+
+  resetForm(){
+    this.email="";
+    this.confirmPasw="";
+    this.firstLastN="";
+    this.name="";
+    this.telefono="";
+    this.secondLastN="";
+    this.password="";
+  }
+
+  verificaLogin(email,pass){
+    for (var i=0;i<this.usersList.length;i++){
+      if(this.usersList[i].data.email == email && this.usersList[i].data.password== pass){
+        return true;
+      }
+    }
+    return false;
   }
 
 

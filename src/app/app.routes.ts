@@ -6,6 +6,9 @@ import { EstadisticaAdminComponent } from './estadistica-admin/estadistica-admin
 import { TorneosComponent } from './torneos/torneos.component';
 import { EquiposAdminComponent } from './equipos-admin/equipos-admin.component';
 import { NotasAdminComponent } from './notas-admin/notas-admin.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+
 
 // arreglo de rutas
 const APP_ROUTES: Routes =[
@@ -16,7 +19,7 @@ const APP_ROUTES: Routes =[
     { path: 'tournamentAdmin', component: TorneosComponent},
     { path: 'teamsAdmin', component: EquiposAdminComponent},
     { path: 'notesAdmin', component: NotasAdminComponent},
-    { path: '**',pathMatch: 'full', redirectTo:'home' }
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 export const APP_ROUTING= RouterModule.forRoot(APP_ROUTES);

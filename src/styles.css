@@ -126,9 +126,10 @@ body {
 
 .panel-login input[type="text"],
 .panel-login input[type="email"],
-.panel-login input[type="password"] {
+.panel-login input[type="password"],
+.panel-login input[type="number"] {
     height: 45px;
-    border: 1px solid #ddd;
+    border: 1px solid rgb(24, 8, 8);
     font-size: 16px;
     -webkit-transition: all 0.1s linear;
     -moz-transition: all 0.1s linear;
@@ -141,24 +142,24 @@ body {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    border-color: #ccc;
+    border-color: rgb(56, 201, 37);
 }
 
 .btn-login {
     background-color: #59B2E0;
     outline: none;
     color: #fff;
-    font-size: 14px;
+    font-size: 34px;
     height: auto;
     font-weight: normal;
-    padding: 14px 0;
+    padding: 12px 0;
     text-transform: uppercase;
-    border-color: #59B2E6;
+    border-color: rgb(93, 91, 216);
 }
 
 .btn-login:hover,
 .btn-login:focus {
-    color: #fff;
+    color: rgb(233, 18, 18);
     background-color: #53A3CD;
     border-color: #53A3CD;
 }
@@ -191,4 +192,38 @@ body {
     color: #fff;
     background-color: #1CA347;
     border-color: #1CA347;
+}
+
+
+/*Page not found*/
+
+@import 'compass';
+
+/* body{
+  background-color: #111111
+} */
+
+.board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 150px;
+    width: 500px;
+    margin: -75px 0 0 -250px;
+    padding: 20px;
+    font: 75px/75px Monoton, cursive;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 0 80px red, 0 0 30px FireBrick, 0 0 6px DarkRed;
+    color: red;
+}
+
+.error {
+    color: rgb(31, 28, 28);
+    text-shadow: 0 0 80px #ffffff, 0 0 30px #008000, 0 0 6px #0000ff
+}
+
+#word {
+    color: rgb(31, 28, 28);
+    text-shadow: 0 0 80px #ffffff, 0 0 30px #008000, 0 0 6px #0000ff
 }
