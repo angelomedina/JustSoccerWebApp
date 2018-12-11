@@ -53,9 +53,6 @@ export class RegistroComponent implements OnInit {
       }
     )
 
-
-
-
   }
 
   pressLogin(){  // Validar opcion elegida por User

@@ -10,7 +10,7 @@ export class NotasService {
 
   notesList:AngularFireList<any>;
 
-  getNotes(){ // Obtiene todods las notas dela DB
+  public getNotes(){ // Obtiene todods las notas dela DB
     return this.notesList= this.firebase.list('notes');
   }
 

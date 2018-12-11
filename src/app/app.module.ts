@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import {Http } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+import { EditorModule } from '@tinymce/tinymce-angular';
+
 // Conexion con FireBase
 import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
@@ -59,6 +61,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    EditorModule,
    // HttpModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
