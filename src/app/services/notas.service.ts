@@ -17,4 +17,12 @@ export class NotasService {
   addNote(note){  // Realiza la inserción de una nota en la DB
     this.notesList.push(note);
   }
+
+  deleteNote(idNote){
+    this.notesList.remove(idNote);
+  }
+
+  updateNote(note){
+    this.firebase.database.ref('notes/'+note.key).set(note);
+  }
 }

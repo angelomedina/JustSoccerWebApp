@@ -5,20 +5,33 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <button type="button" class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
-                    <button type="button" class="btn btn-dark" (click)="veNotas()" style="margin-left:5%">Ver Notas    </button>
-                    <button type="button" class="btn btn-dark" style="margin-left:5%">Modificar Nota    </button>
-                    <button type="button" class="btn btn-dark" style="margin-left:5%">Eliminar Nota    </button>
+                    <button type="button" class="btn btn-dark" (click)="veNotas()" style="margin-left:5%">Ver todas las Notas    </button>
+                    <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button>
                 </div>
             </div>
         </nav>
 
         <br>
 
-        <div class="card" style="padding-top: 5px;padding-left:4px;" *ngIf="readNote">
+        <div style="padding-top: 5px;padding-left:4px;" *ngIf="readNote">
 
-            <h3>Mostraria todas las notas creadas..... </h3>
-
+            <div class="card" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">
+                <div>
+                    <br>
+                    <button type="button" class="btn btn-warning btn-sm" style="margin-right:1%" (click)="editaNota(nota)" data-toggle="modal" data-target="#loginModal">Modificar Nota </button>
+                    <button type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
+                    <h3><i> {{nota.data.title}}</i></h3>
+                    <small>{{nota.data.date}}</small><br>
+                    <small>{{nota.data.author}}</small>
+                </div>
+                <br>
+                <p id="p_{{i}}"></p>
+                <!-- Parrafos dinamicos para rellenar con body de notas -->
+            </div>
         </div>
+        <br>
+
+
         <div *ngIf="createNote">
 
             <form>
@@ -30,7 +43,12 @@
                     <label style="font-size:16px;color:blueviolet">Contenido de la nota</label>
                     <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
                       theme: 'modern',
-                      plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount tinymcespellchecker a11ychecker imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
+                      remove_linebreaks : false,
+                      force_br_newlines : true,
+                      force_p_newlines : true,
+                      gecko_spellcheck : true,
+                      forced_root_block : '',
+                      plugins: 'print preview fullpage  searchreplace autolink directionality  visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount  imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
                       toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
                       image_advtab: true,
                       content_css: [
@@ -40,12 +58,46 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="btn btn-dark" (click)="creaNota()">Agregar Nota!!</button>
+                    <button type="button" class="btn btn-dark" (click)="creaNotaDB()">Agregar Nota!!</button>
                 </div>
             </form>
 
 
         </div>
 
+
+        <div class="modal fade special-card" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModallLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- <h5 class="modal-title" id="loginModal">Ingrese los credenciales solicitados</h5> -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                    </div>
+                    <div class="modal-body">
+                        <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
+                          theme: 'modern',
+                          remove_linebreaks : false,
+                          force_br_newlines : true,
+                          force_p_newlines : true,
+                          gecko_spellcheck : true,
+                          forced_root_block : '',
+                          plugins: 'print preview fullpage  searchreplace autolink directionality  visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount  imagetools contextmenu colorpicker textpattern help',
+                          toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+                          image_advtab: true,
+                          content_css: [
+                            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                            '//www.tinymce.com/css/codepen.min.css'
+                          ]}"></editor>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="closemodal" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" (click)="editaNotaDefinitiva()" class="btn btn-success">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-</div>
