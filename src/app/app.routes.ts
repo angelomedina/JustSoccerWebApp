@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 // arreglo de rutas
 const APP_ROUTES: Routes =[
+    { path: '', component: HomeComponent},
     { path: 'home', component: HomeComponent},
     { path: 'authUser', component: RegistroComponent},
     { path: 'journalAdmin', component: JornadasComponent},

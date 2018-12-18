@@ -227,3 +227,13 @@ body {
     color: rgb(31, 28, 28);
     text-shadow: 0 0 80px #ffffff, 0 0 30px #008000, 0 0 6px #0000ff
 }
+
+
+/*Style div*/
+
+div.colorDiv {
+    background-color: rgb(223, 209, 190);
+    outline: 2px dashed rgb(20, 106, 27);
+    padding-left: 1%;
+    border-style: outset;
+}

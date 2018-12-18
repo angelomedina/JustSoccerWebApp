@@ -4,7 +4,7 @@
         <span><img src="./assets/imgs/jsLOGO.jpg" width="99%" height="35%"></span>
         <mat-nav-list>
             <a mat-list-item [routerLink]="['/home']" style="font-family:'Lucida Console', Monaco, monospace">Inicio</a>
-            <a mat-list-item [routerLink]="['/home']" style="font-family:'Lucida Console', Monaco, monospace">Registrar Administradores</a>
+            <a mat-list-item *ngIf=" authser.userType === 'superAdmin' " [routerLink]="['/home']" style="font-family:'Lucida Console', Monaco, monospace">Registrar Administradores</a>
             <a mat-list-item [routerLink]="['/tournamentAdmin']" style="font-family:'Lucida Console', Monaco, monospace">Torneos</a>
             <a mat-list-item [routerLink]="['/teamsAdmin']" style="font-family:'Lucida Console', Monaco, monospace">Equipos</a>
             <a mat-list-item [routerLink]="['/journalAdmin']" style="font-family:'Lucida Console', Monaco, monospace">Jornadas</a>
@@ -18,8 +18,8 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
             <span><img src="./assets/imgs/nav.jpg" width="110%" height="60px"></span>
-            <button *ngIf="!logueado" type="button" class="btn btn-success" [routerLink]="['/authUser']">Login/Registro</button>
-            <button *ngIf="logueado" type="button" class="btn btn-warning">Cerrar Sesión</button>
+            <button *ngIf="!authser.isUserLoggedIn" type="button" class="btn btn-success" [routerLink]="['/authUser']">Login/Registro</button>
+            <button *ngIf="authser.isUserLoggedIn" type="button" (click)="logout()" class="btn btn-warning">Cerrar Sesión</button>
             <!-- <span>Titulo :v</span> -->
         </mat-toolbar>
         <br>

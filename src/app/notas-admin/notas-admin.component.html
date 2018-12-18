@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <button type="button" class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' " class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
                     <button type="button" class="btn btn-dark" (click)="veNotas()" style="margin-left:5%">Ver todas las Notas    </button>
                     <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button>
                 </div>
@@ -15,7 +15,7 @@
 
         <div style="padding-top: 5px;padding-left:4px;" *ngIf="readNote">
 
-            <div class="card" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">
+            <div class="card colorDiv" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">
                 <div>
                     <br>
                     <button type="button" class="btn btn-warning btn-sm" style="margin-right:1%" (click)="editaNota(nota)" data-toggle="modal" data-target="#loginModal">Modificar Nota </button>
@@ -28,8 +28,10 @@
                 <p id="p_{{i}}"></p>
                 <!-- Parrafos dinamicos para rellenar con body de notas -->
             </div>
+            <br>
+            <br>
         </div>
-        <br>
+
 
 
         <div *ngIf="createNote">
@@ -40,8 +42,11 @@
                     <input type="text" name="titleNote" class="form-control" [(ngModel)]="titleNote" placeholder="">
                 </div>
                 <div class="form-group">
-                    <label style="font-size:16px;color:blueviolet">Contenido de la nota</label>
-                    <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
+                    <label style="font-size:16px;color:blueviolet">Contenido de la nota</label><br>
+                    <textarea name="dataModel" [(ngModel)]="dataModel" rows="20" class="form-control" spellcheck>
+
+                      </textarea>
+                    <!-- <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
                       theme: 'modern',
                       remove_linebreaks : false,
                       force_br_newlines : true,
@@ -54,7 +59,7 @@
                       content_css: [
                         '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                         '//www.tinymce.com/css/codepen.min.css'
-                      ]}"></editor>
+                      ]}"></editor> -->
                 </div>
 
                 <div class="form-group">
@@ -76,7 +81,10 @@
                 </button>
                     </div>
                     <div class="modal-body">
-                        <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
+                        <textarea name="dataModel" [(ngModel)]="dataModel" rows="20" class="form-control" spellcheck>
+
+                        </textarea>
+                        <!-- <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
                           theme: 'modern',
                           remove_linebreaks : false,
                           force_br_newlines : true,
@@ -89,7 +97,7 @@
                           content_css: [
                             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                             '//www.tinymce.com/css/codepen.min.css'
-                          ]}"></editor>
+                          ]}"></editor> -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="closemodal" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -101,3 +109,4 @@
 
 
     </div>
+</div>

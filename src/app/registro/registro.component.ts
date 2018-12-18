@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { UsersService } from '../services/users.service';
 
 import {userModel} from '../models/user';
-
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -13,7 +13,7 @@ import {userModel} from '../models/user';
 })
 export class RegistroComponent implements OnInit {
 
-  constructor(private userServ:UsersService,private router: Router) { }
+  constructor(private userServ:UsersService,private router: Router, private authServ:AuthService) { }
 
   // Banderas *ngIf
   registro:boolean= false;
@@ -65,6 +65,7 @@ export class RegistroComponent implements OnInit {
     this.registro=true;
   }
 
+
   loginUser(){
     if(this.email =="" || this.password==""){
       Swal('Oops...', 'No se permiten valores vacíos', 'error');
@@ -72,9 +73,11 @@ export class RegistroComponent implements OnInit {
       let success = this.verificaLogin(this.email, this.password);
       if(success==true){
         Swal("Bien!", "Login realizado Correctamente", "success");
+        this.router.navigate(['home']);
       }else{
         Swal('Oops...', 'Credenciales Incorrecatas', 'error');
-        this.router.navigate(['home']);
+        this.router.navigateByUrl('/home');
+       //
       }
 
     }
@@ -122,6 +125,7 @@ export class RegistroComponent implements OnInit {
   verificaLogin(email,pass){
     for (var i=0;i<this.usersList.length;i++){
       if(this.usersList[i].data.email == email && this.usersList[i].data.password== pass){
+        this.authServ.setUserLoggedIn(this.usersList[i]);
         return true;
       }
     }

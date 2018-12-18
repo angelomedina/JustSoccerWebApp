@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NotasService} from '../services/notas.service';
+import { AuthService } from '../services/auth.service';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,15 +11,14 @@ import Swal from 'sweetalert2';
 })
 export class NotasAdminComponent implements OnInit {
 
-  constructor(private notaServ:NotasService) {
-
+  constructor(private notaServ:NotasService, private authServ:AuthService) {
   }
 
   // Variables bandera para CRUD de notas
-  createNote:boolean= true;
+  createNote:boolean= false;
   deleteNote:boolean= false;
   updateNote:boolean= false;
-  readNote:boolean= false;
+  readNote:boolean= true;
   modalVisible=false;
 
   //Listas de datos
@@ -47,7 +48,7 @@ export class NotasAdminComponent implements OnInit {
 
           this.notesList.push(noteI);
         }
-        //console.log("",this.notesList);
+        this.veNotas();
       }
     )
 
@@ -62,7 +63,6 @@ export class NotasAdminComponent implements OnInit {
   }
 
   creaNotaDB(){
-    console.log("crea");
     let notaNew={
       title: this.titleNote,
       body:this.dataModel,
@@ -132,7 +132,7 @@ export class NotasAdminComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, deseo borrarla!'
+      confirmButtonText: 'Si, deseo Modificarla!'
     }).then((result) => {
       if (result.value) {
         let newNota={
@@ -145,6 +145,7 @@ export class NotasAdminComponent implements OnInit {
             url:""
           }
         }
+        console.log("Nueva nota a modificar ", newNota);
         this.notaServ.updateNote(newNota);
         Swal(
           'Modificada!',

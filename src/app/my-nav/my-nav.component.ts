@@ -3,6 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-my-nav',
   templateUrl: './my-nav.component.html',
@@ -15,8 +17,14 @@ export class MyNavComponent {
       map(result => result.matches)
     );
 
-    logueado:boolean= false;  // bandera Beta pueba de login
+    logueado:boolean;  // bandera Beta pueba de login
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private authser:AuthService ) {
+
+  }
+
+  logout(){
+    this.authser.removeUserLoggedIn();
+  }
 
 }

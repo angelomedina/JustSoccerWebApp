@@ -1,3 +1,73 @@
-<p>
-  equipos-admin works!
-</p>
+<div class="main-content body">
+
+    <div style="text-align:center">
+        <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:darkblue;">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin'" class="btn btn-success btn-sm">+</button></h2>
+        <hr><br>
+    </div>
+
+    <div style=" margin-left:25%;" *ngIf="add">
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre del equipo</label>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" tabindex="4" name="nombre" [(ngModel)]="nombre">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Logo del equipo</label>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="logoImg" [(ngModel)]="logoImg">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Imagen del estadio</label>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="estadioImg" [(ngModel)]="estadioImg">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Localización</label>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="localization" [(ngModel)]="localization">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Copas Ganadas</label>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="copas" [(ngModel)]="copas">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Descripción</label>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="descrip" [(ngModel)]="descrip">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Fecha de Fundación</label>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="fundation" [(ngModel)]="fundation">
+            </div>
+        </div>
+        <div>
+            <button type="button" style="margin-left:3%;" class="btn btn-success btn-sm" (click)="addTeam()">Agregar equipo</button>
+        </div>
+    </div>
+
+
+
+    <!-- Ver los equipos -->
+    <div class="card-columns" *ngIf="view">
+        <div *ngFor="let team of teamList; let i=index;">
+            <div class="card">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

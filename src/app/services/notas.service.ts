@@ -15,7 +15,7 @@ export class NotasService {
   }
 
   addNote(note){  // Realiza la inserción de una nota en la DB
-    this.notesList.push(note);
+    this.notesList.push(note); 
   }
 
   deleteNote(idNote){
