@@ -15,7 +15,13 @@
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Logo del equipo</label>
             <div class="form-group mx-sm-3 mb-2">
-                <input type="text" class="form-control" name="logoImg" [(ngModel)]="logoImg">
+                <!-- <p id="imgURL" style="visibility:hidden">{{ urlImg | async }}</p> -->
+                <!--{} <input type="text" class="form-control" name="logoImg" [(ngModel)]="logoImg"> -->
+                <input type="file" (change)="upload($event)">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -45,7 +51,7 @@
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Fecha de Fundación</label>
             <div class="form-group mx-sm-3 mb-2">
-                <input type="text" class="form-control" name="fundation" [(ngModel)]="fundation">
+                <input type="text" class="form-control" name="fechaFundac" [(ngModel)]="fechaFundac">
             </div>
         </div>
         <div>
@@ -58,12 +64,13 @@
     <!-- Ver los equipos -->
     <div class="card-columns" *ngIf="view">
         <div *ngFor="let team of teamList; let i=index;">
-            <div class="card">
-                <img class="card-img-top" src="..." alt="Card image cap">
+            <div style="text-align:center;" class="card">
+                <img class="card-img-top" src="{{team.data.logoImg}}" alt="Card image cap" width="150px" height="210px">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title">{{team.data.name}}</h5>
+                    <p class="card-text"></p>
+                    <!-- <p class="card-text">{{team.data.description}}</p> -->
+                    <p class="card-text"><small class="text-muted">Fecha de fundación: {{team.data.fundation}}</small></p>
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@ export class TeamService {
   }
 
   updateTeam(team){
-    this.firebase.database.ref('team/'+note.key).set(team);
+    this.firebase.database.ref('team/'+team.key).set(team);
   }
 
 }

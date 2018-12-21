@@ -11,6 +11,7 @@ import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireModule} from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
 
@@ -74,6 +75,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    AngularFireStorageModule,
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebaseConfig,'JustSoccerWebApp')
