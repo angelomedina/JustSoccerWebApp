@@ -7,7 +7,7 @@ import {userModel} from '../models/user';
 export class AuthService {
 
   public isUserLoggedIn;
-  public usserLogged:userModel; // Se seea el objeto user a esta variable
+  public usserLogged; // Se seea el objeto user a esta variable
   public userType;
 
   constructor() {
@@ -15,6 +15,7 @@ export class AuthService {
     if(data != null){
       this.isUserLoggedIn= true;
       this.userType= data.data.type;
+      this.setUserLoggedIn(data);  // LLama Metodo para setear en LocalStorage
       console.log(this.userType);
     }else{
       this.isUserLoggedIn= false;

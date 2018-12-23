@@ -74,7 +74,6 @@ export class EquiposAdminComponent implements OnInit {
 
 
   addTeam(){
-
     this.urlImg.subscribe(val =>{
       this.urlLogo= val;
       let newTeam={
@@ -95,7 +94,7 @@ export class EquiposAdminComponent implements OnInit {
 
   }
 
-  upload(e){
+  upload(e){  // Metodo para realiozar la subida de la imagen a FireStore
     //console.log("e", e.target.files[0])
     let file = e.target.files[0];
     this.nombreIMG= file.name;
@@ -106,12 +105,6 @@ export class EquiposAdminComponent implements OnInit {
     task.snapshotChanges().pipe(finalize(() =>{
       this.urlImg= ref.getDownloadURL()
     } ) ).subscribe();
-
-  }
-
-  getURLimagen(){
-
-
   }
 
 

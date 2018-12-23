@@ -7,6 +7,8 @@ import { TorneosComponent } from './torneos/torneos.component';
 import { EquiposAdminComponent } from './equipos-admin/equipos-admin.component';
 import { NotasAdminComponent } from './notas-admin/notas-admin.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TeamInfoComponent } from './team-info/team-info.component';
+
 
 
 
@@ -18,8 +20,9 @@ const APP_ROUTES: Routes =[
     { path: 'journalAdmin', component: JornadasComponent},
     { path: 'stadisticsAdmin', component: EstadisticaAdminComponent},
     { path: 'tournamentAdmin', component: TorneosComponent},
-    { path: 'teamsAdmin', component: EquiposAdminComponent},
-    { path: 'notesAdmin', component: NotasAdminComponent},
+    { path: 'teams', component: EquiposAdminComponent},
+    { path: 'notes', component: NotasAdminComponent},
+    { path: 'teamInfo/:id', component: TeamInfoComponent},
     { path: '**', component: PageNotFoundComponent }
 ];
 

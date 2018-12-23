@@ -18,11 +18,15 @@ export class RegistroComponent implements OnInit {
   // Banderas *ngIf
   registro:boolean= false;
   login:boolean= true;
+  adminUse:boolean; // Verifica si es sel superadmin que usa View
+  adminRegistro:boolean= false;
+  myAdminView:boolean=true;
 
   //Lista de Datos
   //usersList : userModel[]=[];
   listaIntermedia:any=[];
   usersList:any=[];
+  adminList:any=[]; // Lista para alamcenar a los superAdmins del Sistema
 
   // Variables NGModel
   user={}
@@ -34,7 +38,15 @@ export class RegistroComponent implements OnInit {
   secondLastN="";
   telefono="";
 
-  ngOnInit() {
+  ngOnInit() {  // Inicializa Vista
+
+    if(this.authServ.userType=="superAdmin" ){
+      this.adminUse=true;  // Si en la vista ingresa un superAdmin, se habilita la opcion
+      this.myAdminView=true;
+    }else{
+      this.adminUse=false;  //para registrar otros administradores
+    }
+
     this.userServ.getUsers().snapshotChanges()
     .subscribe(
       User =>{
@@ -49,6 +61,7 @@ export class RegistroComponent implements OnInit {
 
           this.usersList.push(userI);
         }
+        this.filterAdmin();
         //this.usersList.push(User); // Inserta los users en array
       }
     )
@@ -65,6 +78,17 @@ export class RegistroComponent implements OnInit {
     this.registro=true;
   }
 
+  pressMyAdmins(){
+    this.filterAdmin();
+    this.myAdminView= true;
+    this.adminRegistro= false;
+  }
+
+  pressRegistroAdmin(){
+    this.myAdminView= false;
+    this.adminRegistro= true;
+  }
+
 
   loginUser(){
     if(this.email =="" || this.password==""){
@@ -76,7 +100,6 @@ export class RegistroComponent implements OnInit {
         this.router.navigate(['home']);
       }else{
         Swal('Oops...', 'Credenciales Incorrecatas', 'error');
-        this.router.navigateByUrl('/home');
        //
       }
 
@@ -92,6 +115,14 @@ export class RegistroComponent implements OnInit {
        if(this.password  != this.confirmPasw){
         Swal('Oops...', 'Las contraseñas ingresadas no coinciden.', 'error');
        }else{
+
+         let typeU="";  // Se verifica el tipo de USer a registrar
+         if(this.authServ.userType== "superAdmin"){
+           typeU= "admin";
+         }else{
+           typeU= "publicUser";
+         }
+
         this.user={
           name:this.name,
           surnameI:this.firstLastN,
@@ -99,7 +130,7 @@ export class RegistroComponent implements OnInit {
           email:this.email,
           password:this.password,
           telephone:this.telefono,
-          type:"publicUser"
+          type:typeU
         }
         this.userServ.addUser(this.user);
         Swal("Bien!", "Usuario registrado Correctamente!", "success");
@@ -130,6 +161,34 @@ export class RegistroComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  filterAdmin(){
+    this.adminList=[];
+    for(var i=0; i< this.usersList.length;i++){
+      if(this.usersList[i].data.type=="admin"){
+        this.adminList.push(this.usersList[i]);
+      }
+    }
+  }
+
+  delegarAdmin(admin){
+
+    let user={
+      name:admin.data.name,
+      surnameI:admin.data.surnameI,
+      surnameII:admin.data.surnameII,
+      email:admin.data.email,
+      password:admin.data.password,
+      telephone:admin.data.telephone,
+      type:"publicUser"
+    }
+    this.userServ.updateUser(user,admin.key);
+
+    Swal("Bien!", "El usuario seleccionado ya no dispondrá de privilegios administrativos!", "success");
+    this.filterAdmin();
+
+
   }
 
 

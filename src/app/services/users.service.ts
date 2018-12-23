@@ -20,6 +20,10 @@ export class UsersService {
     this.listUsers.push(user);
   }
 
+  updateUser(user,key){
+    this.firebase.database.ref('user/'+key).set(user);
+  }
+
 
 
 

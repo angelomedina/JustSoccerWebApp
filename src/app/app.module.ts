@@ -40,6 +40,7 @@ import { EstadisticaAdminComponent } from './estadistica-admin/estadistica-admin
 import { EquiposAdminComponent } from './equipos-admin/equipos-admin.component';
 import { NotasAdminComponent } from './notas-admin/notas-admin.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TeamInfoComponent } from './team-info/team-info.component';
 
 
 
@@ -56,7 +57,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     EstadisticaAdminComponent,
     EquiposAdminComponent,
     NotasAdminComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TeamInfoComponent
   ],
   imports: [
     BrowserModule,

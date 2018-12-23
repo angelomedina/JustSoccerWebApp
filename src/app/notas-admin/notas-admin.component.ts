@@ -63,11 +63,12 @@ export class NotasAdminComponent implements OnInit {
   }
 
   creaNotaDB(){
+    let nombreUser = this.returnFullname();
     let notaNew={
       title: this.titleNote,
       body:this.dataModel,
       date:"13/03/2019",
-      author:"User Logueado",
+      author:nombreUser,
       url:""
     }
     //console.log("NOTA NEW: ", notaNew);
@@ -154,6 +155,14 @@ export class NotasAdminComponent implements OnInit {
         )
       }
     })
+  }
+
+
+  returnFullname(){
+    console.log(""+ this.authServ.usserLogged);
+    let nombreCompleto = this.authServ.usserLogged.data.name+" "+ this.authServ.usserLogged.data.surnameI+" "+ this.authServ.usserLogged.data.surnameII;
+    console.log(nombreCompleto);
+    return nombreCompleto;
   }
 
 

@@ -17,7 +17,7 @@
             <div class="form-group mx-sm-3 mb-2">
                 <!-- <p id="imgURL" style="visibility:hidden">{{ urlImg | async }}</p> -->
                 <!--{} <input type="text" class="form-control" name="logoImg" [(ngModel)]="logoImg"> -->
-                <input type="file" (change)="upload($event)">
+                <input type="file" accept="image/*" (change)="upload($event)">
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
                     </div>
@@ -67,7 +67,7 @@
             <div style="text-align:center;" class="card">
                 <img class="card-img-top" src="{{team.data.logoImg}}" alt="Card image cap" width="150px" height="210px">
                 <div class="card-body">
-                    <h5 class="card-title">{{team.data.name}}</h5>
+                    <h5 class="card-title"> <a href="/teamInfo/{{team.key}}"> {{team.data.name}}  </a> </h5>
                     <p class="card-text"></p>
                     <!-- <p class="card-text">{{team.data.description}}</p> -->
                     <p class="card-text"><small class="text-muted">Fecha de fundación: {{team.data.fundation}}</small></p>
