@@ -19,7 +19,7 @@ const APP_ROUTES: Routes =[
     { path: 'authUser', component: RegistroComponent},
     { path: 'journalAdmin', component: JornadasComponent},
     { path: 'stadisticsAdmin', component: EstadisticaAdminComponent},
-    { path: 'tournamentAdmin', component: TorneosComponent},
+    { path: 'tournament', component: TorneosComponent},
     { path: 'teams', component: EquiposAdminComponent},
     { path: 'notes', component: NotasAdminComponent},
     { path: 'teamInfo/:id', component: TeamInfoComponent},

@@ -23,7 +23,6 @@ export class RegistroComponent implements OnInit {
   myAdminView:boolean=true;
 
   //Lista de Datos
-  //usersList : userModel[]=[];
   listaIntermedia:any=[];
   usersList:any=[];
   adminList:any=[]; // Lista para alamcenar a los superAdmins del Sistema
@@ -163,7 +162,7 @@ export class RegistroComponent implements OnInit {
     return false;
   }
 
-  filterAdmin(){
+  filterAdmin(){ // metodo para utilizar unicamente los administradores en una lista
     this.adminList=[];
     for(var i=0; i< this.usersList.length;i++){
       if(this.usersList[i].data.type=="admin"){

@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' " class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
                     <button type="button" class="btn btn-dark" (click)="veNotas()" style="margin-left:5%">Ver todas las Notas    </button>
                     <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button>
                 </div>
@@ -18,8 +18,8 @@
             <div class="card colorDiv" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">
                 <div>
                     <br>
-                    <button type="button" class="btn btn-warning btn-sm" style="margin-right:1%" (click)="editaNota(nota)" data-toggle="modal" data-target="#loginModal">Modificar Nota </button>
-                    <button type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
+                    <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-warning btn-sm" style="margin-right:1%" (click)="editaNota(nota)" data-toggle="modal" data-target="#loginModal">Modificar Nota </button>
+                    <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
                     <h3><i> {{nota.data.title}}</i></h3>
                     <small>{{nota.data.date}}</small><br>
                     <small>{{nota.data.author}}</small>

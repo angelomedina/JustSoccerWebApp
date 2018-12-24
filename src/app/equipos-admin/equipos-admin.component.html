@@ -1,8 +1,16 @@
 <div class="main-content body">
 
     <div style="text-align:center">
-        <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:darkblue;">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin'" class="btn btn-success btn-sm">+</button></h2>
+        <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:darkblue;">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-success btn-sm">+</button></h2>
         <hr><br>
+    </div>
+
+    <!-- Spinner -->
+    <div style="margin-bottom: 3%;margin-top:4%" class="spinnerBig" *ngIf="loading">
+        <div class="item item-1"></div>
+        <div class="item item-2"></div>
+        <div class="item item-3"></div>
+        <div class="item item-4"></div>
     </div>
 
     <div style=" margin-left:25%;" *ngIf="add">

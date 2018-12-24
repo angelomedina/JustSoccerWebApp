@@ -1,3 +1,49 @@
-<p>
-  torneos works!
-</p>
+<div class="main-content body">
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaTorneo()" style="margin-left:5%">Crear Torneo</button>
+                    <button type="button" class="btn btn-dark" (click)="verTorneos()" style="margin-left:5%">Ver Torneos </button>
+                    <!-- <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button> -->
+                </div>
+            </div>
+        </nav>
+        <br>
+
+        <div style="text-align:center;margin-left:20%; margin-right:20%;margin-top:2%" *ngIf="create">
+            <form id="register-form" role="form" style="text-align:center">
+
+                <div class="form-group">
+                    <label>Nombre del Torneo</label>
+                    <input type="text" name="name" tabindex="1" [(ngModel)]="name" class="form-control" placeholder="Torneo Primera Division 2019">
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Inicio</label>
+                    <input type="date" name="fecha" tabindex="2" [(ngModel)]="fecha" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="sel1">Categoria</label>
+                    <select class="form-control" id="category" name="category" [(ngModel)]="category">
+                      <option>Primera División</option>
+                      <option>Segunda División</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+
+                        <button type="button" name="login-submit" id="login-submit" tabindex="2" class="form-control btn btn-login" (click)="createTournamet()">Crear Torneo</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div style="text-align:center" *ngIf="read">
+            <p>
+                Ver Torneos
+            </p>
+        </div>
+    </div>
+</div>

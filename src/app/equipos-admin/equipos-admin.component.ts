@@ -30,6 +30,7 @@ export class EquiposAdminComponent implements OnInit {
 
   add= false;
   view=true;
+  loading= true; // Spinner Loading
 
   //Listas de datos
   listaIntermedia:any=[];
@@ -42,6 +43,7 @@ export class EquiposAdminComponent implements OnInit {
   urlLogo:any;
 
   ngOnInit() {
+    this.loading= true;
     this.teamServ.getTeam().snapshotChanges()
     .subscribe(
       note =>{
@@ -56,7 +58,8 @@ export class EquiposAdminComponent implements OnInit {
 
           this.teamList.push(noteI);
         }
-        console.log("" ,this.teamList);
+        //console.log("" ,this.teamList);
+        this.loading=false;
         //this.veNotas();
       }
     )
