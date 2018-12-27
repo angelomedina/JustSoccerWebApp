@@ -41,6 +41,9 @@ import { EquiposAdminComponent } from './equipos-admin/equipos-admin.component';
 import { NotasAdminComponent } from './notas-admin/notas-admin.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TeamInfoComponent } from './team-info/team-info.component';
+import { NotaInfoComponent } from './nota-info/nota-info.component';
+import { TorneoInfoComponent } from './torneo-info/torneo-info.component';
+import { AboutComponent } from './about/about.component';
 
 
 
@@ -58,7 +61,10 @@ import { TeamInfoComponent } from './team-info/team-info.component';
     EquiposAdminComponent,
     NotasAdminComponent,
     PageNotFoundComponent,
-    TeamInfoComponent
+    TeamInfoComponent,
+    NotaInfoComponent,
+    TorneoInfoComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

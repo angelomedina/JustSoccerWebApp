@@ -48,8 +48,6 @@ export class TeamInfoComponent implements OnInit {
 
     )
 
-
-
   }
 
 

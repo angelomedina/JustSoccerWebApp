@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import {TournamentService} from '../services/tournament.service';
 import Swal from 'sweetalert2';
-
+import { TeamService } from '../services/team.service';
+import { PositionTableService } from '../services/position-table.service';
 
 @Component({
   selector: 'app-torneos',
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class TorneosComponent implements OnInit {
 
-  constructor(private authServ:AuthService, private tournServ: TournamentService) { }
+  constructor(private authServ:AuthService, private tournServ: TournamentService, private teamServ:TeamService, private positionServ:PositionTableService) { }
 
   // Bandeeras NgIf
   create:boolean= false;
@@ -26,11 +27,19 @@ export class TorneosComponent implements OnInit {
   listaIntermedia:any=[];
   TournamnetList:any=[];
 
+  listaIntermediaDos:any=[];
+  TeamList:any=[];
+
+  listaIntermediaTres:any=[];
+  tableList:any=[];
+
+  keyTorneoCreado:any;
+
 
   ngOnInit() {
     this.read=true;
 
-    this.tournServ.getTournament().snapshotChanges()
+    this.tournServ.getTournament().snapshotChanges()  // Obtiene torneos de DB
     .subscribe(
       Tournamnet =>{
         this.TournamnetList=[]; // Resetea arreglo
@@ -44,6 +53,32 @@ export class TorneosComponent implements OnInit {
 
           this.TournamnetList.push(userI);
         }
+      }
+    )
+
+    this.teamServ.getTeam().snapshotChanges()  // Obtiene equipos de DB
+    .subscribe(
+      Team =>{
+        this.TeamList=[]; // Resetea arreglo
+        this.listaIntermedia=[];
+        this.listaIntermediaDos.push(Team);
+        for(var i=0; i<this.listaIntermediaDos[0].length;i++){
+          let userI={
+             key: this.listaIntermediaDos[0][i].key,
+             data:this.listaIntermediaDos[0][i].payload.toJSON()
+          }
+
+          this.TeamList.push(userI);
+        }
+      }
+    )
+
+    this.positionServ.getPositionTable().snapshotChanges()  // Obtiene tablas de posiciones de DB
+    .subscribe(
+      Tabla =>{
+        this.tableList=[]; // Resetea arreglo
+        this.listaIntermediaTres=[];
+        this.listaIntermediaTres.push(Tabla);
       }
     )
 
@@ -61,17 +96,54 @@ export class TorneosComponent implements OnInit {
 
   createTournamet(){
 
+
     let json ={
       name:this.name,
       date: this.fecha,
-      category:this.category
+      category:this.category,
+      dayTrips:[]
     }
 
-    this.tournServ.addTournament(json); // Agrega el nuevo Torneo creado....
-    Swal("Bien!", "Torneo Creado Correctamente!", "success");
+    let a= this.tournServ.addTournament(json); // Agrega el nuevo Torneo creado....
+    this.keyTorneoCreado= a.key;   // Obtiene el key del torneo creado , el cual sera utilizado para crear la tabla de posiciones
+
+    this.createPositioTable();
 
 
   }
+
+  createPositioTable(){
+    // Metodo utilizado despues de crear el torneo, generando asi su tabal de posiciones respectiva
+
+    let positions:any=[];
+
+    for (var i = 0; i < this.TeamList.length; i++) {
+      let teamPos= {  // Genera un json predeterminado por cada equipo de Primera Division
+        name:this.TeamList[i].data.name,
+        idTeam:this.TeamList[i].key,
+        position: i+1,
+        pj:0,
+        pg:0,
+        pe:0,
+        pp:0,
+        avg:0,
+        pts:0
+      }
+
+      positions.push(teamPos); // agrega a lista el json generado
+    }
+
+    let json={
+      idTournamnet: this.keyTorneoCreado,
+      teams: positions
+    }
+
+    this.positionServ.addPositionTable(json);
+    Swal("Bien!", "Torneo Creado Correctamente!", "success");
+
+  }
+
+
 
   resetForm(){
     this.name=""; this.category=""; this.fecha="";

@@ -1,8 +1,13 @@
 <div class="main-content body">
+    <div>
+        <div style="float:left;">
 
-    <div style="text-align:center">
-        <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:darkblue;">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-success btn-sm">+</button></h2>
-        <hr><br>
+        </div>
+        <div style="text-align:center">
+            <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:darkblue;">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-success btn-sm">+</button></h2>
+            <hr style="color:blueviolet;">
+            <img src="../../assets/imgs/unifutLOGO.png" alt="logoUnifut" height="200" width="250"><br>
+        </div>
     </div>
 
     <!-- Spinner -->

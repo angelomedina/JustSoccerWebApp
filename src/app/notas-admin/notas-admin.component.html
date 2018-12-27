@@ -18,20 +18,22 @@
             <div class="card colorDiv" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">
                 <div>
                     <br>
-                    <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-warning btn-sm" style="margin-right:1%" (click)="editaNota(nota)" data-toggle="modal" data-target="#loginModal">Modificar Nota </button>
                     <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
                     <h3><i> {{nota.data.title}}</i></h3>
                     <small>{{nota.data.date}}</small><br>
                     <small>{{nota.data.author}}</small>
                 </div>
                 <br>
-                <p id="p_{{i}}"></p>
-                <!-- Parrafos dinamicos para rellenar con body de notas -->
+                <div>
+                    <p id="p_{{i}}"></p>
+                    <!-- Parrafos dinamicos para rellenar con body de notas -->
+                    <span> <a href="/noteInfo/{{nota.key}}">Ver más ...</a></span>
+                </div>
+
             </div>
             <br>
             <br>
         </div>
-
 
 
         <div *ngIf="createNote">

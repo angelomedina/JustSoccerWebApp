@@ -16,7 +16,7 @@ export class TournamentService {
   }
 
   addTournament(Tournament){  // Realiza la inserción de una nota en la DB
-    this.tournamentList.push(Tournament);
+    return this.tournamentList.push(Tournament);
   }
 
   deleteTournament(idTournament){

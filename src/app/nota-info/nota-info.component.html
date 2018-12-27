@@ -1,0 +1,32 @@
+<div class="main-content body" style="height:900px">
+    <!-- Spinner -->
+    <div class="spinnerBig" *ngIf="loading">
+        <div class="item item-1"></div>
+        <div class="item item-2"></div>
+        <div class="item item-3"></div>
+        <div class="item item-4"></div>
+    </div>
+
+
+    <div style="margin-left: 1%; margin-right:1%;">
+
+        <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-warning btn-sm" style="margin-right:1%" (click)="editaNota()" data-toggle="modal" data-target="#loginModal">Modificar Nota </button>
+
+        <div>
+            <h2 style="text-align:center; font-family:cursive; color:rgb(14, 107, 82);">
+                {{notaActual.data.title}}
+            </h2>
+            <span style="text-align:left;"> {{notaActual.data.date}}</span>
+            <span style="text-align:right; float:right">  {{notaActual.data.author}}</span>
+        </div>
+        <hr>
+        <div style="text-align:center;">
+            <p id="dinamic" style="text-align:center"></p>
+        </div>
+
+    </div>
+
+
+
+
+</div>

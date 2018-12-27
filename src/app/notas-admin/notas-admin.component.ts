@@ -86,12 +86,12 @@ export class NotasAdminComponent implements OnInit {
     this.readNote=true;
     this.updateNote=false;
 
-    setTimeout(() => {
-      for(var i=0;i<=this.notesList.length;i++){
-        document.getElementById("p_"+i).innerHTML= this.notesList[i].data.body;
-      }
+    // setTimeout(() => {
+    //   for(var i=0;i<=this.notesList.length;i++){
+    //     document.getElementById("p_"+i).innerHTML= this.notesList[i].data.body;
+    //   }
 
-    }, 600);
+    // }, 600);
 
 
   }

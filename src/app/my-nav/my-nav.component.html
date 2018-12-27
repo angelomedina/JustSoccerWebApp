@@ -1,16 +1,21 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)" style="color:blue; background-color:thistle">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
         <!-- <mat-toolbar>Menu</mat-toolbar> -->
-        <span><img src="./assets/imgs/jsLOGO.jpg" width="99%" height="35%"></span>
-        <mat-nav-list>
-            <a mat-list-item [routerLink]="['/home']" style="font-family:'Lucida Console', Monaco, monospace">Inicio</a>
-            <a mat-list-item *ngIf=" authser.userType === 'superAdmin' " [routerLink]="['/authUser']" style="font-family:'Lucida Console', Monaco, monospace">Administradores</a>
-            <a mat-list-item [routerLink]="['/tournament']" style="font-family:'Lucida Console', Monaco, monospace">Torneos</a>
-            <a mat-list-item [routerLink]="['/teams']" style="font-family:'Lucida Console', Monaco, monospace">Equipos</a>
-            <a mat-list-item [routerLink]="['/journalAdmin']" style="font-family:'Lucida Console', Monaco, monospace">Jornadas</a>
-            <a mat-list-item [routerLink]="['/stadisticsAdmin']" style="font-family:'Lucida Console', Monaco, monospace">Estadisticas</a>
-            <a mat-list-item [routerLink]="['/notes']" style="font-family:'Lucida Console', Monaco, monospace">Notas</a>
-            <a mat-list-item [routerLink]="['/notes']" style="font-family:'Lucida Console', Monaco, monospace">Multimedia</a>
+        <span><img src="./assets/imgs/jsLOGO.png" width="97%" height="28%"></span>
+        <mat-nav-list style="background-color:rgb(181, 178, 174)">
+            <a mat-list-item [routerLink]="['/home']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">
+                <mat-icon>home</mat-icon> Inicio</a>
+            <a mat-list-item *ngIf=" authser.userType === 'superAdmin' " [routerLink]="['/authUser']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">
+                <mat-icon>vpn_key</mat-icon> Administradores</a>
+            <a mat-list-item [routerLink]="['/tournament']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">Torneos</a>
+            <a mat-list-item [routerLink]="['/teams']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">Equipos</a>
+            <a mat-list-item [routerLink]="['/journalAdmin']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">Jornadas</a>
+            <a mat-list-item [routerLink]="['/stadisticsAdmin']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">Estadisticas</a>
+            <a mat-list-item [routerLink]="['/notes']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">
+                <mat-icon>description</mat-icon> Notas</a>
+            <a mat-list-item [routerLink]="['/notes']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">
+                <mat-icon>wallpaper</mat-icon> Multimedia</a>
+            <a mat-list-item [routerLink]="['/about']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">About</a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

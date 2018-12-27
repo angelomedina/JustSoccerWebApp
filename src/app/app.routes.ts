@@ -8,8 +8,8 @@ import { EquiposAdminComponent } from './equipos-admin/equipos-admin.component';
 import { NotasAdminComponent } from './notas-admin/notas-admin.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TeamInfoComponent } from './team-info/team-info.component';
-
-
+import { NotaInfoComponent } from './nota-info/nota-info.component';
+import { AboutComponent } from './about/about.component';
 
 
 // arreglo de rutas
@@ -23,6 +23,8 @@ const APP_ROUTES: Routes =[
     { path: 'teams', component: EquiposAdminComponent},
     { path: 'notes', component: NotasAdminComponent},
     { path: 'teamInfo/:id', component: TeamInfoComponent},
+    { path: 'noteInfo/:id', component: NotaInfoComponent},
+    { path: 'about', component: AboutComponent},
     { path: '**', component: PageNotFoundComponent }
 ];
 

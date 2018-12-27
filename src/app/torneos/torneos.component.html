@@ -30,20 +30,29 @@
                       <option>Segunda División</option>
                     </select>
                 </div>
+                <!-- <div class="form-group">
+                    <p>Seleccione los equipos participantes del torneo.</p>
+                    <div *ngFor="let team of TeamList; let i=index;">
+                        <label><input type="checkbox" id="p_{{i}}"  checked>{{team.data.name}}</label><br>
+                    </div>
+                </div> -->
                 <div class="form-group">
                     <div class="row">
-
                         <button type="button" name="login-submit" id="login-submit" tabindex="2" class="form-control btn btn-login" (click)="createTournamet()">Crear Torneo</button>
-
                     </div>
                 </div>
             </form>
         </div>
 
-        <div style="text-align:center" *ngIf="read">
-            <p>
-                Ver Torneos
-            </p>
+        <div style="text-align:left; margin-left:2%;" *ngIf="read">
+
+            <div *ngFor="let torneo of TournamnetList" style="margin-top:2%; border-style: outset; background-image:url(' ../../assets/imgs/navTorneo.jpg '); ">
+                <strong style="color:tomato">{{torneo.data.name}}</strong>
+                <p><strong style="color:brown"> Categoría</strong> {{torneo.data.category}}</p>
+                <p> <strong style="color:brown"> Estado actual:</strong> En progreso ... </p>
+                <!-- <p>{{torneo.data.date}}</p> -->
+            </div>
+
         </div>
     </div>
 </div>
