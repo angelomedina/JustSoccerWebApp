@@ -12,6 +12,7 @@
         </nav>
         <br>
 
+        <!-- Crear torno nuevo -->
         <div style="text-align:center;margin-left:20%; margin-right:20%;margin-top:2%" *ngIf="create">
             <form id="register-form" role="form" style="text-align:center">
 
@@ -44,10 +45,15 @@
             </form>
         </div>
 
+
+        <!-- Visualizar lista de torneos -->
         <div style="text-align:left; margin-left:2%;" *ngIf="read">
 
-            <div *ngFor="let torneo of TournamnetList" style="margin-top:2%; border-style: outset; background-image:url(' ../../assets/imgs/navTorneo.jpg '); ">
-                <strong style="color:tomato">{{torneo.data.name}}</strong>
+            <div *ngFor="let torneo of TournamnetList" style="margin-top:2%; border-style: outset;">
+                <br>
+                <a href="stadistics/{{torneo.key}}">
+                    <h5 style="color:tomato">{{torneo.data.name}}</h5>
+                </a>
                 <p><strong style="color:brown"> Categoría</strong> {{torneo.data.category}}</p>
                 <p> <strong style="color:brown"> Estado actual:</strong> En progreso ... </p>
                 <!-- <p>{{torneo.data.date}}</p> -->

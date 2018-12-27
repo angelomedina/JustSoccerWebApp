@@ -1,3 +1,26 @@
-<p>
-  estadistica-admin works!
-</p>
+<div class="main-content body">
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaTorneo()" style="margin-left:5%">Tabla de Posiciones</button>
+                    <button type="button" class="btn btn-dark" (click)="verTorneos()" style="margin-left:5%">Tabla Acumulada </button>
+                    <button type="button" class="btn btn-dark" (click)="verTorneos()" style="margin-left:5%">Tabla Goleo </button>
+                    <!-- <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button> -->
+                </div>
+            </div>
+        </nav>
+        <br>
+        <h2> {{torneoActual.data.name}} </h2>
+        <!-- Spinner -->
+        <div class="spinnerBig" *ngIf="loading">
+            <div class="item item-1"></div>
+            <div class="item item-2"></div>
+            <div class="item item-3"></div>
+            <div class="item item-4"></div>
+        </div>
+
+
+    </div> 
+</div>
