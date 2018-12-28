@@ -351,3 +351,26 @@ div.colorDiv {
         transform: translate(0, -100px)
     }
 }
+
+
+/*Clases Tabla Posiciones */
+
+.td_7 {
+    background-color: rgb(191, 115, 115);
+}
+
+.td_0 {
+    background-color: rgb(142, 214, 142);
+}
+
+.td_1 {
+    background-color: rgb(142, 214, 142);
+}
+
+.td_2 {
+    background-color: rgb(142, 214, 142);
+}
+
+.td_3 {
+    background-color: rgb(142, 214, 142);
+}

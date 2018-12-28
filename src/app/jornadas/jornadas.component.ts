@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { AuthService } from '../services/auth.service';
+import {DaytripsService} from '../services/daytrips.service';
+import { TournamentService } from '../services/tournament.service';
+import { TeamService } from '../services/team.service';
 
 @Component({
   selector: 'app-jornadas',
@@ -7,9 +12,150 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JornadasComponent implements OnInit {
 
-  constructor() { }
+  constructor( private dayServ:DaytripsService, private tournServ:TournamentService, private authServ:AuthService,private teamsServ:TeamService) { }
+
+  loading:boolean=true; //Spinner
+  create:boolean = true;
+  newMatch:boolean=false;
+  matchReady:boolean= false;
+
+  //Listas de datos
+  listaIntermedia:any=[];
+  jornadaList:any=[];
+
+  listaIntermediaDos:any=[];
+  torneoList:any=[];
+
+  listaIntermediaTres:any=[];
+  equiposList:any=[];
+  matchsJornada:any=[];
+
+  //Ngmodel
+  torneo="";
+  name="";
+  fechaInicio="";
+  fechaFin="";
+  teamVisita="";
+  teamLocal="";
+  fechaMatch="";
+  sedeMatch="";
 
   ngOnInit() {
+    this.create= true;
+    this.loading= true;
+
+    this.tournServ.getTournament().snapshotChanges()
+    .subscribe(
+      Torneo =>{
+        this.torneoList=[]; // Resetea arreglo
+        this.listaIntermediaDos=[];
+        this.listaIntermediaDos.push(Torneo);
+        for(var i=0; i<this.listaIntermediaDos[0].length;i++){
+          let noteI={
+             key: this.listaIntermediaDos[0][i].key,
+             data:this.listaIntermediaDos[0][i].payload.toJSON()
+          }
+          this.torneoList.push(noteI);
+        }
+        console.log("",this.torneoList)
+        //this.obtenerTorneoActual();
+      }
+    )
+
+    this.teamsServ.getTeam().snapshotChanges()
+    .subscribe(
+      Team =>{
+        this.equiposList=[]; // Resetea arreglo
+        this.listaIntermediaTres=[];
+        this.listaIntermediaTres.push(Team);
+        for(var i=0; i<this.listaIntermediaTres[0].length;i++){
+          let noteI={
+             key: this.listaIntermediaTres[0][i].key,
+             data:this.listaIntermediaTres[0][i].payload.toJSON()
+          }
+          this.equiposList.push(noteI);
+        }
+        //this.obtenerTorneoActual();
+      }
+    )
+
+    this.dayServ.getDayTrips().snapshotChanges()
+    .subscribe(
+      Day =>{
+        this.jornadaList=[]; // Resetea arreglo
+        this.listaIntermedia=[];
+        this.listaIntermedia.push(Day);
+        for(var i=0; i<this.listaIntermedia[0].length;i++){
+          let noteI={
+             key: this.listaIntermedia[0][i].key,
+             data:this.listaIntermedia[0][i].payload.toJSON()
+          }
+          this.jornadaList.push(noteI);
+        }
+        //this.obtenerTorneoActual();
+      }
+    )
+
+
+  }
+
+  nuevoPartido(){
+    this.newMatch= true;
+  }
+
+  addMatch(){
+    if(this.teamLocal == this.teamVisita  || this.teamLocal==""  || this.teamVisita== ""){
+      Swal('Oops...', 'Debe de seleccioanr equipos diferentes', 'error');
+    }else{
+
+      let idVisita = document.getElementById("visit").value;  // Se obtienen los ids
+      let idLocal = document.getElementById("local").value;   // de los equipos del partido
+      let nombreLocal= this.obtieneNombreEquipo(idVisita);
+      let nombreVisita= this.obtieneNombreEquipo(idLocal);
+
+      let json ={
+        estatus:"En espera",
+        date:this.fechaMatch,
+        sede:this.sedeMatch,
+        idTeamVisita:idVisita,
+        idTeamLocal:idLocal,
+        nameLocalTeam:nombreLocal,
+        nameVisitTeam: nombreVisita,
+        resultVisit:"No disponible",
+        resultLocal:"No disponible"
+      }
+      console.log("Partido ", json)
+      this.matchsJornada.push(json);
+      this.matchReady= true;
+      Swal('Bien!', 'Partido agregado a la jornada Correctamente', 'success');
+    }
+
+  }
+
+  obtieneNombreEquipo(key){
+    for(var i=0; i<this.equiposList.length;i++){
+      if(this.equiposList[i].key == key ){
+          return this.equiposList[i].data.name;
+      }
+    }
+  }
+
+
+  createjournal(){
+
+    let idTorneo = document.getElementById("torneo").value;
+
+    let json={
+      idTournament:idTorneo,
+      matchs:this.matchsJornada,
+      name:this.name,
+      dateBegin: this.fechaInicio,
+      dateEnd: this.fechaFin
+    }
+
+    console.log("Jornada: ", json)
+    this.dayServ.addDayTrip(json);
+
   }
 
 }

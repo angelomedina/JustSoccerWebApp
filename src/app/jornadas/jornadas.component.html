@@ -1,3 +1,88 @@
-<p>
-  jornadas works!
-</p>
+<div class="main-content body">
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaTorneo()" style="margin-left:5%">Crear Jornada</button>
+                    <button type="button" class="btn btn-dark" (click)="verTorneos()" style="margin-left:5%">Ver Jornadas </button>
+                    <!-- <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button> -->
+                </div>
+            </div>
+        </nav>
+
+        <!-- Crear Jornada nueva -->
+        <div style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="create">
+            <form id="register-form" role="form">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="sel1">Torneo</label>
+                        <select class="form-control" id="torneo" name="torneo" [(ngModel)]="torneo">
+                           <option *ngFor="let torneo of torneoList;"  value="{{torneo.key}}" >{{torneo.data.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Nombre de la Jornada </label>
+                        <input type="text" name="name" tabindex="1" [(ngModel)]="name" class="form-control" placeholder="Jornada #11 / Semifinal#2 ">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Fecha de Inicio</label>
+                        <input type="date" name="fecha" tabindex="2" [(ngModel)]="fechaInicio" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Fecha de finalización</label>
+                        <input type="date" name="fecha" tabindex="2" [(ngModel)]="fechaFin" class="form-control">
+                    </div>
+                </div>
+                <hr>
+
+                <div>
+                    <button (click)="nuevoPartido()" style="text-align:center; color:green;background-color:burlywood"> <i class="fa fa-check-circle" aria-hidden="true"></i>Nuevo Partido</button>
+                    <div *ngIf="newMatch" style="border-style:outset; margin-top:1%;margin-right:30%">
+                        <form action="">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="sel1">Local</label>
+                                    <select class="form-control" id="local" name="teamLocal" [(ngModel)]="teamLocal">
+                                       <option *ngFor="let team of equiposList;"  value="{{team.key}}" >{{team.data.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="sel1">Visitante</label>
+                                    <select class="form-control" id="visit" name="teamVisita" [(ngModel)]="teamVisita">
+                                       <option *ngFor="let team of equiposList;"  value="{{team.key}}" >{{team.data.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Sede del Partido</label>
+                                    <input type="text" name="sedeMatch" tabindex="2" [(ngModel)]="sedeMatch" class="form-control" placeholder="22/10/2018 12:00pm">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Fecha y Hora</label>
+                                    <input type="text" name="fechaMatch" tabindex="2" [(ngModel)]="fechaMatch" class="form-control" placeholder="22/10/2018 12:00pm">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <button (click)="addMatch()"> Añadir partido </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- <div *ngIf "matchsJornada.length>0" *ngFor="let match of matchsJornada">
+                    <p>{{match.nameLocalTeam}} VS {{match.nameVisitTeam}} </p>
+                </div> -->
+
+
+                <div *ngIf="matchReady">
+                    <button type="button" name="login-submit" id="login-submit" tabindex="2" class="form-control btn btn-login" (click)="createjournal()">Crear Jornada</button>
+                </div>
+
+
+
+            </form>
+        </div>
+
+
+    </div>
+</div>

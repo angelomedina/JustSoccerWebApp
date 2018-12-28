@@ -13,6 +13,10 @@
 
         <br>
 
+        <div class="alert alert-success" role="alert" *ngIf=" readNote && notesList.length==0">
+            <strong>No hay notas disponibles actualmente!!</strong>
+        </div>
+
         <div style="padding-top: 5px;padding-left:4px;" *ngIf="readNote">
 
             <div class="card colorDiv" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">

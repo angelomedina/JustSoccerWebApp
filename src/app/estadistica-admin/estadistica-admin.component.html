@@ -12,7 +12,7 @@
             </div>
         </nav>
         <br>
-        <h2> {{torneoActual.data.name}} </h2>
+        <h2 style="text-align:center"> {{torneoActual.data.name}} </h2>
         <!-- Spinner -->
         <div class="spinnerBig" *ngIf="loading">
             <div class="item item-1"></div>
@@ -21,6 +21,37 @@
             <div class="item item-4"></div>
         </div>
 
+        <br>
 
-    </div> 
+        <div style="text-align:center;margin-left:3%;margin-right:3%;">
+            <span style="text-align:center;font-size:20px">Tabla de Posiciones</span>
+            <table class="table table-hover">
+                <thead style="color:blue;">
+                    <tr>
+                        <th scope="col">Posición</th>
+                        <th scope="col">Equipo</th>
+                        <th scope="col">PJ</th>
+                        <th scope="col">PG</th>
+                        <th scope="col">PE</th>
+                        <th scope="col">PP</th>
+                        <th scope="col">PTS</th>
+                        <th scope="col">AVG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let team of equiposTable; let i=index ">
+                        <th class="td_{{i}}" scope="row">{{team.position}}</th>
+                        <td class="td_{{i}}">{{team.name}}</td>
+                        <td class="td_{{i}}">{{team.pj}}</td>
+                        <td class="td_{{i}}">{{team.pg}}</td>
+                        <td class="td_{{i}}">{{team.pe}}</td>
+                        <td class="td_{{i}}">{{team.pp}}</td>
+                        <td class="td_{{i}}">{{team.pts}}</td>
+                        <td class="td_{{i}}">{{team.avg}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 </div>
