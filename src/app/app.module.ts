@@ -44,6 +44,7 @@ import { TeamInfoComponent } from './team-info/team-info.component';
 import { NotaInfoComponent } from './nota-info/nota-info.component';
 import { TorneoInfoComponent } from './torneo-info/torneo-info.component';
 import { AboutComponent } from './about/about.component';
+import { MultimediaComponent } from './multimedia/multimedia.component';
 
 
 
@@ -64,7 +65,8 @@ import { AboutComponent } from './about/about.component';
     TeamInfoComponent,
     NotaInfoComponent,
     TorneoInfoComponent,
-    AboutComponent
+    AboutComponent,
+    MultimediaComponent
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@ export class JornadasComponent implements OnInit {
   create:boolean = true;
   newMatch:boolean=false;
   matchReady:boolean= false;
+  formActivate:boolean=true;
 
   //Listas de datos
   listaIntermedia:any=[];
@@ -39,6 +40,7 @@ export class JornadasComponent implements OnInit {
   teamLocal="";
   fechaMatch="";
   sedeMatch="";
+  typeJornada="";
 
   ngOnInit() {
     this.create= true;
@@ -57,7 +59,7 @@ export class JornadasComponent implements OnInit {
           }
           this.torneoList.push(noteI);
         }
-        console.log("",this.torneoList)
+        //console.log("",this.torneoList)
         //this.obtenerTorneoActual();
       }
     )
@@ -108,10 +110,11 @@ export class JornadasComponent implements OnInit {
       Swal('Oops...', 'Debe de seleccioanr equipos diferentes', 'error');
     }else{
 
-      let idVisita = document.getElementById("visit").value;  // Se obtienen los ids
-      let idLocal = document.getElementById("local").value;   // de los equipos del partido
+      let idVisita = (<HTMLInputElement>document.getElementById("visit")).value;  // Se obtienen los ids
+      let idLocal = (<HTMLInputElement>document.getElementById("local")).value;   // de los equipos del partido
       let nombreLocal= this.obtieneNombreEquipo(idVisita);
       let nombreVisita= this.obtieneNombreEquipo(idLocal);
+
 
       let json ={
         estatus:"En espera",
@@ -128,6 +131,7 @@ export class JornadasComponent implements OnInit {
       this.matchsJornada.push(json);
       this.matchReady= true;
       Swal('Bien!', 'Partido agregado a la jornada Correctamente', 'success');
+      this.newMatch=false;
     }
 
   }
@@ -143,19 +147,30 @@ export class JornadasComponent implements OnInit {
 
   createjournal(){
 
-    let idTorneo = document.getElementById("torneo").value;
+    let idTorneo = (<HTMLInputElement>document.getElementById("torneo")).value;
+    let tipo =  (<HTMLInputElement>document.getElementById("typeJornada")).value;
 
     let json={
       idTournament:idTorneo,
       matchs:this.matchsJornada,
       name:this.name,
       dateBegin: this.fechaInicio,
-      dateEnd: this.fechaFin
+      dateEnd: this.fechaFin,
+      typeJornada:tipo
     }
 
-    console.log("Jornada: ", json)
+    //console.log("Jornada: ", json)
     this.dayServ.addDayTrip(json);
 
+  }
+
+
+  ocultaForm1(){
+    this.formActivate= false;
+  }
+
+  muestraForm1(){
+    this.formActivate= true;
   }
 
 }
