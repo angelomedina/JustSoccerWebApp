@@ -76,7 +76,7 @@ export class EquiposAdminComponent implements OnInit {
   }
 
 
-  addTeam(){
+  addTeam(){ 
     this.urlImg.subscribe(val =>{
       this.urlLogo= val;
       let newTeam={

@@ -33,6 +33,14 @@
                     <label>Fecha de Nacimiento</label>
                     <input type="date" name="nac" tabindex="2" [(ngModel)]="nac" class="form-control">
                 </div>
+                <div class="form-group col-md-4">
+                    <label>Foto Perfil</label>
+                    <input type="file" accept="image/*" (change)="upload($event)">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group col-md-3">
                     <label>Nacionalidad(Pais)</label>
                     <input type="text" name="nacionalidad" tabindex="1" [(ngModel)]="nacionalidad" class="form-control">
@@ -55,6 +63,7 @@
                     <label>Tamaño (Metro)</label>
                     <input type="text" name="tama" tabindex="1" [(ngModel)]="tama" class="form-control" placeholder="1.60">
                 </div>
+
             </div>
             <br>
             <button type="button" class="btn btn-outline-success" (click)="addPlayerNew()">Registrar nueva jugadora !!</button>
@@ -69,14 +78,20 @@
                     <label for="sel1">Equipo</label>
                     <!-- <input type="text" name="team" tabindex="1" [(ngModel)]="team" class="form-control"> -->
                     <select class="form-control" id="team" name="team" [(ngModel)]="team">
-                     <option value="Regular" >Regular</option>
+                     <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" >{{team.name}}</option>
                   </select>
                 </div>
+                <div class="form-group col-md-3">
+                    <label for="sel1">Jugadora a inscribir</label>
+                    <select class="form-control" id="player" name="player" [(ngModel)]="player">
+                   <option *ngFor="let player of playerNoInscritas; let i=index "  value="{{player.key}}"> {{player.data.name}} {{player.data.surnameI}} </option>
+                </select>
+                </div>
                 <br>
-                <button type="button" class="btn btn-outline-success" (click)="addPlayerNew()">Inscribir jugadora al equipo!!</button>
+                <button type="button" class="btn btn-outline-success" (click)="inscribirPlayerNew()">Inscribir jugadora al equipo!!</button>
             </div>
             <br>
-            
+
 
         </form>
 

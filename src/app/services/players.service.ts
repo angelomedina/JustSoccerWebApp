@@ -23,7 +23,7 @@ export class PlayersService {
     this.playerList.remove(idPlayer);
   }
 
-  updatePlayer(player){
-    this.firebase.database.ref('player/'+player.key).set(player);
+  updatePlayer(player,key){
+    this.firebase.database.ref('player/'+key).set(player);
   }
 }
