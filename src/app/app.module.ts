@@ -45,6 +45,8 @@ import { NotaInfoComponent } from './nota-info/nota-info.component';
 import { TorneoInfoComponent } from './torneo-info/torneo-info.component';
 import { AboutComponent } from './about/about.component';
 import { MultimediaComponent } from './multimedia/multimedia.component';
+import { SanitizerPipe } from './Pipes/sanitizer.pipe';
+import { PlayersComponent } from './players/players.component';
 
 
 
@@ -66,7 +68,9 @@ import { MultimediaComponent } from './multimedia/multimedia.component';
     NotaInfoComponent,
     TorneoInfoComponent,
     AboutComponent,
-    MultimediaComponent
+    MultimediaComponent,
+    SanitizerPipe,
+    PlayersComponent
   ],
   imports: [
     BrowserModule,

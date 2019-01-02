@@ -1,9 +1,10 @@
 <div class="main-content body">
     <div class="container-fluid">
-        <div style="text-align:left; margin-left:2%; margin-right:2%;">
-            <div *ngFor="let video of videosList" style="float:left;">
-                <!-- HACER UN SANITAZER , pipe -->
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video.data.url}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div style="text-align:left; margin-left:2%; margin-right:1%;">
+            <div *ngFor="let video of videosList" style="float:left;border-style:outset;margin-left:2%;margin-bottom:3%;">
+                <!-- Haciendo uso de pipe Sanitizer para mostrar videos de manera segura -->
+                <iframe width="450" height="330" [src]=" video.data.url | sanitizer:'https://www.youtube.com/embed/' " frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- src="https://www.youtube.com/embed/{{video.data.url}}"  -->
             </div>
         </div>
 

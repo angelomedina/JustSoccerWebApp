@@ -11,6 +11,7 @@ import { TeamInfoComponent } from './team-info/team-info.component';
 import { NotaInfoComponent } from './nota-info/nota-info.component';
 import { AboutComponent } from './about/about.component';
 import { MultimediaComponent } from './multimedia/multimedia.component';
+import { PlayersComponent } from './players/players.component';
 
 // arreglo de rutas
 const APP_ROUTES: Routes =[
@@ -26,6 +27,7 @@ const APP_ROUTES: Routes =[
     { path: 'noteInfo/:id', component: NotaInfoComponent},
     { path: 'about', component: AboutComponent},
     { path: 'multimedia', component: MultimediaComponent},
+    { path: 'players', component: PlayersComponent},
     { path: '**', component: PageNotFoundComponent }
 ];
 

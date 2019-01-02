@@ -1,0 +1,86 @@
+<div class="main-content body">
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <button type="button" class="btn btn-dark" (click)="verJugadoras()" style="margin-left:5%">Ver Lista de Jugadoras del torneo</button>
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="addPlayer()" style="margin-left:5%">Añadir jugadora nueva.</button>
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="inscribirPlayer()" style="margin-left:5%">Inscribir jugadoras a equipos.</button>
+                </div>
+            </div>
+        </nav>
+        <br>
+
+        <form id="register-form" role="form" *ngIf="add">
+            <div class="form-row" style="border-style:outset;">
+
+                <br>
+
+                <div class="form-group col-md-3">
+                    <label for="sel1">Nombre</label>
+                    <input type="text" name="name" tabindex="1" [(ngModel)]="name" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Primer Apellido </label>
+                    <input type="text" name="apellido1" tabindex="1" [(ngModel)]="apellido1" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Segundo Apellido </label>
+                    <input type="text" name="apellido2" tabindex="1" [(ngModel)]="apellido2" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Fecha de Nacimiento</label>
+                    <input type="date" name="nac" tabindex="2" [(ngModel)]="nac" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Nacionalidad(Pais)</label>
+                    <input type="text" name="nacionalidad" tabindex="1" [(ngModel)]="nacionalidad" class="form-control">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="sel1">Posición</label>
+                    <input type="text" name="posicion" tabindex="1" [(ngModel)]="posicion" class="form-control">
+                    <!-- <select class="form-control" id="typeJornada" name="typeJornada" [(ngModel)]="typeJornada">
+                     <option value="Regular" >Regular</option>
+                     <option value="Semifinal" >Semifinal</option>
+                     <option value="Final" >Final</option>
+                  </select> -->
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Peso (Kg)</label>
+                    <input type="text" name="peso" tabindex="1" [(ngModel)]="peso" class="form-control" placeholder="60">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Tamaño (Metro)</label>
+                    <input type="text" name="tama" tabindex="1" [(ngModel)]="tama" class="form-control" placeholder="1.60">
+                </div>
+            </div>
+            <br>
+            <button type="button" class="btn btn-outline-success" (click)="addPlayerNew()">Registrar nueva jugadora !!</button>
+
+        </form>
+
+        <!-- Inscribir jugadoras Form -->
+        <form id="register-form" role="form" *ngIf="inscribe">
+            <div class="form-row" style="border-style:outset;">
+                <br>
+                <div class="form-group col-md-3">
+                    <label for="sel1">Equipo</label>
+                    <!-- <input type="text" name="team" tabindex="1" [(ngModel)]="team" class="form-control"> -->
+                    <select class="form-control" id="team" name="team" [(ngModel)]="team">
+                     <option value="Regular" >Regular</option>
+                  </select>
+                </div>
+                <br>
+                <button type="button" class="btn btn-outline-success" (click)="addPlayerNew()">Inscribir jugadora al equipo!!</button>
+            </div>
+            <br>
+            
+
+        </form>
+
+
+
+    </div>
+</div>

@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
         <!-- <mat-toolbar>Menu</mat-toolbar> -->
-        <span><img src="./assets/imgs/jsLOGO.png" width="97%" height="30%"></span>
+        <span><img src="./assets/imgs/jsLOGO.png" width="97%" height="28%"></span>
         <mat-nav-list style="background-color:rgb(181, 178, 174)">
             <a mat-list-item [routerLink]="['/home']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">
                 <mat-icon>home</mat-icon> Inicio</a>
@@ -9,6 +9,8 @@
                 <mat-icon>vpn_key</mat-icon> Administradores</a>
             <a mat-list-item [routerLink]="['/tournament']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">Torneos</a>
             <a mat-list-item [routerLink]="['/teams']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">Equipos</a>
+            <a mat-list-item [routerLink]="['/players']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">
+                 Jugadoras</a>
             <a mat-list-item [routerLink]="['/journalAdmin']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">Jornadas</a>
             <a mat-list-item [routerLink]="['/notes']" style="font-family:'Lucida Console', Monaco, monospace;color:blue">
                 <mat-icon>description</mat-icon> Notas</a>
