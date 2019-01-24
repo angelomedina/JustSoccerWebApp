@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {NotasService} from '../services/notas.service';
 import { AuthService } from '../services/auth.service';
+import { AngularFireStorage } from '@angular/fire/storage';
 
+import {finalize} from 'rxjs/operators';
+import {Observable} from 'rxjs/internal/Observable';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class NotasAdminComponent implements OnInit {
 
-  constructor(private notaServ:NotasService, private authServ:AuthService) {
+  constructor(private notaServ:NotasService, private authServ:AuthService,private storage:AngularFireStorage) {
   }
 
   // Variables bandera para CRUD de notas
@@ -25,12 +28,15 @@ export class NotasAdminComponent implements OnInit {
 
   listaIntermedia:any=[];
   notesList:any=[];
-
   notatemp:any={};
 
   dataModel="";
   titleNote="";
 
+    // Observables
+    uploadPercent:Observable<number>;
+    urlImg:Observable<String>;
+    urlImagen:any;
 
 
   ngOnInit() {
@@ -62,23 +68,38 @@ export class NotasAdminComponent implements OnInit {
 
   }
 
+
+  upload(e){  // Metodo para realiozar la subida de la imagen a FireStore
+    let file = e.target.files[0];
+    let path="notes/"+file.name;
+    let ref = this.storage.ref(path);
+    let task = this.storage.upload(path,file);
+    this.uploadPercent= task.percentageChanges();
+    task.snapshotChanges().pipe(finalize(() =>{
+      this.urlImg= ref.getDownloadURL()
+    }) ).subscribe();
+  }
+
+
   creaNotaDB(){
     let nombreUser = this.returnFullname();
+
+    this.urlImg.subscribe(val =>{
+      this.urlImagen= val;
+
     let notaNew={
       title: this.titleNote,
       body:this.dataModel,
       date:"13/03/2019",
       author:nombreUser,
-      url:""
+      url:this.urlImagen
     }
-    //console.log("NOTA NEW: ", notaNew);
 
     this.notaServ.addNote(notaNew);
     Swal("Bien!", "Nota agregada Correctamente", "success");
     this.dataModel="";
     this.titleNote="";
-
-  }
+  })}
 
   veNotas(){
     this.createNote= false;

@@ -19,6 +19,7 @@ export class JornadasComponent implements OnInit {
   newMatch:boolean=false;
   matchReady:boolean= false;
   formActivate:boolean=true;
+  ver:boolean= false;
 
   //Listas de datos
   listaIntermedia:any=[];
@@ -105,6 +106,16 @@ export class JornadasComponent implements OnInit {
     this.newMatch= true;
   }
 
+  addJornada(){
+    this.create=true;
+    this.ver=false;
+  }
+
+  verJornada(){
+    this.create=false;
+    this.ver=true;
+  }
+
   addMatch(){
     if(this.teamLocal == this.teamVisita  || this.teamLocal==""  || this.teamVisita== ""){
       Swal('Oops...', 'Debe de seleccioanr equipos diferentes', 'error');
@@ -153,6 +164,7 @@ export class JornadasComponent implements OnInit {
     let json={
       idTournament:idTorneo,
       matchs:this.matchsJornada,
+      cantidad: this.matchsJornada.length,
       name:this.name,
       dateBegin: this.fechaInicio,
       dateEnd: this.fechaFin,
@@ -171,6 +183,22 @@ export class JornadasComponent implements OnInit {
 
   muestraForm1(){
     this.formActivate= true;
+  }
+
+  mostrarPartidosJornada(idJornada){
+  console.log(" ", idJornada);
+
+  // Se crea el html
+  let html="<div style='margin-left:2%;margin-right:2%'> </br> ";
+  console.log("",idJornada.data.matchs)
+  console.log("",idJornada.data.cantidad)
+
+  for (let i = 0; i < idJornada.data.cantidad; i++) {
+    html = html+ "<p style ='color:blue;'> "+ idJornada.data.matchs[i].nameLocalTeam+ " VS "+ idJornada.data.matchs[i].nameVisitTeam+"</p>"
+  }
+   html= html +"</div>";
+   console.log(" ", html);
+  (<HTMLInputElement>document.getElementById(idJornada.key)).innerHTML = html;  //Obtiene el id de la jornada
   }
 
 }

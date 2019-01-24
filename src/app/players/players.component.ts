@@ -24,19 +24,28 @@ export class PlayersComponent implements OnInit {
   playerList:any=[];
   tablesList:any=[];
   playerNoInscritas:any =[];
+  jugadorasEquipo:any=[];
 
   //Variables NgIf
-  ver:boolean=false;
+  ver:boolean=true;
   inscribe:boolean=false;
   add:boolean= false;
+  vacioteam:boolean=false;
 
   //Variables NGModel
-  name="";
-  apellido1="";
-  apellido2="";
-  nac="";
-  nacionalidad="";
-  posicion=""; peso=""; tama="";
+  // name="";
+  // apellido1="";
+  // apellido2="";
+  // nac="";
+  // nacionalidad="";
+  // posicion=""; peso=""; tama="";
+
+  playerName="";
+  surname1="";
+  surname2="";
+
+
+
 
   // Observables
   uploadPercent:Observable<number>;
@@ -63,7 +72,7 @@ export class PlayersComponent implements OnInit {
 
           this.playerList.push(noteI);
         }
-        this.verJugadoras();
+        //this.verJugadoras();
         this.obtieneNoInscritas();
       }
     )
@@ -87,17 +96,20 @@ export class PlayersComponent implements OnInit {
   }
 
   verJugadoras(){
+    this.vacioteam= false;
     this.ver=true;
     this.inscribe=false;
     this.add=false;
   }
   addPlayer(){
+    this.vacioteam= false;
     this.ver=false;
     this.inscribe=false;
     this.add=true;
   }
 
   inscribirPlayer(){
+    this.vacioteam= false;
     this.ver=false;
     this.inscribe=true;
     this.add=false;
@@ -105,50 +117,53 @@ export class PlayersComponent implements OnInit {
   }
 
 
-  addPlayerNew(){
-    this.urlImg.subscribe(val =>{
-      this.urlImagen= val;
-    let json={
-      name:this.name,
-      surnameI:this.apellido1,
-      surnameII:this.apellido2,
-      birth:this.nac,
-      position:this.posicion,
-      country:this.nacionalidad,
-      weigh:this.peso,
-      heigh:this.tama,
-      estado:"No Inscrita",
-      idTeam:"NULL",
-      url:this.urlImagen
-    }
+  // addPlayerNew(){
+  //   this.urlImg.subscribe(val =>{
+  //     this.urlImagen= val;
+  //   let json={
+  //     name:this.name,
+  //     surnameI:this.apellido1,
+  //     surnameII:this.apellido2,
+  //     birth:this.nac,
+  //     position:this.posicion,
+  //     country:this.nacionalidad,
+  //     weigh:this.peso,
+  //     heigh:this.tama,
+  //     estado:"No Inscrita",
+  //     idTeam:"NULL",
+  //     url:this.urlImagen
+  //   }
 
-    console.log("", json);
-    this.playerServ.addPlayer(json);
-    Swal("Bien!", "Jugadora agregada Correctamente", "success");
-    this.inscribirPlayer();
-    this.resetForm();
-  })}
+  //   console.log("", json);
+  //   this.playerServ.addPlayer(json);
+  //   Swal("Bien!", "Jugadora agregada Correctamente", "success");
+  //   this.inscribirPlayer();
+  //   this.resetForm();
+  // })}
 
   resetForm(){
-    this.name="";
-    this.apellido1="";
-    this.apellido2="";
-    this.nac="";
-    this.posicion="";
-    this.nacionalidad="";
-    this.peso="";
-    this.tama="";
+    // this.name="";
+    // this.apellido1="";
+    // this.apellido2="";
+    // this.nac="";
+    // this.posicion="";
+    // this.nacionalidad="";
+    // this.peso="";
+    // this.tama="";
+    this.playerName="";
+    this.surname1="";
+    this.surname2="";
   }
 
   upload(e){  // Metodo para realiozar la subida de la imagen a FireStore
     let file = e.target.files[0];
-    let path="/profiles/"+file.name;
+    let path="profiles/"+file.name;
     let ref = this.storage.ref(path);
     let task = this.storage.upload(path,file);
     this.uploadPercent= task.percentageChanges();
     task.snapshotChanges().pipe(finalize(() =>{
       this.urlImg= ref.getDownloadURL()
-    } ) ).subscribe();
+    }) ).subscribe();
   }
 
   obtieneEquiposTabla(){
@@ -158,8 +173,8 @@ export class PlayersComponent implements OnInit {
 
   }
 
-  obtieneNoInscritas(){
-    this.playerNoInscritas=[];
+  obtieneNoInscritas(){ // Metodo que retorna jugadoras libres sin equipos.... usando de comparacion
+    this.playerNoInscritas=[];  //Su atributo de estado
     for(var i=0; i<this.playerList.length;i++){   /// .length = undefiend ... en este caso, solo usar si son 8 equipos
       if(this.playerList[i].data.estado =="No Inscrita"){
         this.playerNoInscritas.push(this.playerList[i]);
@@ -167,32 +182,43 @@ export class PlayersComponent implements OnInit {
     }
   }
 
-  inscribirPlayerNew(){
-    let idT= (<HTMLInputElement>document.getElementById("team")).value;
-    let idPlayer =  (<HTMLInputElement>document.getElementById("player")).value;
-    for(var i=0; i< this.playerNoInscritas.length;i++){
-      if(this.playerNoInscritas[i].key == idPlayer){
-        let json={
-          name:this.playerNoInscritas[i].data.name,
-          surnameI:this.playerNoInscritas[i].data.surnameI,
-          surnameII:this.playerNoInscritas[i].data.surnameII,
-          birth:this.playerNoInscritas[i].data.birth,
-          position:this.playerNoInscritas[i].data.position,
-          country:this.playerNoInscritas[i].data.country,
-          weigh:this.playerNoInscritas[i].data.weigh,
-          heigh:this.playerNoInscritas[i].data.heigh,
-          estado:"Inscrita",
-          idTeam:idT,
-          url:this.playerNoInscritas[i].data.url,
-        }
-        this.playerServ.updatePlayer(json,idPlayer);
-        this.obtieneNoInscritas();
-        return;
+  obtieneJugadorasEquipo(selectTeam){
+    this.jugadorasEquipo= [];
+    let idTeam= selectTeam.target.selectedOptions[0].value
+    for(var i=0;i<this.playerList.length;i++){
+      if(this.playerList[i].data.idTeam == idTeam){
+        this.jugadorasEquipo.push(this.playerList[i]);
       }
-
     }
-
+    if(this.jugadorasEquipo.length ==0){
+      this.vacioteam=true;
+    }else{
+      this.vacioteam= false;
+    }
+    console.log("lista ", this.jugadorasEquipo);
+    //console.log("Entra aca", idTeam.target.selectedOptions[0].value);
   }
+
+
+  inscribirPlayerNew(){
+    let idT= (<HTMLInputElement>document.getElementById("team")).value;  //Obtiene el id del equipo
+    this.urlImg.subscribe(val =>{
+        this.urlImagen= val;
+   let json={
+    idTeam:idT,
+    name:this.playerName,
+    surnameI:this.surname1,
+    surnameII:this.surname2,
+    url:this.urlImagen,
+    estado:"Inscrita"
+  }
+  this.playerServ.addPlayer(json); // agrega jugadora
+  Swal("Bien!", "Jugadora agregada Correctamente", "success");
+  this.resetForm();
+  this.inscribirPlayer();
+})
+this.inscribirPlayer();
+}
 
 
 }

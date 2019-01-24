@@ -5,18 +5,19 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <button type="button" class="btn btn-dark" (click)="verJugadoras()" style="margin-left:5%">Ver Lista de Jugadoras del torneo</button>
-                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="addPlayer()" style="margin-left:5%">Añadir jugadora nueva.</button>
+                    <!-- <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="addPlayer()" style="margin-left:5%">Añadir jugadora nueva.</button> -->
                     <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="inscribirPlayer()" style="margin-left:5%">Inscribir jugadoras a equipos.</button>
                 </div>
             </div>
         </nav>
         <br>
 
-        <form id="register-form" role="form" *ngIf="add">
+        <!--
+            EN CASO DE CERARJUGADORAS CON INFORMACION DETALLADA
+           <form id="register-form" role="form" *ngIf="add">
             <div class="form-row" style="border-style:outset;">
 
                 <br>
-
                 <div class="form-group col-md-3">
                     <label for="sel1">Nombre</label>
                     <input type="text" name="name" tabindex="1" [(ngModel)]="name" class="form-control">
@@ -53,7 +54,7 @@
                      <option value="Regular" >Regular</option>
                      <option value="Semifinal" >Semifinal</option>
                      <option value="Final" >Final</option>
-                  </select> -->
+                  </select>
                 </div>
                 <div class="form-group col-md-2">
                     <label>Peso (Kg)</label>
@@ -67,35 +68,72 @@
             </div>
             <br>
             <button type="button" class="btn btn-outline-success" (click)="addPlayerNew()">Registrar nueva jugadora !!</button>
-
-        </form>
+        </form> -->
 
         <!-- Inscribir jugadoras Form -->
+        <!-- UNICAMENTE UTILIZANDO UN NOMBRE COMPLETO, IMAGEN, Y UN ESTADO. -->
         <form id="register-form" role="form" *ngIf="inscribe">
             <div class="form-row" style="border-style:outset;">
                 <br>
                 <div class="form-group col-md-3">
+                    <label for="sel1">Nombre</label>
+                    <input type="text" name="playerName" tabindex="1" [(ngModel)]="playerName" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sel1">Primer Apellido</label>
+                    <input type="text" name="surname1" tabindex="1" [(ngModel)]="surname1" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sel1">Segundo Apellido</label>
+                    <input type="text" name="surname2" tabindex="1" [(ngModel)]="surname2" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
                     <label for="sel1">Equipo</label>
                     <!-- <input type="text" name="team" tabindex="1" [(ngModel)]="team" class="form-control"> -->
                     <select class="form-control" id="team" name="team" [(ngModel)]="team">
-                     <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" >{{team.name}}</option>
+                     <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" required>{{team.name}}</option>
                   </select>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="sel1">Jugadora a inscribir</label>
-                    <select class="form-control" id="player" name="player" [(ngModel)]="player">
-                   <option *ngFor="let player of playerNoInscritas; let i=index "  value="{{player.key}}"> {{player.data.name}} {{player.data.surnameI}} </option>
-                </select>
+                <div class="form-group col-md-4">
+                    <label>Foto Perfil</label>
+                    <input type="file" accept="image/*" (change)="upload($event)">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <button type="button" class="btn btn-outline-success" (click)="inscribirPlayerNew()">Inscribir jugadora al equipo!!</button>
+                <br>
             </div>
             <br>
-
-
         </form>
 
 
+        <!-- Mostrar jugadoras del torneo -->
+
+        <div style="margin-top:2%;margin-left:2%;margin-right:2%" *ngIf="ver">
+            <br>
+            <div class="form-group col-md-3">
+                <select class="form-control" id="team" name="team" [(ngModel)]="team" (change)="obtieneJugadorasEquipo($event)">
+                    <option value="" disabled selected>Seleccione un equipo</option>
+                   <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}">{{team.name}}</option>
+              </select>
+            </div>
+            <table style="text-align:center;" class="table table-hover" *ngIf="jugadorasEquipo.length>0">
+                <thead style="color:blue;">
+                    <tr>
+                        <th scope="col">Nombre Completo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let player of jugadorasEquipo; let i=index ">
+                        <th scope="row">{{player.data.name}} {{player.data.surnameI}} {{player.data.surnameII}} </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <span style="text-align:center; margin-top:5%;margin-left:3%; color:brown; border-style: outset;font-size:24px;" *ngIf="vacioteam"> Equipo seelccionado no dispone de jugadoras inscritas!! </span>
 
     </div>
 </div>

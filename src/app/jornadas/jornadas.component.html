@@ -4,12 +4,32 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaTorneo()" style="margin-left:5%">Crear Jornada</button>
-                    <button type="button" class="btn btn-dark" (click)="verTorneos()" style="margin-left:5%">Ver Jornadas </button>
+                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="addJornada()" style="margin-left:5%">Crear Jornada</button>
+                    <button type="button" class="btn btn-dark" (click)="verJornada()" style="margin-left:5%">Ver Jornadas </button>
                     <!-- <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button> -->
                 </div>
             </div>
         </nav>
+
+
+        <div style="margin-top:2%;margin-left:2%;margin-right:40%" *ngIf="ver">
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action active">
+                  Jornadas del torneo actual
+                </button>
+                <div *ngFor="let jornada of jornadaList; let i= index;">
+                    <button type="button" class="list-group-item list-group-item-action" (click)="mostrarPartidosJornada(jornada)">
+                        {{jornada.data.name}}
+                        <div >
+                           <p id="{{jornada.key}}"></p>
+                        </div>
+                      </button>
+                </div>
+
+            </div>
+        </div>
+
+
 
         <!-- Crear Jornada nueva -->
         <div style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="create">

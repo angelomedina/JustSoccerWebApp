@@ -17,40 +17,70 @@
             <strong>No hay notas disponibles actualmente!!</strong>
         </div>
 
-        <div style="padding-top: 5px;padding-left:4px;" *ngIf="readNote">
+        <div class="card-columns" *ngIf="readNote">
+            <div *ngFor="let nota of notesList; let i=index;">
+                <div style="text-align:center;margin-top:2%;" class="card">
+                    <img class="card-img-top" src="{{nota.data.url}}" alt="Card image cap" width="150px" height="210px">
+                    <div class="card-body">
+                        <h5 class="card-title"> <a href="/noteInfo/{{nota.key}}"> {{nota.data.title}}  </a> </h5>
+                        <p class="card-text"></p>
+                        <small>{{nota.data.date}}</small><br>
+                        <small>{{nota.data.author}}</small>
+                        <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+
+        <!-- <div style="padding-top:5px;padding-left:2px;width:150px;height:250px;" *ngIf="readNote">
             <div class="card colorDiv" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">
                 <div>
                     <br>
                     <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
-                    <h3><i> {{nota.data.title}}</i></h3>
+                    <h5><i> {{nota.data.title}}</i></h5>
                     <small>{{nota.data.date}}</small><br>
                     <small>{{nota.data.author}}</small>
+                    <div style="width:100px;height:100px;">
+                        <img class="card-img-top" src="{{nota.data.url}}" width="100px" height="100" alt="logo">
+                    </div>
+
                 </div>
                 <br>
                 <div>
-                    <p id="p_{{i}}"></p>
-                    <!-- Parrafos dinamicos para rellenar con body de notas -->
+                    <!-- <p id="p_{{i}}"></p> -->
+        <!-- Parrafos dinamicos para rellenar con body de notas
                     <span> <a href="/noteInfo/{{nota.key}}">Ver más ...</a></span>
                 </div>
 
             </div>
             <br>
             <br>
-        </div>
+        </div> -->
 
 
         <div *ngIf="createNote">
-
-            <form>
-                <div class="form-group">
-                    <label style="font-size:16px;color:blueviolet">Titulo de la nota</label>
-                    <input type="text" name="titleNote" class="form-control" [(ngModel)]="titleNote" placeholder="">
+            <form style="text-align:center; margin-left:2%;margin-right:2%;">
+                <div>
+                    <div class="form-group col-md-6" style="float:left;">
+                        <label style="font-size:16px;color:blueviolet">Titulo de la nota</label>
+                        <input type="text" name="titleNote" class="form-control" [(ngModel)]="titleNote" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6" style="float:right;">
+                        <label style="font-size:16px;color:blueviolet">Imagen de referencia</label>
+                        <input type="file" accept="image/*" (change)="upload($event)">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <br>
+                <br>
                 <div class="form-group">
-                    <label style="font-size:16px;color:blueviolet">Contenido de la nota</label><br>
-                    <textarea name="dataModel" [(ngModel)]="dataModel" rows="20" class="form-control" spellcheck>
 
+                    <label style="font-size:16px;color:blueviolet; text-align:center;">Contenido de la nota</label><br>
+                    <textarea name="dataModel" [(ngModel)]="dataModel" rows="20" class="form-control" spellcheck>
                       </textarea>
                     <!-- <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
                       theme: 'modern',
