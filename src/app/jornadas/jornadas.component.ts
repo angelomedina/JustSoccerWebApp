@@ -20,6 +20,7 @@ export class JornadasComponent implements OnInit {
   matchReady:boolean= false;
   formActivate:boolean=true;
   ver:boolean= false;
+  addResult:boolean = false;
 
   //Listas de datos
   listaIntermedia:any=[];
@@ -31,6 +32,7 @@ export class JornadasComponent implements OnInit {
   listaIntermediaTres:any=[];
   equiposList:any=[];
   matchsJornada:any=[];
+  jornadasSinResult:any =[];
 
   //Ngmodel
   torneo="";
@@ -109,11 +111,20 @@ export class JornadasComponent implements OnInit {
   addJornada(){
     this.create=true;
     this.ver=false;
+    this.addResult=false;
   }
 
   verJornada(){
     this.create=false;
     this.ver=true;
+    this.addResult=false;
+  }
+  addResultado(){
+    this.create=false;
+    this.ver=false;
+    this.addResult=true;
+    this.mostrarJornadasSinResultado();
+
   }
 
   addMatch(){
@@ -135,10 +146,9 @@ export class JornadasComponent implements OnInit {
         idTeamLocal:idLocal,
         nameLocalTeam:nombreLocal,
         nameVisitTeam: nombreVisita,
-        resultVisit:"No disponible",
-        resultLocal:"No disponible"
+        resultVisit:"-",
+        resultLocal:"-"
       }
-      console.log("Partido ", json)
       this.matchsJornada.push(json);
       this.matchReady= true;
       Swal('Bien!', 'Partido agregado a la jornada Correctamente', 'success');
@@ -170,8 +180,6 @@ export class JornadasComponent implements OnInit {
       dateEnd: this.fechaFin,
       typeJornada:tipo
     }
-
-    //console.log("Jornada: ", json)
     this.dayServ.addDayTrip(json);
 
   }
@@ -186,19 +194,83 @@ export class JornadasComponent implements OnInit {
   }
 
   mostrarPartidosJornada(idJornada){
-  console.log(" ", idJornada);
-
   // Se crea el html
   let html="<div style='margin-left:2%;margin-right:2%'> </br> ";
-  console.log("",idJornada.data.matchs)
-  console.log("",idJornada.data.cantidad)
 
   for (let i = 0; i < idJornada.data.cantidad; i++) {
-    html = html+ "<p style ='color:blue;'> "+ idJornada.data.matchs[i].nameLocalTeam+ " VS "+ idJornada.data.matchs[i].nameVisitTeam+"</p>"
+    html = html+ "<p style ='color:blue;'> "+ idJornada.data.matchs[i].nameLocalTeam+ "<span style='color:grey;font-size:10px'> "+ idJornada.data.matchs[i].resultLocal +"</span>"+ " VS "+ "<span style='color:grey;font-size:10px'>"+ idJornada.data.matchs[i].resultVisit +" </span>"+  idJornada.data.matchs[i].nameVisitTeam+"</p>"
+    html= html + "<span style='color:grey'>"+ idJornada.data.matchs[i].estatus +"</span>";
   }
    html= html +"</div>";
    console.log(" ", html);
   (<HTMLInputElement>document.getElementById(idJornada.key)).innerHTML = html;  //Obtiene el id de la jornada
+  }
+
+
+
+  desplegarForm(id){
+    // if ((<HTMLInputElement>document.getElementById("res"+id)).style.visibility == "visible"){
+    //   (<HTMLInputElement>document.getElementById("res"+id)).style.visibility = "hidden";
+    // }else{
+      (<HTMLInputElement>document.getElementById("res"+id)).style.visibility = "visible";
+    // }
+  }
+
+
+  mostrarJornadasSinResultado(){
+    this.jornadasSinResult = [];
+    for(let i=0; i< this.jornadaList.length; i++){
+      for( let n=0; n< this.jornadaList[i].data.cantidad; n++){
+        if(this.jornadaList[i].data.matchs[n].estatus == "En espera"){
+          let json ={
+            jornada:this.jornadaList[i].data.name,
+            idJornada:this.jornadaList[i].key,
+            dataJornada: this.jornadaList[i],
+            data:this.jornadaList[i].data.matchs[n]
+          }
+          this.jornadasSinResult.push(json);
+          // Añade en lista los partidos a lista para utilizar
+        }
+      }
+    }
+  }
+
+  resultadoJornada(match,num){
+    let local= (<HTMLInputElement>document.getElementById("local"+num)).value;
+    let visita= (<HTMLInputElement>document.getElementById("visita"+num)).value;
+    let matchOld = this.jornadasSinResult[num].data;
+    let jornada = match.dataJornada;
+
+    //Primero se debe de actualizar el partido, despues la jornada en total
+    matchOld.resultLocal= local;
+    matchOld.resultVisit= visita;
+
+    // Ubicar que partido es el que se debe de actualizar en la jornada
+    for(let i=0; i< jornada.data.cantidad;i++){
+      if(jornada.data.matchs[i].idTeamLocal == matchOld.idTeamLocal && jornada.data.matchs[i].idTeamVisita == matchOld.idTeamVisita ){
+        // Si se halla el equipo que coincide con los id's del partido, se actualiza
+        jornada.data.matchs[i] = matchOld;
+        jornada.data.matchs[i].estatus ="Finalizado";
+
+        let jornadaN={  //Nuevo Json De Jornada
+          idTournament:jornada.data.idTournament,
+          matchs:jornada.data.matchs,
+          cantidad: jornada.data.cantidad,
+          name:jornada.data.name,
+          dateBegin: jornada.data.dateBegin,
+          dateEnd: jornada.data.dateEnd,
+          typeJornada:jornada.data.typeJornada
+        };
+
+        this.dayServ.updateDayTrip(jornadaN,jornada.key ); //Llama al servicio para actualizar
+
+        Swal('Bien!', 'Resultado agregado Correctamente!!', 'success');
+        this.mostrarJornadasSinResultado(); // Vuelve a llamar funcion para traer los partidos sin resultados
+        break;
+      }
+    }
+
+
   }
 
 }

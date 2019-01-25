@@ -23,7 +23,7 @@ export class DaytripsService {
     this.dayTripsList.remove(idDayTrip);
   }
 
-  updateDayTrip(dayTrip){
-    this.firebase.database.ref('dayTrips/'+dayTrip.key).set(dayTrip);
+  updateDayTrip(dayTrip,key){
+    this.firebase.database.ref('dayTrips/'+key).set(dayTrip);
   }
 }
