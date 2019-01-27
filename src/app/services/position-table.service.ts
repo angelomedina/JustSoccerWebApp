@@ -24,8 +24,8 @@ export class PositionTableService {
     this.positionTableList.remove(idtable);
   }
 
-  updatePositionTable(table){
-    this.firebase.database.ref('positionTable/'+table.key).set(table);
+  updatePositionTable(table,key){
+    this.firebase.database.ref('positionTable/'+key).set(table);
   }
 
 }

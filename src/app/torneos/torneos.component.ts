@@ -116,6 +116,7 @@ export class TorneosComponent implements OnInit {
     // Metodo utilizado despues de crear el torneo, generando asi su tabal de posiciones respectiva
 
     let positions:any=[];
+    let cant=0;
 
     for (var i = 0; i < this.TeamList.length; i++) {
       let teamPos= {  // Genera un json predeterminado por cada equipo de Primera Division
@@ -127,15 +128,19 @@ export class TorneosComponent implements OnInit {
         pe:0,
         pp:0,
         avg:0,
-        pts:0
+        pts:0,
+        gf:0,
+        gc:0
       }
 
       positions.push(teamPos); // agrega a lista el json generado
+      cant++;
     }
 
     let json={
       idTournamnet: this.keyTorneoCreado,
-      teams: positions
+      teams: positions,
+      cantidad: cant
     }
 
     this.positionServ.addPositionTable(json);

@@ -39,6 +39,7 @@
 
                 <div *ngFor=" let match of jornadasSinResult; let i = index;">
                     <button type="button" class="list-group-item list-group-item-action" (click)="desplegarForm(i)">
+                         <p style="color:blueviolet"> {{match.name}} </p>
                          <label style="color:brown"> {{match.jornada}}. </label>  {{match.data.nameLocalTeam}} VS {{match.data.nameVisitTeam}}
                          <small style="color:grey" > Resultado sin definir</small>
                          <form id="res{{i}}" style="visibility:hidden">
@@ -117,7 +118,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Sede del Partido</label>
-                                <input type="text" name="sedeMatch" tabindex="2" [(ngModel)]="sedeMatch" class="form-control" placeholder="22/10/2018 12:00pm">
+                                <input type="text" name="sedeMatch" tabindex="2" [(ngModel)]="sedeMatch" class="form-control" placeholder="Estadio Nombre/Ubicación">
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Fecha y Hora</label>

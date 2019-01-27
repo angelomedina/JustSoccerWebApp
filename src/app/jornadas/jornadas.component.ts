@@ -4,6 +4,8 @@ import { AuthService } from '../services/auth.service';
 import {DaytripsService} from '../services/daytrips.service';
 import { TournamentService } from '../services/tournament.service';
 import { TeamService } from '../services/team.service';
+import {PositionTableService} from '../services/position-table.service';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-jornadas',
@@ -12,7 +14,8 @@ import { TeamService } from '../services/team.service';
 })
 export class JornadasComponent implements OnInit {
 
-  constructor( private dayServ:DaytripsService, private tournServ:TournamentService, private authServ:AuthService,private teamsServ:TeamService) { }
+  constructor( private tablePosit:PositionTableService, private dayServ:DaytripsService, private tournServ:TournamentService,
+    private authServ:AuthService,private teamsServ:TeamService) { }
 
   loading:boolean=true; //Spinner
   create:boolean = true;
@@ -29,10 +32,16 @@ export class JornadasComponent implements OnInit {
   listaIntermediaDos:any=[];
   torneoList:any=[];
 
+  listaIntermediaCuatro:any=[];
+  tableList:any=[];
+
   listaIntermediaTres:any=[];
   equiposList:any=[];
   matchsJornada:any=[];
   jornadasSinResult:any =[];
+  //tableActual:any=[];
+
+  tablaActual:any=[]; //Tabla de posicion actual
 
   //Ngmodel
   torneo="";
@@ -62,8 +71,7 @@ export class JornadasComponent implements OnInit {
           }
           this.torneoList.push(noteI);
         }
-        //console.log("",this.torneoList)
-        //this.obtenerTorneoActual();
+
       }
     )
 
@@ -98,6 +106,23 @@ export class JornadasComponent implements OnInit {
           this.jornadaList.push(noteI);
         }
         //this.obtenerTorneoActual();
+      }
+    )
+
+    this.tablePosit.getPositionTable().snapshotChanges()
+    .subscribe(
+      Day =>{
+        this.tableList=[]; // Resetea arreglo
+        this.listaIntermediaCuatro=[];
+        this.listaIntermediaCuatro.push(Day);
+        for(var i=0; i<this.listaIntermediaCuatro[0].length;i++){
+          let noteI={
+             key: this.listaIntermediaCuatro[0][i].key,
+             data:this.listaIntermediaCuatro[0][i].payload.toJSON()
+          }
+          this.tableList.push(noteI);
+        }
+
       }
     )
 
@@ -202,7 +227,7 @@ export class JornadasComponent implements OnInit {
     html= html + "<span style='color:grey'>"+ idJornada.data.matchs[i].estatus +"</span>";
   }
    html= html +"</div>";
-   console.log(" ", html);
+
   (<HTMLInputElement>document.getElementById(idJornada.key)).innerHTML = html;  //Obtiene el id de la jornada
   }
 
@@ -216,17 +241,29 @@ export class JornadasComponent implements OnInit {
     // }
   }
 
+  obtieneNombreTorneo(idTorneo){
+      for(let i=0; i< this.torneoList.length;i++){
+       if(this.torneoList[i].key == idTorneo){
+          return this.torneoList[i].data.name;
+        }
+      }
+  }
+
 
   mostrarJornadasSinResultado(){
     this.jornadasSinResult = [];
     for(let i=0; i< this.jornadaList.length; i++){
       for( let n=0; n< this.jornadaList[i].data.cantidad; n++){
         if(this.jornadaList[i].data.matchs[n].estatus == "En espera"){
+
+          let nombreTorneo = this.obtieneNombreTorneo(this.jornadaList[i].data.idTournament);
+
           let json ={
             jornada:this.jornadaList[i].data.name,
             idJornada:this.jornadaList[i].key,
             dataJornada: this.jornadaList[i],
-            data:this.jornadaList[i].data.matchs[n]
+            data:this.jornadaList[i].data.matchs[n],
+            name: nombreTorneo
           }
           this.jornadasSinResult.push(json);
           // Añade en lista los partidos a lista para utilizar
@@ -235,17 +272,168 @@ export class JornadasComponent implements OnInit {
     }
   }
 
+
+  obtenerTablaPosicionesActual(idTorneo){
+    // Con base a las tablas de posiciones y un id del torneo unico, se halla la que se debe de actualizar
+    for(let i=0; i < this.tableList.length;i++){
+      if(this.tableList[i].data.idTournamnet === idTorneo){
+        this.tablaActual= this.tableList[i]; // guarda en variable la tabal de posiciones a utilizar
+        return;
+      }
+    }
+  }
+
   resultadoJornada(match,num){
-    let local= (<HTMLInputElement>document.getElementById("local"+num)).value;
+    let local=(<HTMLInputElement>document.getElementById("local"+num)).value;
     let visita= (<HTMLInputElement>document.getElementById("visita"+num)).value;
-    let matchOld = this.jornadasSinResult[num].data;
+
+    if(<number><any>visita <10){
+        visita= "0"+visita;
+    }
+    if(<number><any>local <10){
+      local= "0"+local;
+  }
+
+    // let local = <number><any>localS;    //se realiza conversion de
+    // let visita = <number><any>visitaS;  //String a Int
+
+
+    let matchOld = this.jornadasSinResult[num].data; // Se obtiene el partido correspondiente
+    console.log("MATCH== ", matchOld);
     let jornada = match.dataJornada;
+    let idTorneo = jornada.data.idTournament; // Id del torno para obtener tabla de posiciones a usar
+    this.obtenerTablaPosicionesActual(idTorneo);  // Lamma metodo para obtener la tabla  edposicion a utilizar
 
     //Primero se debe de actualizar el partido, despues la jornada en total
     matchOld.resultLocal= local;
     matchOld.resultVisit= visita;
+    let idLocal = matchOld.idTeamLocal;
+    let idVisita= matchOld.idTeamVisita;
 
-    // Ubicar que partido es el que se debe de actualizar en la jornada
+
+
+    //Se compara el resultado del partido
+    if(local == visita){//Empate
+      console.log("Empate");
+      for(let i=0; i<this.tablaActual.data.cantidad;i++){
+        if(this.tablaActual.data.teams[i].idTeam == idLocal){
+            //realiza el incremento en partido empatados, puntos, goles favor y en contra
+          this.tablaActual.data.teams[i].pts = this.tablaActual.data.teams[i].pts+1;
+          this.tablaActual.data.teams[i].pe = this.tablaActual.data.teams[i].pe+1;
+          this.tablaActual.data.teams[i].pj = this.tablaActual.data.teams[i].pj+1;
+          this.tablaActual.data.teams[i].gf = this.tablaActual.data.teams[i].gf+local;
+          this.tablaActual.data.teams[i].gc = this.tablaActual.data.teams[i].gc+ visita;
+        }
+        if(this.tablaActual.data.teams[i].idTeam == idVisita){
+          //realiza el incremento en partido empatados, puntos, goles favor y en contra
+          this.tablaActual.data.teams[i].pts = this.tablaActual.data.teams[i].pts+1;
+          this.tablaActual.data.teams[i].pe = this.tablaActual.data.teams[i].pe+1;
+          this.tablaActual.data.teams[i].pj = this.tablaActual.data.teams[i].pj+1;
+          this.tablaActual.data.teams[i].gf = this.tablaActual.data.teams[i].gf+visita;
+          this.tablaActual.data.teams[i].gc = this.tablaActual.data.teams[i].gc+local;
+        }
+      }
+    }
+    if(<number><any>local > <number><any>visita){//Gana local
+      console.log("Local");
+      for(let i=0; i<this.tablaActual.data.cantidad;i++){
+        if(this.tablaActual.data.teams[i].idTeam === idVisita){
+            //realiza el incremento en partido ganados, puntos, goles favor y en contra
+          this.tablaActual.data.teams[i].pts = <number><any>this.tablaActual.data.teams[i].pts+3;
+          this.tablaActual.data.teams[i].pg = <number><any>this.tablaActual.data.teams[i].pg+1;
+          this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
+          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>local;
+          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>visita;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>local;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>visita;
+          console.log("Local gana: ",this.tablaActual.data.teams[i] );
+        }
+        if(this.tablaActual.data.teams[i].idTeam === idLocal){
+          //realiza el incremento en partido ganados, puntos, goles favor y en contra
+          this.tablaActual.data.teams[i].pp = <number><any>this.tablaActual.data.teams[i].pp+1;
+          this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
+          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>visita;
+          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>local;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>visita;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>local;
+          console.log("Pierde visita: ",this.tablaActual.data.teams[i] );
+        }
+      }
+    }
+
+
+    if(<number><any>local < <number><any>visita){//Gana Visita
+      console.log("Visita");
+      for(let i=0; i<this.tablaActual.data.cantidad;i++){
+        if(this.tablaActual.data.teams[i].idTeam === idVisita){
+            //realiza el incremento en partido ganados, puntos, goles favor y en contra
+          this.tablaActual.data.teams[i].pp = <number><any>this.tablaActual.data.teams[i].pp+1;
+          this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
+          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>local;
+          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>visita;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>local;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>visita;
+          console.log("Pierde local: ",this.tablaActual.data.teams[i] );
+        }
+        if(this.tablaActual.data.teams[i].idTeam === idLocal){
+          //realiza el incremento en partido ganados, puntos, goles favor y en contra
+          this.tablaActual.data.teams[i].pts = <number><any>this.tablaActual.data.teams[i].pts+3;
+          this.tablaActual.data.teams[i].pg = <number><any>this.tablaActual.data.teams[i].pg+1;
+          this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
+          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>visita;
+          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>local;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>visita;
+          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>local;
+          console.log("Visita gana: ",this.tablaActual.data.teams[i] );
+        }
+      }
+    }
+      let newTable= this.tablaActual.data;
+
+      this.nuevasPosiciones(newTable,this.tablaActual.key);
+
+      // Falta aun ordenar posiciones dinamicamente, el AVg ,,,, y verificar genes y perdidas
+
+      this.actualizaJornada(jornada,matchOld);
+  }
+
+
+  nuevasPosiciones(table,key){
+      let ordenados:any  = this.metodoBurbuja(table.teams,table.cantidad);
+      //console.log("orden ", ordenados);
+      let newPositions:any=[];
+
+      let pos= 1;
+      for (let i = table.cantidad-1; i>-1; i--) {
+        let match = ordenados[i];
+        match.position = pos;
+        newPositions.push(match);
+        pos++;
+      }
+      table.teams= newPositions;
+      this.tablePosit.updatePositionTable(table,key); //Actualiza tabla de posiciones
+  }
+
+   metodoBurbuja(miArray,cant){  //Metodo de ordenamiento para las posiciones de los equipos en tabla
+		for(var i=1;i<cant;i++)
+		{
+			for(var j=0;j<(cant-i);j++)
+			{
+        //console.log(". ",miArray[j].pts+"  "+ miArray[j+1].pts);
+				if(miArray[j].pts>miArray[j+1].pts)
+				{
+					let k=miArray[j+1];
+					miArray[j+1]=miArray[j];
+					miArray[j]=k;
+				}
+			}
+		}
+		return miArray; //Retrona el array ordenado
+	}
+
+
+
+  actualizaJornada(jornada,matchOld){
     for(let i=0; i< jornada.data.cantidad;i++){
       if(jornada.data.matchs[i].idTeamLocal == matchOld.idTeamLocal && jornada.data.matchs[i].idTeamVisita == matchOld.idTeamVisita ){
         // Si se halla el equipo que coincide con los id's del partido, se actualiza
@@ -269,7 +457,6 @@ export class JornadasComponent implements OnInit {
         break;
       }
     }
-
 
   }
 
