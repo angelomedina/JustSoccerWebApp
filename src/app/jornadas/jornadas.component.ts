@@ -5,7 +5,6 @@ import {DaytripsService} from '../services/daytrips.service';
 import { TournamentService } from '../services/tournament.service';
 import { TeamService } from '../services/team.service';
 import {PositionTableService} from '../services/position-table.service';
-import { isNumber } from 'util';
 
 @Component({
   selector: 'app-jornadas',
@@ -18,11 +17,11 @@ export class JornadasComponent implements OnInit {
     private authServ:AuthService,private teamsServ:TeamService) { }
 
   loading:boolean=true; //Spinner
-  create:boolean = true;
+  create:boolean = false;
   newMatch:boolean=false;
   matchReady:boolean= false;
   formActivate:boolean=true;
-  ver:boolean= false;
+  ver:boolean= true;
   addResult:boolean = false;
 
   //Listas de datos
@@ -55,7 +54,6 @@ export class JornadasComponent implements OnInit {
   typeJornada="";
 
   ngOnInit() {
-    this.create= true;
     this.loading= true;
 
     this.tournServ.getTournament().snapshotChanges()
@@ -289,18 +287,18 @@ export class JornadasComponent implements OnInit {
     }
   }
 
-  suma(a:any,b:any){
-
-    var aa = new number();
-      let r:number = parseInt(a,10)+parseInt(b,10);
+  sumaa(a:any,b:any){
+      let r:number = <number><any>a +<number><any>b;
       return r;
   }
 
-  avg(actual:number,a:number,b:number){ // actual,favor,contra
-    let r:number = parseInt(actual) +parseInt(a);
-    r = r - parseInt(b);
+  avgg(actual:number,a:number,b:number){ // actual,favor,contra
+    let r:number = <number><any>actual +<number><any>a;
+    r = r - <number><any>b;
     return r;
   }
+
+
 
   resultadoJornada(match,num){
     let local=(<HTMLInputElement>document.getElementById("local"+num)).value;
@@ -344,10 +342,10 @@ export class JornadasComponent implements OnInit {
 
           let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
           let b1:number= <number><any>local;
-          let r1 = this.suma(a1,b1);
+          let r1 = this.sumaa(a1,b1);
           let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
           let b2:number= <number><any>visita;
-          let r2 = this.suma(a2,b2);
+          let r2 = this.sumaa(a2,b2);
 
           this.tablaActual.data.teams[i].gf = r1;
           this.tablaActual.data.teams[i].gc = r2;
@@ -362,10 +360,10 @@ export class JornadasComponent implements OnInit {
 
           let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
           let b1:number= <number><any>visita;
-          let r1 = this.suma(a1,b1);
+          let r1 = this.sumaa(a1,b1);
           let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
           let b2:number= <number><any>local;
-          let r2 = this.suma(a2,b2);
+          let r2 = this.sumaa(a2,b2);
 
           this.tablaActual.data.teams[i].gf = r1;
           this.tablaActual.data.teams[i].gc = r2;
@@ -385,14 +383,14 @@ export class JornadasComponent implements OnInit {
 
           let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
           let b1:number= <number><any>local;
-          let r1 = this.suma(a1,b1);
+          let r1 = this.sumaa(a1,b1);
           let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
           let b2:number= <number><any>visita;
-          let r2 = this.suma(a2,b2);
+          let r2 = this.sumaa(a2,b2);
           let actual = <number><any>this.tablaActual.data.teams[i].avg;
           let a3:number = <number><any>local;
           let b3:number= <number><any>visita;
-          let r3 = this.avg(actual,a3,b3);
+          let r3 = this.avgg(actual,a3,b3);
 
           this.tablaActual.data.teams[i].gf = r1;
           this.tablaActual.data.teams[i].gc = r2;
@@ -406,14 +404,14 @@ export class JornadasComponent implements OnInit {
 
           let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
           let b1:number= <number><any>visita;
-          let r1 = this.suma(a1,b1);
+          let r1 = this.sumaa(a1,b1);
           let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
           let b2:number= <number><any>local;
-          let r2 = this.suma(a2,b2);
+          let r2 = this.sumaa(a2,b2);
           let actual = <number><any>this.tablaActual.data.teams[i].avg;
           let a3:number = <number><any>visita;
           let b3:number= <number><any>local;
-          let r3 = this.avg(actual,a3,b3);
+          let r3 = this.avgg(actual,a3,b3);
 
           this.tablaActual.data.teams[i].gf = r1;
           this.tablaActual.data.teams[i].gc = r2;
@@ -433,14 +431,14 @@ export class JornadasComponent implements OnInit {
 
           let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
           let b1:number= <number><any>local;
-          let r1 = this.suma(a1,b1);
+          let r1 = this.sumaa(a1,b1);
           let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
           let b2:number= <number><any>visita;
-          let r2 = this.suma(a2,b2);
+          let r2 = this.sumaa(a2,b2);
           let actual = <number><any>this.tablaActual.data.teams[i].avg;
           let a3:number = <number><any>local;
           let b3:number= <number><any>visita;
-          let r3 = this.avg(actual,a3,b3);
+          let r3 = this.avgg(actual,a3,b3);
 
           this.tablaActual.data.teams[i].gf = r1;
           this.tablaActual.data.teams[i].gc = r2;
@@ -455,14 +453,14 @@ export class JornadasComponent implements OnInit {
 
           let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
           let b1:number= <number><any>visita;
-          let r1 = this.suma(a1,b1);
+          let r1 = this.sumaa(a1,b1);
           let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
           let b2:number= <number><any>local;
-          let r2 = this.suma(a2,b2);
+          let r2 = this.sumaa(a2,b2);
           let actual = <number><any>this.tablaActual.data.teams[i].avg;
           let a3:number = <number><any>visita;
           let b3:number= <number><any>local;
-          let r3 = this.avg(actual,a3,b3);
+          let r3 = this.avgg(actual,a3,b3);
 
           this.tablaActual.data.teams[i].gf = r1;
           this.tablaActual.data.teams[i].gc = r2;
@@ -472,7 +470,6 @@ export class JornadasComponent implements OnInit {
     }
 
       let newTable= this.tablaActual.data;
-      console.log("new: ", newTable);
 
       this.nuevasPosiciones(newTable,this.tablaActual.key);
       this.actualizaJornada(jornada,matchOld);
@@ -482,7 +479,6 @@ export class JornadasComponent implements OnInit {
 
   nuevasPosiciones(table,key){
       let ordenados:any  = this.metodoBurbuja(table.teams,table.cantidad);
-      console.log("orden ", ordenados);
       let newPositions:any=[];
 
       let pos= 1;

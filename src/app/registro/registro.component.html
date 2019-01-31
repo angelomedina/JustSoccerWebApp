@@ -11,27 +11,29 @@
             <div>
                 <!-- User View -->
                 <div *ngIf="!adminUse">
-                    <nav style=" margin-left:30%;margin-right:30%;" class="navbar navbar-expand-lg navbar-light bg-dark">
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav">
-                                <button style="margin-left:30%;" type="button" (click)="pressLogin()" class="btn btn-dark">Login</button>
-                                <button style="margin-left:10%;" type="button" (click)="pressRegistro()" class="btn btn-dark">Registro</button>
-                            </div>
-                        </div>
-                    </nav>
+                    <ul class="nav nav-tabs justify-content-center">
+                        <li class="nav-item">
+                            <a style="font-size:120%;" id="log" [ngClass]="{'nav-link active':login == true}" class="nav-link" (click)="pressLogin()">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size:120%;" id="reg" [ngClass]="{'nav-link active':registro == true}" class="nav-link" (click)="pressRegistro()">Registro</a>
+                        </li>
+                    </ul>
                 </div>
 
 
                 <!-- Admin View -->
                 <div *ngIf="adminUse">
-                    <nav style=" margin-left:20%;margin-right:30%;" class="navbar navbar-expand-lg navbar-light bg-dark">
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav">
-                                <button style="margin-left:30%;" type="button" (click)="pressMyAdmins()" class="btn btn-dark">Mis Administradores</button>
-                                <button style="margin-left:10%;" type="button" (click)="pressRegistroAdmin()" class="btn btn-dark">Registrar Admin</button>
-                            </div>
-                        </div>
-                    </nav>
+
+                    <ul class="nav nav-tabs justify-content-center">
+                        <li class="nav-item">
+                            <a style="font-size:120%;" id="log" [ngClass]="{'nav-link active':myAdminView == true}" class="nav-link" (click)="pressMyAdmins()">Mis Administradores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size:120%;" id="reg" [ngClass]="{'nav-link active':adminRegistro == true}" class="nav-link" (click)="pressRegistroAdmin()">Registrar Admin</a>
+                        </li>
+                    </ul>
+
                 </div>
 
 
@@ -89,8 +91,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div style="color:red;">
-                                <form style="margin-left:4%; margin-right:4%;" id="register-form" role="form" *ngIf="registro || adminRegistro">
+                            <div>
+                                <form id="register-form" role="form" *ngIf="registro || adminRegistro">
 
                                     <div style="margin-bottom:2%;" *ngIf="authServ.userType === 'superAdmin'">
                                         <span style="color:blue">Ya está registrado? Ingrese unicamente el correo del nuevo administrador! </span>

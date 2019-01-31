@@ -200,7 +200,6 @@ export class PlayersComponent implements OnInit {
     }else{
       this.vacioteam= false;
     }
-    console.log("lista ", this.jugadorasEquipo);
     //console.log("Entra aca", idTeam.target.selectedOptions[0].value);
   }
 

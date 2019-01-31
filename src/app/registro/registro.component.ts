@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { UsersService } from '../services/users.service';
+import { DOCUMENT } from '@angular/common';
 
 import {userModel} from '../models/user';
 import {AuthService} from '../services/auth.service';
@@ -75,6 +76,7 @@ export class RegistroComponent implements OnInit {
   pressRegistro(){ // Validar opcion elegida por User
     this.login= false;
     this.registro=true;
+
   }
 
   pressMyAdmins(){

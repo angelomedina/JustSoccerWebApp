@@ -1,14 +1,15 @@
 <div class="main-content body">
     <div class="container-fluid">
 
-        <nav style=" margin-left:30%;margin-right:30%;" class="navbar navbar-expand-lg navbar-light bg-dark">
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <button style="margin-left:30%;" type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaTorneo()">Crear Torneo</button>
-                    <button style="margin-left:10%;" type="button" class="btn btn-dark" (click)="verTorneos()">Ver Torneos </button>
-                </div>
-            </div>
-        </nav>
+        <ul class="nav nav-tabs justify-content-center">
+            <li style="margin-right:2%;" class="nav-item">
+                <a id="log" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':read == true}" class="nav-link" (click)="verTorneos()">Ver Torneos </a>
+            </li>
+            <li style="margin-right:2%;" class="nav-item" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
+                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':create == true}" class="nav-link" (click)="creaTorneo()">Crear Torneo</a>
+            </li>
+        </ul>
+
         <br>
 
         <!-- Crear torno nuevo -->
@@ -47,7 +48,7 @@
 
 
         <!-- Visualizar lista de torneos -->
-        <div style=" margin-left:4%;margin-right:4%;background-color:rgb(177, 174, 186)" *ngIf="read">
+        <div style=" margin-left:15%;margin-right:15%;background-color:rgba(155, 242, 158, 0.707); border-radius:30px; padding-bottom:1%;" *ngIf="read">
 
             <div *ngFor="let torneo of TournamnetList" style="margin-top:2%;border-radius:15px;">
                 <br>

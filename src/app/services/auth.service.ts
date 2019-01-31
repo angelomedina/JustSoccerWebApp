@@ -16,7 +16,6 @@ export class AuthService {
       this.isUserLoggedIn= true;
       this.userType= data.data.type;
       this.setUserLoggedIn(data);  // LLama Metodo para setear en LocalStorage
-      console.log(this.userType);
     }else{
       this.isUserLoggedIn= false;
     }
@@ -30,9 +29,7 @@ export class AuthService {
   setUserLoggedIn(user) {  // Al realizar login , se guara en localStorage
     this.isUserLoggedIn = true; // Y la bandera de logeo pasará a true
     this.usserLogged = user;
-    console.log(user);
     this.userType= user.data.type;
-    console.log("",this.userType);
     localStorage.setItem('currentUser', JSON.stringify(user));
 
   }

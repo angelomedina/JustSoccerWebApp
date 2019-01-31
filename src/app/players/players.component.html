@@ -1,16 +1,14 @@
 <div class="main-content body">
     <div class="container-fluid">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <button type="button" class="btn btn-dark" (click)="verJugadoras()" style="margin-left:5%">Ver Lista de Jugadoras del torneo</button>
-                    <!-- <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="addPlayer()" style="margin-left:5%">Añadir jugadora nueva.</button> -->
-                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="inscribirPlayer()" style="margin-left:5%">Inscribir jugadoras a equipos.</button>
-                </div>
-            </div>
-        </nav>
-        <br>
+        <ul class="nav nav-tabs justify-content-center">
+            <li style="margin-right:2%;" class="nav-item">
+                <a id="log" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':ver == true}" class="nav-link" (click)="verJugadoras()">Ver Lista de Jugadoras del torneo</a>
+            </li>
+            <li style="margin-right:2%;" class="nav-item" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
+                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':inscribe == true}" class="nav-link" (click)="inscribirPlayer()">Inscribir jugadoras a equipos</a>
+            </li>
+        </ul>
 
         <!--
             EN CASO DE CReAR JUGADORAS CON INFORMACION DETALLADA
@@ -118,7 +116,7 @@
             <span style="color:red;">Seleccione un equipo para ver su lista de jugadoras ↲ </span>
             <div class="form-group col-md-3">
                 <select class="form-control" id="team" name="team" [(ngModel)]="team" (change)="obtieneJugadorasEquipo($event)">
-                   <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" >{{team.name}}</option>
+                   <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" selected value>{{team.name}}</option>
               </select>
             </div>
             <div *ngIf="!vacioteam && !inicio" style="margin-left:20%;margin-right:20%;margin-top:1%; border-radius:15px;border-color:rgb(0, 0, 0);border-style:solid;">
@@ -140,7 +138,7 @@
                 </table>
             </div>
         </div>
-        <div *ngIf="vacioteam" style="margin-left:20%;margin-right:20%; margin-top:10%;border-style:double; color:black;padding: 2% 2% 2% 2%; ">
+        <div *ngIf="vacioteam" style="margin-left:20%;margin-right:20%; margin-top:7%;border-style:double; color:black;padding: 2% 2% 2% 2%; ">
             <span style="text-align:center;color:rgb(204, 124, 38); font-size:22px;"> Equipo seleccionado no dispone de jugadoras inscritas aún!! </span>
         </div>
     </div>
