@@ -23,7 +23,7 @@ export class MultimediaService {
     this.videosList.remove(idVideo);
   }
 
-  updateVideo(video){
-    this.firebase.database.ref('videos/'+video.key).set(video);
+  updateVideo(video,key){
+    this.firebase.database.ref('videos/'+key).set(video);
   }
 }

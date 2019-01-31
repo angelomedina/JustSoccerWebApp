@@ -39,6 +39,7 @@ export class TorneosComponent implements OnInit {
   ngOnInit() {
     this.read=true;
 
+
     this.tournServ.getTournament().snapshotChanges()  // Obtiene torneos de DB
     .subscribe(
       Tournamnet =>{
@@ -88,6 +89,7 @@ export class TorneosComponent implements OnInit {
   creaTorneo(){
     this.create= true;
     this.read=false;
+
   }
   verTorneos(){
     this.create= false;
@@ -100,6 +102,7 @@ export class TorneosComponent implements OnInit {
     let json ={
       name:this.name,
       date: this.fecha,
+      estado:"En desarrollo",
       category:this.category,
       dayTrips:[]
     }

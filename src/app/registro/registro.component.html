@@ -3,77 +3,70 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 <br>
-<br>
 
 
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-login">
+<div class="main-content body">
+    <div class="container-fluid">
+        <div>
+            <div>
                 <!-- User View -->
-                <div class="panel-heading" *ngIf="!adminUse">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <button type="button" (click)="pressLogin()" class="btn btn-outline-success">Login</button>
+                <div *ngIf="!adminUse">
+                    <nav style=" margin-left:30%;margin-right:30%;" class="navbar navbar-expand-lg navbar-light bg-dark">
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <button style="margin-left:30%;" type="button" (click)="pressLogin()" class="btn btn-dark">Login</button>
+                                <button style="margin-left:10%;" type="button" (click)="pressRegistro()" class="btn btn-dark">Registro</button>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <button type="button" (click)="pressRegistro()" class="btn btn-outline-info">Registro</button>
-                        </div>
-                    </div>
-                    <hr>
+                    </nav>
                 </div>
+
+
                 <!-- Admin View -->
-                <div class="panel-heading" *ngIf="adminUse">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <button type="button" (click)="pressMyAdmins()" class="btn btn-outline-success">Mis Administradores</button>
+                <div *ngIf="adminUse">
+                    <nav style=" margin-left:20%;margin-right:30%;" class="navbar navbar-expand-lg navbar-light bg-dark">
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <button style="margin-left:30%;" type="button" (click)="pressMyAdmins()" class="btn btn-dark">Mis Administradores</button>
+                                <button style="margin-left:10%;" type="button" (click)="pressRegistroAdmin()" class="btn btn-dark">Registrar Admin</button>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <button type="button" (click)="pressRegistroAdmin()" class="btn btn-outline-info">Registrar</button>
-                        </div>
-                    </div>
-                    <hr>
+                    </nav>
                 </div>
 
 
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="lds-hourglass"></div>
-
+                        <div style=" padding:2% 3% 2% 3%; border-radius:15px; border-style:solid;border-color:teal; margin-left:15%;">
                             <!-- Login View -->
-                            <form id="login-form" role="form" style="display: block;" *ngIf="login && !adminUse">
-                                <div class="form-group">
-                                    <input type="text" name="email" id="email" [(ngModel)]="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="">
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <input type="password" name="password" id="password" [(ngModel)]="password" tabindex="2" class="form-control" placeholder="Contraseña">
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <button type="button" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" (click)="loginUser()">Ingresar</button>
-                                        </div>
+                            <div style="float:left;">
+                                <form style="padding-left:90%; " id="login-form" role="form" style="display: block;" *ngIf="login && !adminUse">
+                                    <div class="form-group ">
+                                        <input type="text" name="email" id="email" [(ngModel)]="email" tabindex="1" class="form-control" autocomplete="off" placeholder="Correo electronico" value="">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="text-center">
-                                                <a tabindex="5" class="forgot-password">Olvido su contraseña?</a>
+                                    <br>
+                                    <div class="form-group ">
+                                        <input type="password" name="password" id="password" [(ngModel)]="password" tabindex="2" autocomplete="off" class="form-control" placeholder="Contraseña">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-sm-offset-3">
+                                                <button type="button" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success" (click)="loginUser()">Ingresar</button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+                            <div style="float:right;margin-left:2%" *ngIf="login && !adminUse">
+                                <img style="float:right;" src="https://image.freepik.com/vector-gratis/candado_17-828103944.jpg" alt="" width="200px" height="200px">
+                                <p style="color:rgb(148, 148, 147);"> Inicie sesión para lograr contar con más beneficios dentro de la página</p>
+                            </div>
+
 
                             <!-- My admin Views -->
-                            <div *ngIf="adminUse && myAdminView">
-                                <table class="table table-striped table-dark">
-                                    <thead>
+                            <div style="margin-left:4%; margin-right:4%;" *ngIf="adminUse && myAdminView">
+                                <table class="table">
+                                    <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Nombre</th>
@@ -90,55 +83,60 @@
                                             <td>{{admin.data.surnameII}}</td>
                                             <td>
                                                 <button type="button" (click)="delegarAdmin(admin)" class="btn btn-danger btn-sm">Delegar Puesto</button>
-                                                <button type="button" class="btn btn-success btn-sm">Ver Historial Activ.</button>
+                                                <!-- <button type="button" class="btn btn-success btn-sm">Ver Historial Activ.</button> -->
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-
                             </div>
+                            <div style="color:red;">
+                                <form style="margin-left:4%; margin-right:4%;" id="register-form" role="form" *ngIf="registro || adminRegistro">
 
-                            <br>
-                            <br>
-
-                            <form id="register-form" role="form" *ngIf="registro || adminRegistro">
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <input type="text" name="name" [(ngModel)]="name" class="form-control" placeholder="Nombre">
+                                    <div style="margin-bottom:2%;" *ngIf="authServ.userType === 'superAdmin'">
+                                        <span style="color:blue">Ya está registrado? Ingrese unicamente el correo del nuevo administrador! </span>
+                                        <input type="text" name="" id="emailVerif" placeholder="email" placeholder="Email">
+                                        <button (click)="addAdminEmail()" class="btn btn-info">Registrar mediante Correo</button>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <input type="text" name="firstLastN" [(ngModel)]="firstLastN" class="form-control" placeholder="Primer Apellido">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <input type="text" name="secondLastN" [(ngModel)]="secondLastN" class="form-control" placeholder="Segundo Apellido">
-                                    </div>
-                                </div>
 
-
-                                <div class="form-group">
-                                    <input type="text" name="email" tabindex="1" [(ngModel)]="email" class="form-control" placeholder="Correo Eléctrónico">
-                                </div>
-                                <div class="form-group">
-                                    <input type="number" name="telefono" tabindex="2" [(ngModel)]="telefono" class="form-control" placeholder="Número de telefono">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" [(ngModel)]="password" tabindex="2" class="form-control" placeholder="Contraseña">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="confirmPasw" [(ngModel)]="confirmPasw" tabindex="2" class="form-control" placeholder="Confirmar Contraseña">
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <button type="button" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" (click)="registerUser()">Registrar!!</button>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="name" [(ngModel)]="name" autocomplete="off" class="form-control" placeholder="Nombre">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="firstLastN" [(ngModel)]="firstLastN" autocomplete="off" class="form-control" placeholder="Primer Apellido">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" name="secondLastN" [(ngModel)]="secondLastN" autocomplete="off" class="form-control" placeholder="Segundo Apellido">
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+
+                                    <div class="form-group">
+                                        <input type="text" name="email" tabindex="1" [(ngModel)]="email" autocomplete="off" class="form-control" placeholder="Correo Eléctrónico">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" name="telefono" tabindex="2" [(ngModel)]="telefono" autocomplete="off" class="form-control" placeholder="Número de telefono">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password" [(ngModel)]="password" tabindex="2" autocomplete="off" class="form-control" placeholder="Contraseña">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="confirmPasw" [(ngModel)]="confirmPasw" tabindex="2" autocomplete="off" class="form-control" placeholder="Confirmar Contraseña">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-sm-offset-3">
+                                                <button type="button" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success" (click)="registerUser()">Registrar!!</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                         </div>
+                        <br>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </div>

@@ -16,7 +16,6 @@ export class PositionTableService {
   }
 
   addPositionTable(table){  // Realiza la inserción de una tabla en la DB
-    console.log("recibe: ", table);
     this.positionTableList.push(table);
   }
 

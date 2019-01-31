@@ -1,64 +1,49 @@
 <div class="main-content body">
     <div class="container-fluid">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
                     <button type="button" class="btn btn-dark" (click)="veNotas()" style="margin-left:5%">Ver todas las Notas    </button>
                 </div>
             </div>
-        </nav>
+        </nav> -->
 
         <br>
 
-        <div class="alert alert-success" role="alert" *ngIf=" readNote && notesList.length==0">
+        <div class="alert alert-success" role="alert" *ngIf="notesList.length==0">
             <strong>No hay notas disponibles actualmente!!</strong>
         </div>
 
-        <div class="card-columns" *ngIf="readNote">
-            <div *ngFor="let nota of notesList; let i=index;">
-                <div style="text-align:center;margin-top:2%;" class="card">
-                    <img class="card-img-top" src="{{nota.data.url}}" alt="Card image cap" width="150px" height="210px">
+
+        <div>
+            <hr style="color:blue;">
+            <span> A continuación se muestran las 50 notas deportivas  más recientes de Just Soccer. Para ver más visite el blog principal de</span>
+            <a href="http://justsoccercr.blogspot.com/" target="_blank"> Just Soccer</a><br>
+            <hr style="color:blue;">
+        </div>
+
+
+        <div class="card-group" *ngIf="readNote">
+            <div *ngFor="let nota of jsonNotas.items; let i=index;">
+                <div style="text-align:center;margin-top:2%;margin-left:2%;margin-right:2%;" class="card">
                     <div class="card-body">
-                        <h5 class="card-title"> <a href="/noteInfo/{{nota.key}}"> {{nota.data.title}}  </a> </h5>
-                        <p class="card-text"></p>
-                        <small>{{nota.data.date}}</small><br>
-                        <small>{{nota.data.author}}</small>
-                        <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
+                        <h6 class="card-title"> <a href="{{nota.url}}" target="_blank"> {{nota.title}} </a> </h6>
+                        <br>
+                        <img class="card-img-top" src="{{nota.images[0].url}}" alt="img referencia" class="img180">
+
+                        <small>Nota escrita por {{nota.author.displayName}}</small><br>
+                        <small>Feha de publicación: {{nota.updated}}</small><br>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <!-- <div style="padding-top:5px;padding-left:2px;width:150px;height:250px;" *ngIf="readNote">
-            <div class="card colorDiv" style="margin-top:20px;" *ngFor="let nota of notesList; let i=index;">
-                <div>
-                    <br>
-                    <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" type="button" class="btn btn-danger btn-sm" style="margin-right:1%" (click)="borraNota(nota.key)">Eliminar Nota </button>
-                    <h5><i> {{nota.data.title}}</i></h5>
-                    <small>{{nota.data.date}}</small><br>
-                    <small>{{nota.data.author}}</small>
-                    <div style="width:100px;height:100px;">
-                        <img class="card-img-top" src="{{nota.data.url}}" width="100px" height="100" alt="logo">
-                    </div>
-
-                </div>
-                <br>
-                <div>
-                    <!-- <p id="p_{{i}}"></p> -->
-        <!-- Parrafos dinamicos para rellenar con body de notas
-                    <span> <a href="/noteInfo/{{nota.key}}">Ver más ...</a></span>
-                </div>
-
-            </div>
-            <br>
-            <br>
-        </div> -->
 
 
-        <div *ngIf="createNote">
+        <!-- <div *ngIf="createNote">
             <form style="text-align:center; margin-left:2%;margin-right:2%;">
                 <div>
                     <div class="form-group col-md-6" style="float:left;">
@@ -94,7 +79,7 @@
                       content_css: [
                         '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                         '//www.tinymce.com/css/codepen.min.css'
-                      ]}"></editor> -->
+                      ]}"></editor>
                 </div>
 
                 <div class="form-group">
@@ -103,44 +88,9 @@
             </form>
 
 
-        </div>
+        </div> -->
 
 
-        <div class="modal fade special-card" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModallLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!-- <h5 class="modal-title" id="loginModal">Ingrese los credenciales solicitados</h5> -->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                    </div>
-                    <div class="modal-body">
-                        <textarea name="dataModel" [(ngModel)]="dataModel" rows="20" class="form-control" spellcheck>
-
-                        </textarea>
-                        <!-- <editor name="dataModel" [(ngModel)]="dataModel" [init]="{height: 500,
-                          theme: 'modern',
-                          remove_linebreaks : false,
-                          force_br_newlines : true,
-                          force_p_newlines : true,
-                          gecko_spellcheck : true,
-                          forced_root_block : '',
-                          plugins: 'print preview fullpage  searchreplace autolink directionality  visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount  imagetools contextmenu colorpicker textpattern help',
-                          toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
-                          image_advtab: true,
-                          content_css: [
-                            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                            '//www.tinymce.com/css/codepen.min.css'
-                          ]}"></editor> -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="closemodal" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" (click)="editaNotaDefinitiva()" class="btn btn-success">Modificar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
     </div>

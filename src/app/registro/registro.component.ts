@@ -115,7 +115,7 @@ export class RegistroComponent implements OnInit {
         Swal('Oops...', 'Las contraseñas ingresadas no coinciden.', 'error');
        }else{
 
-         let typeU="";  // Se verifica el tipo de USer a registrar
+         let typeU="";  // Se verifica el tipo de User a registrar
          if(this.authServ.userType== "superAdmin"){
            typeU= "admin";
          }else{
@@ -131,15 +131,38 @@ export class RegistroComponent implements OnInit {
           telephone:this.telefono,
           type:typeU
         }
+
+        for(let i=0; i<this.usersList.length;i++){
+          if(this.usersList[i].data.email == this.email){
+            Swal("Oooops!", "Correo electronico  se encuentra asociado a un usuario. Intente con otro distinto.", "error");
+            return;
+          }
+        }
+
         this.userServ.addUser(this.user);
         Swal("Bien!", "Usuario registrado Correctamente!", "success");
-        //console.log("Registro ", this.user);
         this.resetForm();
         this.router.navigate(['/authUser']);
 
        }
      }
   }
+
+  addAdminEmail(){
+    let emailUser = (<HTMLInputElement>document.getElementById("emailVerif")).value;
+    for(let i=0; i<this.usersList.length;i++){
+      if(this.usersList[i].data.email == emailUser){
+        this.usersList[i].data.type = "admin";
+        this.userServ.updateUser(this.usersList[i].data,this.usersList[i].key );
+        Swal("Bien!", "Nuevo administrado asignado Correctamente!", "success");
+        return;
+      }
+    }
+    Swal("Oooops!", "Correo electronico no se encuentra asociado a ningún usuario", "error");
+
+  }
+
+
 
 
   resetForm(){

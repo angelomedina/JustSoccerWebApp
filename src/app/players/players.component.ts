@@ -31,6 +31,7 @@ export class PlayersComponent implements OnInit {
   inscribe:boolean=false;
   add:boolean= false;
   vacioteam:boolean=false;
+  inicio:boolean= true;
 
   //Variables NGModel
   // name="";
@@ -96,12 +97,14 @@ export class PlayersComponent implements OnInit {
   }
 
   verJugadoras(){
+    this.inicio= true;
     this.vacioteam= false;
     this.ver=true;
     this.inscribe=false;
     this.add=false;
   }
   addPlayer(){
+    this.inicio= false;
     this.vacioteam= false;
     this.ver=false;
     this.inscribe=false;
@@ -109,6 +112,7 @@ export class PlayersComponent implements OnInit {
   }
 
   inscribirPlayer(){
+    this.inicio= false;
     this.vacioteam= false;
     this.ver=false;
     this.inscribe=true;
@@ -184,6 +188,7 @@ export class PlayersComponent implements OnInit {
 
   obtieneJugadorasEquipo(selectTeam){
     this.jugadorasEquipo= [];
+    this.inicio = false;
     let idTeam= selectTeam.target.selectedOptions[0].value
     for(var i=0;i<this.playerList.length;i++){
       if(this.playerList[i].data.idTeam == idTeam){
@@ -201,6 +206,7 @@ export class PlayersComponent implements OnInit {
 
 
   inscribirPlayerNew(){
+    this.inicio = false;
     let idT= (<HTMLInputElement>document.getElementById("team")).value;  //Obtiene el id del equipo
     this.urlImg.subscribe(val =>{
         this.urlImagen= val;

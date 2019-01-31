@@ -13,7 +13,7 @@
         <br>
 
         <!--
-            EN CASO DE CERARJUGADORAS CON INFORMACION DETALLADA
+            EN CASO DE CReAR JUGADORAS CON INFORMACION DETALLADA
            <form id="register-form" role="form" *ngIf="add">
             <div class="form-row" style="border-style:outset;">
 
@@ -72,68 +72,76 @@
 
         <!-- Inscribir jugadoras Form -->
         <!-- UNICAMENTE UTILIZANDO UN NOMBRE COMPLETO, IMAGEN, Y UN ESTADO. -->
-        <form id="register-form" role="form" *ngIf="inscribe">
-            <div class="form-row" style="border-style:outset;">
-                <br>
-                <div class="form-group col-md-3">
-                    <label for="sel1">Nombre</label>
-                    <input type="text" name="playerName" tabindex="1" [(ngModel)]="playerName" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sel1">Primer Apellido</label>
-                    <input type="text" name="surname1" tabindex="1" [(ngModel)]="surname1" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sel1">Segundo Apellido</label>
-                    <input type="text" name="surname2" tabindex="1" [(ngModel)]="surname2" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sel1">Equipo</label>
-                    <!-- <input type="text" name="team" tabindex="1" [(ngModel)]="team" class="form-control"> -->
-                    <select class="form-control" id="team" name="team" [(ngModel)]="team">
-                     <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" required>{{team.name}}</option>
+        <div style="margin-left:3%; margin-right:3%;margin-top:5%;">
+            <form id="register-form" role="form" *ngIf="inscribe">
+                <div class="form-row" style="border-style:outset; border-radius:20px;border-color:blueviolet; padding: 2% 2% 2% 2%;">
+                    <br>
+                    <div class="form-group col-md-3">
+                        <label for="sel1" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Nombre</label>
+                        <input type="text" name="playerName" tabindex="1" [(ngModel)]="playerName" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="sel1" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Primer Apellido</label>
+                        <input type="text" name="surname1" tabindex="1" [(ngModel)]="surname1" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="sel1" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Segundo Apellido</label>
+                        <input type="text" name="surname2" tabindex="1" [(ngModel)]="surname2" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="sel1" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Equipo</label>
+                        <!-- <input type="text" name="team" tabindex="1" [(ngModel)]="team" class="form-control"> -->
+                        <select class="form-control" id="team" name="team" [(ngModel)]="team">
+                     <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" selected value>{{team.name}}</option>
                   </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Foto Perfil</label>
-                    <input type="file" accept="image/*" (change)="upload($event)">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Foto Perfil</label>
+                        <input type="file" accept="image/*" (change)="upload($event)">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+                            </div>
                         </div>
                     </div>
+                    <div style="margin-left:7%;margin-top:4%;" class="form-group col-md-6">
+                        <button type="button" class="btn btn-outline-success" (click)="inscribirPlayerNew()">Inscribir jugadora al equipo!!</button>
+                    </div>
                 </div>
-                <br>
-                <button type="button" class="btn btn-outline-success" (click)="inscribirPlayerNew()">Inscribir jugadora al equipo!!</button>
-                <br>
-            </div>
-            <br>
-        </form>
+
+            </form>
+        </div>
 
 
         <!-- Mostrar jugadoras del torneo -->
 
         <div style="margin-top:2%;margin-left:2%;margin-right:2%" *ngIf="ver">
-            <br>
+            <span style="color:red;">Seleccione un equipo para ver su lista de jugadoras ↲ </span>
             <div class="form-group col-md-3">
                 <select class="form-control" id="team" name="team" [(ngModel)]="team" (change)="obtieneJugadorasEquipo($event)">
-                    <option value="" disabled selected>Seleccione un equipo</option>
-                   <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}">{{team.name}}</option>
+                   <option *ngFor="let team of equiposTable; let i=index "  value="{{team.idTeam}}" >{{team.name}}</option>
               </select>
             </div>
-            <table style="text-align:center;" class="table table-hover" *ngIf="jugadorasEquipo.length>0">
-                <thead style="color:blue;">
-                    <tr>
-                        <th scope="col">Nombre Completo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let player of jugadorasEquipo; let i=index ">
-                        <th scope="row">{{player.data.name}} {{player.data.surnameI}} {{player.data.surnameII}} </th>
-                    </tr>
-                </tbody>
-            </table>
+            <div *ngIf="!vacioteam && !inicio" style="margin-left:20%;margin-right:20%;margin-top:1%; border-radius:15px;border-color:rgb(0, 0, 0);border-style:solid;">
+                <table style="text-align:center;" class="table" *ngIf="jugadorasEquipo.length>0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre Completo</th>
+                            <th scope="col">Imagen Perfil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let player of jugadorasEquipo; let i=index ">
+                            <th scope="row">{{player.data.name}} {{player.data.surnameI}} {{player.data.surnameII}} </th>
+                            <th scope="row">
+                                <img src="{{player.data.url}}" alt="perfil" class="img10">
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <span style="text-align:center; margin-top:5%;margin-left:3%; color:brown; border-style: outset;font-size:24px;" *ngIf="vacioteam"> Equipo seelccionado no dispone de jugadoras inscritas!! </span>
-
+        <div *ngIf="vacioteam" style="margin-left:20%;margin-right:20%; margin-top:10%;border-style:double; color:black;padding: 2% 2% 2% 2%; ">
+            <span style="text-align:center;color:rgb(204, 124, 38); font-size:22px;"> Equipo seleccionado no dispone de jugadoras inscritas aún!! </span>
+        </div>
     </div>
 </div>

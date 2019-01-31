@@ -159,8 +159,8 @@ export class JornadasComponent implements OnInit {
 
       let idVisita = (<HTMLInputElement>document.getElementById("visit")).value;  // Se obtienen los ids
       let idLocal = (<HTMLInputElement>document.getElementById("local")).value;   // de los equipos del partido
-      let nombreLocal= this.obtieneNombreEquipo(idVisita);
-      let nombreVisita= this.obtieneNombreEquipo(idLocal);
+      let nombreLocal= this.obtieneNombreEquipo(idLocal);
+      let nombreVisita= this.obtieneNombreEquipo(idVisita);
 
 
       let json ={
@@ -190,6 +190,11 @@ export class JornadasComponent implements OnInit {
     }
   }
 
+  eliminarJornada(jornada){
+    this.dayServ.deleteDayTrip(jornada.key);
+    Swal('Bien!', 'Jornada eliminada correctamente', 'success');
+  }
+
 
   createjournal(){
 
@@ -206,6 +211,7 @@ export class JornadasComponent implements OnInit {
       typeJornada:tipo
     }
     this.dayServ.addDayTrip(json);
+    Swal('Bien!', 'Jornada creada correctamente', 'success');
 
   }
 
@@ -283,15 +289,30 @@ export class JornadasComponent implements OnInit {
     }
   }
 
+  suma(a:any,b:any){
+
+    var aa = new number();
+      let r:number = parseInt(a,10)+parseInt(b,10);
+      return r;
+  }
+
+  avg(actual:number,a:number,b:number){ // actual,favor,contra
+    let r:number = parseInt(actual) +parseInt(a);
+    r = r - parseInt(b);
+    return r;
+  }
+
   resultadoJornada(match,num){
     let local=(<HTMLInputElement>document.getElementById("local"+num)).value;
     let visita= (<HTMLInputElement>document.getElementById("visita"+num)).value;
+    let localC = local;
+    let visitaC = visita;
 
     if(<number><any>visita <10){
-        visita= "0"+visita;
+        visitaC= "0"+visitaC;
     }
     if(<number><any>local <10){
-      local= "0"+local;
+      localC= "0"+localC;
   }
 
     // let local = <number><any>localS;    //se realiza conversion de
@@ -299,7 +320,6 @@ export class JornadasComponent implements OnInit {
 
 
     let matchOld = this.jornadasSinResult[num].data; // Se obtiene el partido correspondiente
-    console.log("MATCH== ", matchOld);
     let jornada = match.dataJornada;
     let idTorneo = jornada.data.idTournament; // Id del torno para obtener tabla de posiciones a usar
     this.obtenerTablaPosicionesActual(idTorneo);  // Lamma metodo para obtener la tabla  edposicion a utilizar
@@ -311,96 +331,158 @@ export class JornadasComponent implements OnInit {
     let idVisita= matchOld.idTeamVisita;
 
 
-
     //Se compara el resultado del partido
-    if(local == visita){//Empate
+    if(localC == visitaC  && jornada.data.typeJornada=="Regular"){//Empate
       console.log("Empate");
+
       for(let i=0; i<this.tablaActual.data.cantidad;i++){
         if(this.tablaActual.data.teams[i].idTeam == idLocal){
             //realiza el incremento en partido empatados, puntos, goles favor y en contra
           this.tablaActual.data.teams[i].pts = this.tablaActual.data.teams[i].pts+1;
           this.tablaActual.data.teams[i].pe = this.tablaActual.data.teams[i].pe+1;
           this.tablaActual.data.teams[i].pj = this.tablaActual.data.teams[i].pj+1;
-          this.tablaActual.data.teams[i].gf = this.tablaActual.data.teams[i].gf+local;
-          this.tablaActual.data.teams[i].gc = this.tablaActual.data.teams[i].gc+ visita;
+
+          let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
+          let b1:number= <number><any>local;
+          let r1 = this.suma(a1,b1);
+          let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
+          let b2:number= <number><any>visita;
+          let r2 = this.suma(a2,b2);
+
+          this.tablaActual.data.teams[i].gf = r1;
+          this.tablaActual.data.teams[i].gc = r2;
+
+
         }
         if(this.tablaActual.data.teams[i].idTeam == idVisita){
           //realiza el incremento en partido empatados, puntos, goles favor y en contra
           this.tablaActual.data.teams[i].pts = this.tablaActual.data.teams[i].pts+1;
           this.tablaActual.data.teams[i].pe = this.tablaActual.data.teams[i].pe+1;
           this.tablaActual.data.teams[i].pj = this.tablaActual.data.teams[i].pj+1;
-          this.tablaActual.data.teams[i].gf = this.tablaActual.data.teams[i].gf+visita;
-          this.tablaActual.data.teams[i].gc = this.tablaActual.data.teams[i].gc+local;
+
+          let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
+          let b1:number= <number><any>visita;
+          let r1 = this.suma(a1,b1);
+          let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
+          let b2:number= <number><any>local;
+          let r2 = this.suma(a2,b2);
+
+          this.tablaActual.data.teams[i].gf = r1;
+          this.tablaActual.data.teams[i].gc = r2;
         }
       }
     }
-    if(<number><any>local > <number><any>visita){//Gana local
+
+
+    if(<number><any>localC > <number><any>visitaC   && jornada.data.typeJornada=="Regular" ){//Gana local
       console.log("Local");
       for(let i=0; i<this.tablaActual.data.cantidad;i++){
-        if(this.tablaActual.data.teams[i].idTeam === idVisita){
+        if(this.tablaActual.data.teams[i].idTeam === idLocal){
             //realiza el incremento en partido ganados, puntos, goles favor y en contra
           this.tablaActual.data.teams[i].pts = <number><any>this.tablaActual.data.teams[i].pts+3;
           this.tablaActual.data.teams[i].pg = <number><any>this.tablaActual.data.teams[i].pg+1;
           this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
-          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>local;
-          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>visita;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>local;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>visita;
-          console.log("Local gana: ",this.tablaActual.data.teams[i] );
+
+          let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
+          let b1:number= <number><any>local;
+          let r1 = this.suma(a1,b1);
+          let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
+          let b2:number= <number><any>visita;
+          let r2 = this.suma(a2,b2);
+          let actual = <number><any>this.tablaActual.data.teams[i].avg;
+          let a3:number = <number><any>local;
+          let b3:number= <number><any>visita;
+          let r3 = this.avg(actual,a3,b3);
+
+          this.tablaActual.data.teams[i].gf = r1;
+          this.tablaActual.data.teams[i].gc = r2;
+          this.tablaActual.data.teams[i].avg = r3;
         }
-        if(this.tablaActual.data.teams[i].idTeam === idLocal){
+
+        if(this.tablaActual.data.teams[i].idTeam === idVisita){
           //realiza el incremento en partido ganados, puntos, goles favor y en contra
           this.tablaActual.data.teams[i].pp = <number><any>this.tablaActual.data.teams[i].pp+1;
           this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
-          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>visita;
-          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>local;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>visita;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>local;
-          console.log("Pierde visita: ",this.tablaActual.data.teams[i] );
+
+          let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
+          let b1:number= <number><any>visita;
+          let r1 = this.suma(a1,b1);
+          let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
+          let b2:number= <number><any>local;
+          let r2 = this.suma(a2,b2);
+          let actual = <number><any>this.tablaActual.data.teams[i].avg;
+          let a3:number = <number><any>visita;
+          let b3:number= <number><any>local;
+          let r3 = this.avg(actual,a3,b3);
+
+          this.tablaActual.data.teams[i].gf = r1;
+          this.tablaActual.data.teams[i].gc = r2;
+          this.tablaActual.data.teams[i].avg = r3;
         }
       }
     }
 
 
-    if(<number><any>local < <number><any>visita){//Gana Visita
+    if(<number><any>localC < <number><any>visitaC   && jornada.data.typeJornada=="Regular"){//Gana Visita
       console.log("Visita");
       for(let i=0; i<this.tablaActual.data.cantidad;i++){
-        if(this.tablaActual.data.teams[i].idTeam === idVisita){
+        if(this.tablaActual.data.teams[i].idTeam === idLocal){
             //realiza el incremento en partido ganados, puntos, goles favor y en contra
           this.tablaActual.data.teams[i].pp = <number><any>this.tablaActual.data.teams[i].pp+1;
           this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
-          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>local;
-          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>visita;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>local;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>visita;
-          console.log("Pierde local: ",this.tablaActual.data.teams[i] );
+
+          let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
+          let b1:number= <number><any>local;
+          let r1 = this.suma(a1,b1);
+          let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
+          let b2:number= <number><any>visita;
+          let r2 = this.suma(a2,b2);
+          let actual = <number><any>this.tablaActual.data.teams[i].avg;
+          let a3:number = <number><any>local;
+          let b3:number= <number><any>visita;
+          let r3 = this.avg(actual,a3,b3);
+
+          this.tablaActual.data.teams[i].gf = r1;
+          this.tablaActual.data.teams[i].gc = r2;
+          this.tablaActual.data.teams[i].avg = r3;
         }
-        if(this.tablaActual.data.teams[i].idTeam === idLocal){
+
+        if(this.tablaActual.data.teams[i].idTeam === idVisita){
           //realiza el incremento en partido ganados, puntos, goles favor y en contra
           this.tablaActual.data.teams[i].pts = <number><any>this.tablaActual.data.teams[i].pts+3;
           this.tablaActual.data.teams[i].pg = <number><any>this.tablaActual.data.teams[i].pg+1;
           this.tablaActual.data.teams[i].pj = <number><any>this.tablaActual.data.teams[i].pj+1;
-          this.tablaActual.data.teams[i].gf = <number><any>this.tablaActual.data.teams[i].gf+<number><any>visita;
-          this.tablaActual.data.teams[i].gc = <number><any>this.tablaActual.data.teams[i].gc+<number><any>local;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg+<number><any>visita;
-          this.tablaActual.data.teams[i].avg = <number><any>this.tablaActual.data.teams[i].avg-<number><any>local;
-          console.log("Visita gana: ",this.tablaActual.data.teams[i] );
+
+          let a1:number = <number><any>this.tablaActual.data.teams[i].gf;
+          let b1:number= <number><any>visita;
+          let r1 = this.suma(a1,b1);
+          let a2:number = <number><any>this.tablaActual.data.teams[i].gc;
+          let b2:number= <number><any>local;
+          let r2 = this.suma(a2,b2);
+          let actual = <number><any>this.tablaActual.data.teams[i].avg;
+          let a3:number = <number><any>visita;
+          let b3:number= <number><any>local;
+          let r3 = this.avg(actual,a3,b3);
+
+          this.tablaActual.data.teams[i].gf = r1;
+          this.tablaActual.data.teams[i].gc = r2;
+          this.tablaActual.data.teams[i].avg = r3;
         }
       }
     }
+
       let newTable= this.tablaActual.data;
+      console.log("new: ", newTable);
 
       this.nuevasPosiciones(newTable,this.tablaActual.key);
-
-      // Falta aun ordenar posiciones dinamicamente, el AVg ,,,, y verificar genes y perdidas
-
       this.actualizaJornada(jornada,matchOld);
+
   }
 
 
   nuevasPosiciones(table,key){
       let ordenados:any  = this.metodoBurbuja(table.teams,table.cantidad);
-      //console.log("orden ", ordenados);
+      console.log("orden ", ordenados);
       let newPositions:any=[];
 
       let pos= 1;

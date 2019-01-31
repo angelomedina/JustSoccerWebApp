@@ -1,19 +1,18 @@
 <div class="main-content body">
     <div class="container-fluid">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <nav style=" margin-left:30%;margin-right:30%;" class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaTorneo()" style="margin-left:5%">Crear Torneo</button>
-                    <button type="button" class="btn btn-dark" (click)="verTorneos()" style="margin-left:5%">Ver Torneos </button>
-                    <!-- <button type="button" class="btn btn-dark" style="margin-left:5%">Buscar Nota </button> -->
+                    <button style="margin-left:30%;" type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaTorneo()">Crear Torneo</button>
+                    <button style="margin-left:10%;" type="button" class="btn btn-dark" (click)="verTorneos()">Ver Torneos </button>
                 </div>
             </div>
         </nav>
         <br>
 
         <!-- Crear torno nuevo -->
-        <div style="text-align:center;margin-left:20%; margin-right:20%;margin-top:2%" *ngIf="create">
+        <div style="text-align:center;margin-left:20%; margin-right:20%;margin-top:2%; border-radius:15px; background-color:rgba(179, 174, 174, 0.892); padding: 2% 2% 2% 2%;" *ngIf="create">
             <form id="register-form" role="form" style="text-align:center">
 
                 <div class="form-group">
@@ -27,10 +26,11 @@
                 <div class="form-group">
                     <label for="sel1">Categoria</label>
                     <select class="form-control" id="category" name="category" [(ngModel)]="category">
-                      <option>Primera División</option>
-                      <option>Segunda División</option>
+                      <option selected value>Primera División</option>
+                      <option disabled>Segunda División</option>
                     </select>
                 </div>
+                <small style="color:red;">Actualmente la funcionalidad admite unicamente equipos de Primera División.</small>
                 <!-- <div class="form-group">
                     <p>Seleccione los equipos participantes del torneo.</p>
                     <div *ngFor="let team of TeamList; let i=index;">
@@ -39,7 +39,7 @@
                 </div> -->
                 <div class="form-group">
                     <div class="row">
-                        <button type="button" name="login-submit" id="login-submit" tabindex="2" class="form-control btn btn-login" (click)="createTournamet()">Crear Torneo</button>
+                        <button type="button" name="login-submit" id="login-submit" tabindex="2" class="btn btn-success btn-lg btn-block" (click)="createTournamet()">Crear Torneo</button>
                     </div>
                 </div>
             </form>
@@ -47,16 +47,20 @@
 
 
         <!-- Visualizar lista de torneos -->
-        <div style="text-align:left; margin-left:2%;" *ngIf="read">
+        <div style=" margin-left:4%;margin-right:4%;background-color:rgb(177, 174, 186)" *ngIf="read">
 
-            <div *ngFor="let torneo of TournamnetList" style="margin-top:2%; border-style: outset;">
+            <div *ngFor="let torneo of TournamnetList" style="margin-top:2%;border-radius:15px;">
                 <br>
-                <a href="stadistics/{{torneo.key}}">
-                    <h5 style="color:tomato">{{torneo.data.name}}</h5>
-                </a>
-                <p><strong style="color:brown"> Categoría</strong> {{torneo.data.category}}</p>
-                <p> <strong style="color:brown"> Estado actual:</strong> En progreso ... </p>
-                <!-- <p>{{torneo.data.date}}</p> -->
+                <div style="text-align:center;">
+                    <a href="stadistics/{{torneo.key}}">
+                        <h5 style="color:rgb(56, 116, 49)">{{torneo.data.name}}</h5>
+                    </a>
+                    <p><strong style="color:brown"> Categoría: </strong> {{torneo.data.category}}</p>
+                    <p> <strong style="color:brown"> Estado actual: </strong> {{torneo.data.estado}} </p>
+                    <!-- <button> Eliminar Torneo </button>  Funcionalidad procima -->
+                </div>
+
+
             </div>
 
         </div>

@@ -27,6 +27,7 @@ export class EquiposAdminComponent implements OnInit {
   descrip="";
 
   nombreIMG="";
+  nombreIMGStadium="";
 
   add= false;
   view=true;
@@ -39,7 +40,10 @@ export class EquiposAdminComponent implements OnInit {
   // Observables
   uploadPercent:Observable<number>;
   urlImg:Observable<String>;
+  uploadPercentStaddium:Observable<number>;
+  urlImgStadium:Observable<String>;
 
+  urlLogoStadium:any;
   urlLogo:any;
 
   ngOnInit() {
@@ -76,13 +80,17 @@ export class EquiposAdminComponent implements OnInit {
   }
 
 
-  addTeam(){ 
+  addTeam(){
     this.urlImg.subscribe(val =>{
       this.urlLogo= val;
+
+      this.urlImgStadium.subscribe(val2 =>{
+        this.urlLogoStadium=val2;
+
       let newTeam={
         name: this.nombre,
         logoImg:this.urlLogo,
-        estadiumImg: this.estadioImg,
+        estadiumImg: this.urlLogoStadium,
         localization:this.localization,
         cups:this.copas,
         description:this.descrip,
@@ -91,14 +99,14 @@ export class EquiposAdminComponent implements OnInit {
       this.teamServ.addTeam(newTeam);
       Swal("Bien!", "Nota agregada Correctamente", "success");
       this.viewTeams();
-    });
+    })
+  });
 
 
 
   }
 
   upload(e){  // Metodo para realiozar la subida de la imagen a FireStore
-    //console.log("e", e.target.files[0])
     let file = e.target.files[0];
     this.nombreIMG= file.name;
     let path="/clubs/"+file.name;
@@ -110,13 +118,25 @@ export class EquiposAdminComponent implements OnInit {
     } ) ).subscribe();
   }
 
-
-  deleteTeam(){
-
+  uploadstadium(e){  // Metodo para realiozar la subida de la imagen a FireStore
+    let file = e.target.files[0];
+    this.nombreIMGStadium= file.name;
+    let path="/estadiums/"+file.name;
+    let ref = this.storage.ref(path);
+    let task = this.storage.upload(path,file);
+    this.uploadPercentStaddium= task.percentageChanges();
+    task.snapshotChanges().pipe(finalize(() =>{
+      this.urlImgStadium= ref.getDownloadURL()
+    } ) ).subscribe();
   }
 
-  updateTeam(){
 
-  }
+  // deleteTeam(){   //Eliminar o bajar de categoria
+
+  // }
+
+  // updateTeam(){
+
+  // }
 
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {NotasService} from '../services/notas.service';
+import { BloggerService } from '../services/blogger.service';
 import { AuthService } from '../services/auth.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+
+import { HttpClient } from '@angular/common/http';
 
 import {finalize} from 'rxjs/operators';
 import {Observable} from 'rxjs/internal/Observable';
@@ -14,7 +17,8 @@ import Swal from 'sweetalert2';
 })
 export class NotasAdminComponent implements OnInit {
 
-  constructor(private notaServ:NotasService, private authServ:AuthService,private storage:AngularFireStorage) {
+  constructor(private notaServ:NotasService, private authServ:AuthService,private storage:AngularFireStorage,
+    private http: HttpClient) {
   }
 
   // Variables bandera para CRUD de notas
@@ -30,6 +34,11 @@ export class NotasAdminComponent implements OnInit {
   notesList:any=[];
   notatemp:any={};
 
+  jsonNotas={
+    items:"",
+    nextPageToken:""
+  }
+
   dataModel="";
   titleNote="";
 
@@ -40,6 +49,34 @@ export class NotasAdminComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.notesList=[]; // Resetea arreglo
+    this.jsonNotas={
+      items:"",
+      nextPageToken:""
+    };
+
+    return this.http.get("https://www.googleapis.com/blogger/v3/blogs/2811544302412945813/posts?fetchBodies=true&fetchImages=true&maxResults=100&key=AIzaSyDC9bpgeN4HCnUwffRJombvFBq5wRb7Eyg")
+    .subscribe(
+      success => {
+        let posts:any = success;//agregar la variable para extraer los datos
+        console.log("Json completo: ", posts);
+
+        for(let i =0; i< posts.items.length;i++){
+         this.notesList.push(posts.items[i]);
+        }
+        this.jsonNotas.items= this.notesList;
+        this.jsonNotas.nextPageToken= posts.nextPageToken;
+
+        console.log("sucessss de obtener . ",this.jsonNotas);
+      },
+      err => {
+        console.log("Error ",err);
+      }
+    )
+
+
+    /*  Obtiene notas desde FireBase
     this.notaServ.getNotes().snapshotChanges()
     .subscribe(
       note =>{
@@ -56,7 +93,7 @@ export class NotasAdminComponent implements OnInit {
         }
         this.veNotas();
       }
-    )
+    )*/
 
   }
 
@@ -80,7 +117,7 @@ export class NotasAdminComponent implements OnInit {
     }) ).subscribe();
   }
 
-
+/*
   creaNotaDB(){
     let nombreUser = this.returnFullname();
 
@@ -100,6 +137,7 @@ export class NotasAdminComponent implements OnInit {
     this.dataModel="";
     this.titleNote="";
   })}
+  */
 
   veNotas(){
     this.createNote= false;
@@ -114,9 +152,9 @@ export class NotasAdminComponent implements OnInit {
 
     // }, 600);
 
-
   }
 
+ /*
   borraNota(idNota){
     Swal({
       title: 'Borrar Nota?',
@@ -138,14 +176,17 @@ export class NotasAdminComponent implements OnInit {
     })
 
   }
+*/
 
+/*
   editaNota(nota){
     this.modalVisible=true;
     this.notatemp= nota;
-    this.dataModel= nota.data.body;
-
+    this.dataModel= nota.data.body
   }
+*/
 
+  /*
   editaNotaDefinitiva(){
     Swal({
       title: 'Modificar Nota?',
@@ -176,11 +217,10 @@ export class NotasAdminComponent implements OnInit {
         )
       }
     })
-  }
+  }*/
 
 
   returnFullname(){
-    console.log(""+ this.authServ.usserLogged);
     let nombreCompleto = this.authServ.usserLogged.data.name+" "+ this.authServ.usserLogged.data.surnameI+" "+ this.authServ.usserLogged.data.surnameII;
     console.log(nombreCompleto);
     return nombreCompleto;

@@ -14,8 +14,14 @@
 
 
         <div style="text-align:center;" *ngIf="ver">
-            <div style="margin-top:2%;margin-left:2%;margin-right:2%">
-                <div class="list-group">
+            <div style="margin-left:20%;margin-right:20%; margin-top:3%">
+
+
+                <div class="alert alert-danger" role="alert" *ngIf="jornadaList.length==0">
+                    Por el momento no hay jornadas para el torneo actual !
+                </div>
+
+                <div class="list-group" *ngIf="jornadaList.length>0">
                     <button type="button" class="list-group-item list-group-item-action active">
                       Jornadas del torneo actual
                     </button>
@@ -25,7 +31,8 @@
                             <div >
                                <p id="{{jornada.key}}"></p>
                             </div>
-                          </button>
+                            <button *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" (click)="eliminarJornada(jornada)" class="btn btn-danger btn-sm"> Eliminar Jornada </button>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -35,18 +42,24 @@
 
         <!-- Añade resultados a  Jornada-->
         <div style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="addResult">
-            <div class="list-group">
 
+            <div class="alert alert-danger" role="alert" *ngIf="jornadasSinResult.length==0">
+                Por el momento no hay partidos por disputarse !
+            </div>
+
+            <div class="list-group" *ngIf="jornadasSinResult.length>0">
                 <div *ngFor=" let match of jornadasSinResult; let i = index;">
                     <button type="button" class="list-group-item list-group-item-action" (click)="desplegarForm(i)">
                          <p style="color:blueviolet"> {{match.name}} </p>
                          <label style="color:brown"> {{match.jornada}}. </label>  {{match.data.nameLocalTeam}} VS {{match.data.nameVisitTeam}}
-                         <small style="color:grey" > Resultado sin definir</small>
-                         <form id="res{{i}}" style="visibility:hidden">
-                           <input  type="number" id="local{{i}}" placeholder="Resultado equipo local" required="required">
-                           <strong> - - - </strong>
-                           <input type="number" id="visita{{i}}" placeholder="Resultado equipo visita" required="required">
-                           <button type="button" class="btn btn-outline-success btn-sm" (click)="resultadoJornada(match,i)" >Agregar Resultado</button>
+                         <small style="color:grey; margin-left:2%;" > Resultado sin definir</small>
+
+                    <form id="res{{i}}" style="visibility:hidden">
+                        <input type="number" id="local{{i}}" placeholder="Resultado equipo local" required="required">
+                        <strong> - - - </strong>
+                        <input type="number" id="visita{{i}}" placeholder="Resultado equipo visita" required="required">
+                        <button type="button" class="btn btn-outline-success btn-sm" (click)="resultadoJornada(match,i)">Agregar Resultado</button>
+
                     </form>
                     </button>
                 </div>
@@ -125,7 +138,7 @@
                                 <input type="text" name="fechaMatch" tabindex="2" [(ngModel)]="fechaMatch" class="form-control" placeholder="22/10/2018 12:00pm">
                             </div>
                             <div class="form-group col-md-6">
-                                <button (click)="addMatch()"> Añadir partido </button>
+                                <button class="btn btn-success" (click)="addMatch()"> Añadir partido!</button>
                             </div>
                         </div>
                     </form>
@@ -138,10 +151,8 @@
 
             <br>
             <div *ngIf="matchReady">
-                <button type="button" name="login-submit" id="login-submit" tabindex="2" (click)="createjournal()">Crear Jornada</button>
+                <button class="btn btn-dark" name="login-submit" id="login-submit" tabindex="2" (click)="createjournal()">Crear Jornada</button>
             </div>
-
-
         </div>
     </div>
 </div>

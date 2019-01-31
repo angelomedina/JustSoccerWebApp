@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MultimediaService } from '../services/multimedia.service';
-
-
+import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-multimedia',
@@ -10,11 +11,13 @@ import { MultimediaService } from '../services/multimedia.service';
 })
 export class MultimediaComponent implements OnInit {
 
-  constructor( private multiServ:MultimediaService) { }
+  constructor( private multiServ:MultimediaService, private authServ:AuthService) { }
 
   //Listas de datos
   listaIntermedia:any=[];
   videosList:any=[];
+
+  videoNew:boolean = false;
 
 
   ngOnInit() {
@@ -31,9 +34,29 @@ export class MultimediaComponent implements OnInit {
           }
           this.videosList.push(noteI);
         }
-        console.log("videos", this.videosList)
       }
     )
+  }
+
+
+  addVideo(){
+    this.videoNew=true;
+  }
+
+
+  addUrl(){
+    let urlV = new String((<HTMLInputElement>document.getElementById("url")).value);
+    let VideoID = urlV.substring( urlV.indexOf("?v=")+3 );
+    //console.log("new video ", VideoID);
+    let json ={
+      url:VideoID
+    }
+
+    this.multiServ.addVideo(json);
+    this.videoNew=false;
+    Swal("Bien!", "Video agregado Correctamente", "success");
+
+
   }
 
 }
