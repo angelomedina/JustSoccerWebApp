@@ -16,7 +16,6 @@ export class EstadisticaAdminComponent implements OnInit {
   constructor(private _activatedRouter:ActivatedRoute,private router: Router,private authServ:AuthService,
     private tournServ:TournamentService,private positionServ:PositionTableService) {
     this._activatedRouter.params.subscribe(params =>{
-      console.log(params['id']);  // retorna objeto con parametro de url
       this.IDToneo= params['id'];
     });
    }

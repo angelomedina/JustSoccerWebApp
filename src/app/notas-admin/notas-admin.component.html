@@ -1,40 +1,33 @@
 <div class="main-content body">
     <div class="container-fluid">
-
-        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <button type="button" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-dark" (click)="creaNota()" style="margin-left:5%">Crear Nota   </button>
-                    <button type="button" class="btn btn-dark" (click)="veNotas()" style="margin-left:5%">Ver todas las Notas    </button>
-                </div>
-            </div>
-        </nav> -->
-
         <br>
 
-        <div class="alert alert-success" role="alert" *ngIf="notesList.length==0">
+        <div class="alert alert-warning" role="alert" *ngIf="notesList.length==0">
             <strong>Cargando notas ....!!</strong>
         </div>
 
 
         <div>
             <hr style="color:blue;">
-            <span style="color:rgb(56, 35, 7)"> A continuación se muestran las 50 notas deportivas  más recientes de Just Soccer. Para ver más visite el blog principal de</span>
+            <span style="color:rgb(92, 59, 17)"> A continuación se muestran las 50 notas deportivas  más recientes de Just Soccer. Para ver más visite el blog principal de</span>
             <a href="http://justsoccercr.blogspot.com/" target="_blank"> Just Soccer</a><br>
-            <hr style="color:blue;">
+            <hr style="color:rgb(47, 47, 87);">
         </div>
 
 
         <div class="card-group" *ngIf="readNote">
             <div *ngFor="let nota of jsonNotas.items; let i=index;">
-                <div style="text-align:center;margin-top:3%;margin-left:4%;margin-right:2%; border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card">
-                    <div class="card-body">
-                        <h6 class="card-title" style="color:rgb(75, 30, 39)"> <a href="{{nota.url}}" target="_blank"> {{nota.title}} </a> </h6>
-                        <br>
-                        <img class="card-img-top" src="{{nota.images[0].url}}" alt="img referencia" class="img180">
-                        <br>
-                        <small>Nota escrita por {{nota.author.displayName}}</small><br>
-                        <small style="color:grey">Feha de publicación: {{nota.updated}}</small><br>
+                <div style="text-align:center; margin-left:3%;margin-right:3%; margin-bottom:3%">
+                    <div style="text-align:center;margin-top:2%;margin-left:1%;margin-right:1%; border-radius:35px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card">
+                        <div class="card-body" style="width:400px; height:320px;">
+                            <h6 class="card-title" style="color:rgb(100, 36, 49)"> <a href="{{nota.url}}" target="_blank"> {{nota.title}} </a> </h6>
+                            <br>
+                            <img class="card-img-top" src="{{nota.images[0].url}}" alt="img referencia" style="width:250px;;height:170px;">
+                            <!-- class="img180" -->
+                            <br>
+                            <small>Nota escrita por {{nota.author.displayName}}</small><br>
+                            <small style="color:grey">Feha de publicación: {{nota.updated}}</small><br>
+                        </div>
                     </div>
                 </div>
             </div>

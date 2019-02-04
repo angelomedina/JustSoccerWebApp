@@ -33,9 +33,7 @@
                             <a style="font-size:120%;" id="reg" [ngClass]="{'nav-link active':adminRegistro == true}" class="nav-link" (click)="pressRegistroAdmin()">Registrar Admin</a>
                         </li>
                     </ul>
-
                 </div>
-
 
                 <div class="panel-body">
                     <div class="row">
@@ -66,7 +64,7 @@
 
 
                             <!-- My admin Views -->
-                            <div style="margin-left:4%; margin-right:4%;" *ngIf="adminUse && myAdminView">
+                            <div style="margin-left:4%; margin-right:4%;margin-top:3%;" *ngIf="adminUse && myAdminView">
                                 <table class="table">
                                     <thead class="thead-dark">
                                         <tr>
@@ -97,7 +95,7 @@
                                     <div style="margin-bottom:2%;" *ngIf="authServ.userType === 'superAdmin'">
                                         <span style="color:blue">Ya está registrado? Ingrese unicamente el correo del nuevo administrador! </span>
                                         <input type="text" name="" id="emailVerif" placeholder="email" placeholder="Email">
-                                        <button (click)="addAdminEmail()" class="btn btn-info">Registrar mediante Correo</button>
+                                        <button style="margin-left:2%;" (click)="addAdminEmail()" class="btn btn-info">Registrar mediante Correo</button>
                                     </div>
 
                                     <div class="form-row">

@@ -60,7 +60,6 @@ export class NotasAdminComponent implements OnInit {
     .subscribe(
       success => {
         let posts:any = success;//agregar la variable para extraer los datos
-        console.log("Json completo: ", posts);
 
         for(let i =0; i< posts.items.length;i++){
          this.notesList.push(posts.items[i]);
@@ -68,7 +67,6 @@ export class NotasAdminComponent implements OnInit {
         this.jsonNotas.items= this.notesList;
         this.jsonNotas.nextPageToken= posts.nextPageToken;
 
-        console.log("sucessss de obtener . ",this.jsonNotas);
       },
       err => {
         console.log("Error ",err);

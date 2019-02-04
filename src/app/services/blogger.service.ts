@@ -16,7 +16,6 @@ export class BloggerService {
     .subscribe(
       success => {
         let posts:any = success;//agregar la variable para extraer los datos
-        console.log("sucessss de obtener pks. ",posts);
         return posts;
       },
       err => {

@@ -13,7 +13,6 @@ export class TeamInfoComponent implements OnInit {
 
   constructor(private teamServ:TeamService,private _activatedRouter:ActivatedRoute,private router: Router) {
     this._activatedRouter.params.subscribe(params =>{
-      console.log(params['id']);  // retorna objeto con parametro de url
       this.IDteam= params['id'];
     });
    }

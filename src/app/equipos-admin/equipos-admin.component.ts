@@ -62,7 +62,6 @@ export class EquiposAdminComponent implements OnInit {
 
           this.teamList.push(noteI);
         }
-        //console.log("" ,this.teamList);
         this.loading=false;
         //this.veNotas();
       }
