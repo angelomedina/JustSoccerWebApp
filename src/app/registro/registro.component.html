@@ -5,7 +5,7 @@
 <br>
 
 
-<div class="main-content body">
+<div class="main-content body elementToFadeInAndOut">
     <div class="container-fluid">
         <div>
             <div>
@@ -35,7 +35,7 @@
                     </ul>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body elementToFadeInAndOut">
                     <div class="row">
                         <div style=" padding:2% 3% 2% 3%; border-radius:15px; border-style:solid;border-color:teal; margin-left:15%;">
                             <!-- Login View -->
@@ -64,8 +64,8 @@
 
 
                             <!-- My admin Views -->
-                            <div style="margin-left:4%; margin-right:4%;margin-top:3%;" *ngIf="adminUse && myAdminView">
-                                <table class="table">
+                            <div class="elementToFadeInAndOut" style="margin-left:4%; margin-right:4%;margin-top:3%;" *ngIf="adminUse && myAdminView">
+                                <table class="table elementToFadeInAndOut">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">#</th>
@@ -89,8 +89,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div>
-                                <form id="register-form" role="form" *ngIf="registro || adminRegistro">
+                            <div class="elementToFadeInAndOut">
+                                <form class="elementToFadeInAndOut" id="register-form" role="form" *ngIf="registro || adminRegistro">
 
                                     <div style="margin-bottom:2%;" *ngIf="authServ.userType === 'superAdmin'">
                                         <span style="color:blue">Ya está registrado? Ingrese unicamente el correo del nuevo administrador! </span>

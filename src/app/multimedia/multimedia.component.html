@@ -1,9 +1,9 @@
-<div class="main-content body">
+<div class="main-content body elementToFadeInAndOut">
     <div class="container-fluid">
 
-        <div class="form-group" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
+        <div class="form-group elementToFadeInAndOut" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
             <button type="button" class="btn btn-outline-success" (click)="addVideo()">Añadir video nuevo</button>
-            <div *ngIf="videoNew" style="border-color:#665442; border-radius:40px;">
+            <div *ngIf="videoNew" class="elementToFadeInAndOut" style="border-color:#665442; border-radius:40px;">
                 <label for="exampleInputEmail1">Url del video (Youtube)</label>
                 <input type="url" class="form-control" id="url" placeholder="url">
                 <small id="emailHelp" class="form-text text-muted">Ingrese una dirección completa url del video a subir</small>
@@ -28,7 +28,7 @@
 
         <!-- Muestra los videos directos desde youtube -->
 
-        <div style="text-align:left; margin-left:3%;margin-top:2%;">
+        <div style="text-align:left; margin-left:3%;margin-top:2%;" class="elementToFadeInAndOut">
             <div *ngFor="let video of videosList" style="float:left;border-style:outset;margin-left:2%;margin-bottom:3%;border-radius:25px;box-shadow: 8px 9px 20px 3px #665442;">
                 <!-- Haciendo uso de pipe Sanitizer para mostrar videos de manera segura -->
                 <iframe width="450" height="330" [src]=" video.data.url | sanitizer:'https://www.youtube.com/embed/' " frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

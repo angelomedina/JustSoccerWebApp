@@ -227,8 +227,15 @@ export class JornadasComponent implements OnInit {
   let html="<div style='margin-left:2%;margin-right:2%'> </br> ";
 
   for (let i = 0; i < idJornada.data.cantidad; i++) {
-    html = html+ "<p style ='color:blue;'> "+ idJornada.data.matchs[i].nameLocalTeam+ "<span style='color:grey;font-size:10px'> "+ idJornada.data.matchs[i].resultLocal +"</span>"+ " VS "+ "<span style='color:grey;font-size:10px'>"+ idJornada.data.matchs[i].resultVisit +" </span>"+  idJornada.data.matchs[i].nameVisitTeam+"</p>"
-    html= html + "<span style='color:grey'>"+ idJornada.data.matchs[i].estatus +"</span>";
+    html = html+ "<p style ='color:green;text-decoration: none;'> "+ idJornada.data.matchs[i].nameLocalTeam+ "<span style='color:grey;font-size:10px'> </span>";
+    html = html + "<span style='width: 20px; height: 25px; margin:auto; display: inline-block; border: 2px solid gray; vertical-align: middle; border-radius: 5px;color:black'> "+ idJornada.data.matchs[i].resultLocal +"</span> ";
+    html = html + " VS "+"<span style='width: 20px; height: 25px; margin:auto; display: inline-block; border: 2px solid gray; vertical-align: middle; border-radius: 5px;color:black'> "+ idJornada.data.matchs[i].resultVisit +"</span> ";
+    html = html +  "<span style='color:green;text-decoration: none;'>"+ idJornada.data.matchs[i].nameVisitTeam +" </span>";
+
+
+    html= html + "<small style=' margin-left:1%; color:grey'>"+ idJornada.data.matchs[i].estatus +"</small>";
+    html= html +"<hr style='border: 1px solid grey;'>";
+
   }
    html= html +"</div>";
 

@@ -1,4 +1,4 @@
-<div class="main-content body">
+<div class="main-content body elementToFadeInAndOut">
     <div class="container-fluid">
 
         <ul class="nav nav-tabs justify-content-center">
@@ -14,20 +14,20 @@
         </ul>
 
 
-        <div style="text-align:center;" *ngIf="ver">
+        <div class="elementToFadeInAndOut" style="text-align:center;" *ngIf="ver">
             <div style="margin-left:20%;margin-right:20%; margin-top:3%">
+ 
 
-
-                <div class="alert alert-danger" role="alert" *ngIf="jornadaList.length==0">
+                <div class=" elementToFadeInAndOut alert alert-danger" role="alert" *ngIf="jornadaList.length==0">
                     Por el momento no hay jornadas para el torneo actual !
                 </div>
 
-                <div class="list-group" *ngIf="jornadaList.length>0">
+                <div class="list-group elementToFadeInAndOut" *ngIf="jornadaList.length>0">
                     <button type="button" class="list-group-item list-group-item-action active">
                       Jornadas del torneo actual
                     </button>
                     <div *ngFor="let jornada of jornadaList; let i= index;">
-                        <button type="button" class="list-group-item list-group-item-action" (click)="mostrarPartidosJornada(jornada)">
+                        <button type="button"  class="list-group-item list-group-item-action" style="color:crimson;   font-weight: bold;" (click)="mostrarPartidosJornada(jornada)">
                             {{jornada.data.name}}
                             <div >
                                <p id="{{jornada.key}}"></p>
@@ -42,13 +42,13 @@
 
 
         <!-- Añade resultados a  Jornada-->
-        <div style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="addResult">
+        <div class="elementToFadeInAndOut" style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="addResult">
 
-            <div class="alert alert-danger" role="alert" *ngIf="jornadasSinResult.length==0">
+            <div class="alert alert-danger elementToFadeInAndOut" role="alert" *ngIf="jornadasSinResult.length==0">
                 Por el momento no hay partidos por disputarse !
             </div>
 
-            <div class="list-group" *ngIf="jornadasSinResult.length>0">
+            <div class="list-group elementToFadeInAndOut" *ngIf="jornadasSinResult.length>0">
                 <div *ngFor=" let match of jornadasSinResult; let i = index;">
                     <button type="button" class="list-group-item list-group-item-action" (click)="desplegarForm(i)">
                          <p style="color:blueviolet"> {{match.name}} </p>
@@ -70,14 +70,14 @@
 
 
         <!-- Crear Jornada nueva -->
-        <div style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="create">
+        <div class="elementToFadeInAndOut" style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="create">
             <div>
                 <button (click)="ocultaForm1()" style="background-color:white;float:left;margin-right:2%;" *ngIf="formActivate"><img src="../../assets/icons/up.png" alt="" width="30px;" height="30px;"  ></button>
                 <button (click)="muestraForm1()" style="background-color:white;float:left;margin-right:2%;" *ngIf="!formActivate"><img src="../../assets/icons/down.png" alt="" width="30px;" height="30px;"  ></button>
                 <span style="font-size:30px;color:teal;">Información General de la Jornada</span>
             </div>
 
-            <form id="register-form" role="form" *ngIf="formActivate && create">
+            <form class="elementToFadeInAndOut" id="register-form" role="form" *ngIf="formActivate && create">
                 <div class="form-row" style="border-style:outset;">
 
                     <br>
@@ -115,7 +115,7 @@
             <div>
                 <button (click)="nuevoPartido()" style="text-align:center; color:green;background-color:burlywood"> <i class="fa fa-check-circle" aria-hidden="true"></i>Añadir Partido a la Jornada</button>
                 <br><br>
-                <div *ngIf="newMatch" style="border-style:outset; text-align:center; padding-left:1%;padding-right:1%;">
+                <div *ngIf="newMatch" class="elementToFadeInAndOut" style="border-style:outset; text-align:center; padding-left:1%;padding-right:1%;">
                     <form action="">
                         <div class="form-row">
                             <div class="form-group col-md-6">

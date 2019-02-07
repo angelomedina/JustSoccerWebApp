@@ -1,4 +1,4 @@
-<div class="main-content body">
+<div class="main-content body elementToFadeInAndOut">
     <div>
         <div style="float:left;">
 
@@ -18,7 +18,7 @@
         <div class="item item-4"></div>
     </div>
 
-    <div style="text-align:center; margin-left:10%;margin-right:10%;border-style:outset; border-radius:20px;border-color:blueviolet; padding: 3% 3% 3% 3%; " *ngIf="add">
+    <div class="elementToFadeInAndOut" style="text-align:center; margin-left:10%;margin-right:10%;border-style:outset; border-radius:20px;border-color:blueviolet; padding: 3% 3% 3% 3%; " *ngIf="add">
 
         <div class="form-group row">
             <label for="inputEmail3">Nombre del equipo</label>
@@ -80,7 +80,7 @@
 
 
     <!-- Ver los equipos -->
-    <div class="card-columns" *ngIf="view">
+    <div class="card-columns elementToFadeInAndOut" *ngIf="view">
         <div *ngFor="let team of teamList; let i=index;">
             <div style="text-align:center;" class="card">
                 <img class="card-img-top" src="{{team.data.logoImg}}" alt="Card image cap" width="150px" height="210px">

@@ -388,3 +388,18 @@ div.colorDiv {
 .iconsImg {
     margin-right: 10%;
 }
+
+.responsive {
+    width: 100%;
+    height: auto;
+  }
+
+  .elementToFadeInAndOut {
+    -webkit-animation: fadein 1s linear forwards;
+    animation: fadein 1s linear forwards;
+}
+
+@-webkit-keyframes fadein {
+  0%,20% { opacity: 0; }
+  40% { opacity: 1; }
+}

@@ -1,8 +1,8 @@
-<div class="main-content body">
+<div class="main-content body elementToFadeInAndOut">
     <div class="container-fluid">
         <br>
 
-        <div class="alert alert-warning" role="alert" *ngIf="notesList.length==0">
+        <div class="alert alert-warning elementToFadeInAndOut" role="alert" *ngIf="notesList.length==0">
             <strong>Cargando notas ....!!</strong>
         </div>
 
@@ -15,7 +15,7 @@
         </div>
 
 
-        <div class="card-group" *ngIf="readNote">
+        <div class="card-group elementToFadeInAndOut" *ngIf="readNote">
             <div *ngFor="let nota of jsonNotas.items; let i=index;">
                 <div style="text-align:center; margin-left:3%;margin-right:3%; margin-bottom:3%">
                     <div style="text-align:center;margin-top:2%;margin-left:1%;margin-right:1%; border-radius:35px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card">

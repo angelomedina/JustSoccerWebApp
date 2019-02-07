@@ -1,4 +1,4 @@
-<div class="main-content body">
+<div class="main-content body elementToFadeInAndOut">
     <div class="container-fluid">
 
         <!-- Spinner -->
@@ -9,7 +9,7 @@
             <div class="item item-4"></div>
         </div>
 
-        <div style="text-align:center">
+        <div style="text-align:center" class="elementToFadeInAndOut">
             <h2 style="text-align:center; font-family:cursive; color:rgb(14, 107, 82);">
                 {{equipoActual.data.name}}
             </h2>
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div style="margin-left:2%;margin-right:3%;" *ngIf="!loading">
+        <div style="margin-left:2%;margin-right:3%;" class="elementToFadeInAndOut" *ngIf="!loading">
             <br>
             <h3 style="font-style:italic;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif"> Descripción</h3>
             <blockquote style="border-radius:10px; background-color:rgba(252, 248, 247, 0.905)">
