@@ -47,6 +47,7 @@ import { AboutComponent } from './about/about.component';
 import { MultimediaComponent } from './multimedia/multimedia.component';
 import { SanitizerPipe } from './Pipes/sanitizer.pipe';
 import { PlayersComponent } from './players/players.component';
+import { RandomComponent } from './random/random.component';
 
 
 
@@ -70,7 +71,8 @@ import { PlayersComponent } from './players/players.component';
     AboutComponent,
     MultimediaComponent,
     SanitizerPipe,
-    PlayersComponent
+    PlayersComponent,
+    RandomComponent
   ],
   imports: [
     BrowserModule,
