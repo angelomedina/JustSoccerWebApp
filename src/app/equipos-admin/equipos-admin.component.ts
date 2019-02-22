@@ -25,12 +25,14 @@ export class EquiposAdminComponent implements OnInit {
   localization="";
   copas=0;
   descrip="";
+  keyTeamActual="";
 
   nombreIMG="";
   nombreIMGStadium="";
 
   add= false;
   view=true;
+  update:boolean= false;
   loading= true; // Spinner Loading
 
   //Listas de datos
@@ -109,7 +111,7 @@ export class EquiposAdminComponent implements OnInit {
     let file = e.target.files[0];
     this.nombreIMG= file.name;
     let path="/clubs/"+file.name;
-    let ref = this.storage.ref(path);
+    let ref = this.storage.ref(path); 
     let task = this.storage.upload(path,file);
     this.uploadPercent= task.percentageChanges();
     task.snapshotChanges().pipe(finalize(() =>{
@@ -130,12 +132,85 @@ export class EquiposAdminComponent implements OnInit {
   }
 
 
-  // deleteTeam(){   //Eliminar o bajar de categoria
+   deleteTeam(team){   //Eliminar equipo .... debe de implementarse bajar de categoria
+      console.log("team ", team);
 
-  // }
+      Swal({
+        title: 'Eliminar equipo',
+        text: "En serio desea eliminar este equipo del sistema? No será posible recuperarlo en caso de eliminarlo!!",
+        imageUrl: team.data.logoImg,
+        imageWidth: 150,
+        imageHeight: 150,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminarlo!'
+      }).then((result) => {
+        if (result.value) {
+          Swal(
+            'Elimiando!',
+            'El quipo ha sido eliminado correcatmente',
+            'success'
+          )
+          this.teamServ.deleteTeam(team.key);
+        }
+      })
 
-  // updateTeam(){
+      
+   }
 
-  // }
+   updateTeam(team){
+      this.update=true;
+      this.view= false;
+      this.nombre= team.data.name;
+      this.localization= team.data.localization;
+      this.copas = team.data.cups;
+      this.descrip= team.data.description;
+      this.fechaFundac= team.data.fundation;
+      this.urlLogo= team.data.logoImg
+      this.urlLogoStadium= team.data.estadiumImg;
+      this.keyTeamActual= team.key;
+
+   }
+
+   updateT(){
+    let newTeam={
+      name: this.nombre,
+      logoImg:this.urlLogo,
+      estadiumImg: this.urlLogoStadium,
+      localization:this.localization,
+      cups:this.copas,
+      description:this.descrip,
+      fundation:this.fechaFundac
+    }
+    this.teamServ.updateTeam(newTeam,this.keyTeamActual);
+
+    Swal("Bien!", "Datos actualizados Correctamente", "success");
+    this.cancelUpdate();
+
+   }
+
+   cancelUpdate(){
+     this.resetForms();
+     this.update= false;
+      this.view= true; 
+   }
+
+   cancelAdd(){
+     this.resetForms();
+    this.add= false;
+     this.view= true;
+  }
+
+  resetForms(){
+
+      this.nombre= "";
+      this.localization= "";
+      this.copas = 0;
+      this.descrip= "";
+      this.fechaFundac= "";
+      this.urlLogo= "";
+      this.urlLogoStadium= "";
+  }
 
 }

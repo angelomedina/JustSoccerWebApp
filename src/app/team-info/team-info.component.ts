@@ -49,6 +49,8 @@ export class TeamInfoComponent implements OnInit {
 
   }
 
+  
+
 
   obtenerEquipoActual(){
     for(var i=0; i< this.teamList.length; i++){
@@ -61,5 +63,7 @@ export class TeamInfoComponent implements OnInit {
     this.router.navigate(['/GG']);
 
   }
+ 
+  
 
 }

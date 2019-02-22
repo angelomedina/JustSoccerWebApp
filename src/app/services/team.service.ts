@@ -17,13 +17,14 @@ export class TeamService {
   addTeam(team){  // Realiza la inserción de una nota en la DB
     this.notesList.push(team);
   }
-
+ 
   deleteTeam(idTeam){
     this.notesList.remove(idTeam);
   }
-
-  updateTeam(team){
-    this.firebase.database.ref('team/'+team.key).set(team);
-  }
+ 
+  updateTeam(team,key){
+    this.firebase.database.ref('team/'+key).set(team);
+  } 
 
 }
+ 
