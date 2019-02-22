@@ -133,8 +133,6 @@ export class EquiposAdminComponent implements OnInit {
 
 
    deleteTeam(team){   //Eliminar equipo .... debe de implementarse bajar de categoria
-      console.log("team ", team);
-
       Swal({
         title: 'Eliminar equipo',
         text: "En serio desea eliminar este equipo del sistema? No será posible recuperarlo en caso de eliminarlo!!",
@@ -155,8 +153,7 @@ export class EquiposAdminComponent implements OnInit {
           this.teamServ.deleteTeam(team.key);
         }
       })
-
-      
+    
    }
 
    updateTeam(team){

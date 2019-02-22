@@ -1,7 +1,7 @@
 <div class="main-content body elementToFadeInAndOut">
     <div class="container-fluid">
         <br>
-
+ 
         <div class="alert alert-warning elementToFadeInAndOut" role="alert" *ngIf="notesList.length==0">
             <strong>Cargando notas ....!!</strong>
         </div>
@@ -17,19 +17,25 @@
 
         <div class="card-group elementToFadeInAndOut" *ngIf="readNote">
             <div *ngFor="let nota of jsonNotas.items; let i=index;">
-                <div style="text-align:center; margin-left:3%;margin-right:3%; margin-bottom:3%">
-                    <div style="text-align:center;margin-top:2%;margin-left:1%;margin-right:1%; border-radius:35px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card">
-                        <div class="card-body" style="width:400px; height:320px;">
-                            <h6 class="card-title" style="color:rgb(100, 36, 49)"> <a href="{{nota.url}}" target="_blank"> {{nota.title}} </a> </h6>
-                            <br>
-                            <img class="card-img-top" src="{{nota.images[0].url}}" alt="img referencia" style="width:250px;;height:170px;">
-                            <!-- class="img180" -->
-                            <br>
-                            <small>Nota escrita por {{nota.author.displayName}}</small><br>
-                            <small style="color:grey">Feha de publicación: {{nota.updated}}</small><br>
+              <div style="margin-left:9%">
+                    <div style="margin-top:10%; margin-right: 5%;  border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card">
+                       
+                            <div class="card-body" style="width:350px; height:320px;">
+                                <h6 class="card-title" style="color:rgb(100, 36, 49)"> <a href="{{nota.url}}" target="_blank"> {{nota.title}} </a> </h6>
+                                <br>
+                                <img class="card-img-top" src="{{nota.images[0].url}}" alt="img referencia" style="width:250px;height:170px;">
+                                <!-- class="img180" -->
+                                <br>
+                                <small>Nota escrita por {{nota.author.displayName}}</small><br>
+                                <small style="color:grey">Feha de publicación: {{nota.updated}}</small><br>
+                            </div>
+    
+    
                         </div>
-                    </div>
-                </div>
+
+              </div>
+                    
+               
             </div>
         </div>
 
