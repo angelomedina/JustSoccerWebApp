@@ -1,22 +1,19 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<br>
-
-
-<div class="main-content body elementToFadeInAndOut">
+ 
+<div class="main-content body imgCentral elementToFadeInAndOut" style="height:560px">
     <div class="container-fluid">
         <div>
             <div>
-                <!-- User View -->
+                <!-- User View --> 
                 <div *ngIf="!adminUse">
                     <ul class="nav nav-tabs justify-content-center">
                         <li class="nav-item">
-                            <a style="font-size:120%;" id="log" [ngClass]="{'nav-link active':login == true}" class="nav-link" (click)="pressLogin()">Login</a>
+                            <a style="font-size:120%;" id="log" [ngClass]="{'activePers':login == true, 'desactivePers':login == false}" class="nav-link" (click)="pressLogin()">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a style="font-size:120%;" id="reg" [ngClass]="{'nav-link active':registro == true}" class="nav-link" (click)="pressRegistro()">Registro</a>
+                            <a style="font-size:120%;" id="reg" [ngClass]="{'activePers':registro == true, 'desactivePers':registro == false}" class="nav-link" (click)="pressRegistro()">Registro</a>
                         </li>
                     </ul>
                 </div>
@@ -27,26 +24,26 @@
 
                     <ul class="nav nav-tabs justify-content-center">
                         <li class="nav-item">
-                            <a style="font-size:120%;" id="log" [ngClass]="{'nav-link active':myAdminView == true}" class="nav-link" (click)="pressMyAdmins()">Mis Administradores</a>
+                            <a style="font-size:120%;" id="log" [ngClass]="{'activePers':myAdminView == true, 'desactivePers':myAdminView == false}" class="nav-link" (click)="pressMyAdmins()">Mis Administradores</a>
                         </li>
                         <li class="nav-item">
-                            <a style="font-size:120%;" id="reg" [ngClass]="{'nav-link active':adminRegistro == true}" class="nav-link" (click)="pressRegistroAdmin()">Registrar Admin</a>
+                            <a style="font-size:120%;" id="reg" [ngClass]="{'activePers':adminRegistro == true, 'desactivePers':adminRegistro == false}" class="nav-link" (click)="pressRegistroAdmin()">Registrar Admin</a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="panel-body elementToFadeInAndOut">
                     <div class="row">
-                        <div style=" padding:2% 3% 2% 3%; border-radius:15px; border-style:solid;border-color:teal; margin-left:15%;">
+                        <div style=" padding:2% 3% 2% 3%; border-radius:15px; border-style:solid;border-color:teal; background-color: rgba(140, 108, 199, 0.5); margin-left:25%; margin-right: 30%">
                             <!-- Login View -->
                             <div style="float:left;">
-                                <form style="padding-left:90%; " id="login-form" role="form" style="display: block;" *ngIf="login && !adminUse">
+                                <form style="padding-left:80%; " id="login-form" role="form" style="display: block;" *ngIf="login && !adminUse">
                                     <div class="form-group ">
-                                        <input type="text" name="email" id="email" [(ngModel)]="email" tabindex="1" class="form-control" autocomplete="off" placeholder="Correo electronico" value="">
+                                        <input autocomplete="off" type="text" name="email" id="email" [(ngModel)]="email" tabindex="1" class="form-control" autocomplete="off" placeholder="Correo electronico" value="">
                                     </div>
                                     <br>
                                     <div class="form-group ">
-                                        <input type="password" name="password" id="password" [(ngModel)]="password" tabindex="2" autocomplete="off" class="form-control" placeholder="Contraseña">
+                                        <input autocomplete="off" type="password" name="password" id="password" [(ngModel)]="password" tabindex="2" autocomplete="off" class="form-control" placeholder="Contraseña">
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
@@ -58,15 +55,15 @@
                                 </form>
                             </div>
                             <div style="float:right;margin-left:2%" *ngIf="login && !adminUse">
-                                <img style="float:right;" src="https://image.freepik.com/vector-gratis/candado_17-828103944.jpg" alt="" width="200px" height="200px">
-                                <p style="color:rgb(148, 148, 147);"> Inicie sesión para lograr contar con más beneficios dentro de la página</p>
+                                <img style="float:right;" src="https://candado.net/wp-content/uploads/2018/06/candado-favicon.png" alt="IMag" width="200px" height="200px">
+                                <p style="color:rgb(221, 232, 236);"> Inicie sesión para lograr contar con más beneficios dentro de la página</p>
                             </div>
 
 
                             <!-- My admin Views -->
                             <div class="elementToFadeInAndOut" style="margin-left:4%; margin-right:4%;margin-top:3%;" *ngIf="adminUse && myAdminView">
-                                <table class="table elementToFadeInAndOut">
-                                    <thead class="thead-dark">
+                                <table class="table table-striped elementToFadeInAndOut">
+                                    <thead  style="background-color:rgba(188, 179, 202, 0.5)">
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Nombre</th>
@@ -92,35 +89,36 @@
                             <div class="elementToFadeInAndOut">
                                 <form class="elementToFadeInAndOut" id="register-form" role="form" *ngIf="registro || adminRegistro">
 
-                                    <div style="margin-bottom:2%;" *ngIf="authServ.userType === 'superAdmin'">
-                                        <span style="color:blue">Ya está registrado? Ingrese unicamente el correo del nuevo administrador! </span>
-                                        <input type="text" name="" id="emailVerif" placeholder="email" placeholder="Email">
-                                        <button style="margin-left:2%;" (click)="addAdminEmail()" class="btn btn-info">Registrar mediante Correo</button>
+                                    <div style="margin-bottom:2%; padding-bottom: 1%;" *ngIf="authServ.userType === 'superAdmin'">
+                                        <strong style="color:white; font-size: 80%">Ya está registrado? Ingrese unicamente el correo del nuevo administrador! </strong><br>
+                                        <input autocomplete="off" type="text" name="" id="emailVerif" placeholder="email" placeholder="Email">
+                                        <button style="margin-left:4%; margin-right:4%;" (click)="addAdminEmail()" class="btn btn-info">Registrar mediante Correo</button>
                                     </div>
+                                    <hr>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <input type="text" name="name" [(ngModel)]="name" autocomplete="off" class="form-control" placeholder="Nombre">
+                                            <input autocomplete="off" type="text" name="name" [(ngModel)]="name" autocomplete="off" class="form-control" placeholder="Nombre">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="text" name="firstLastN" [(ngModel)]="firstLastN" autocomplete="off" class="form-control" placeholder="Primer Apellido">
+                                            <input autocomplete="off" type="text" name="firstLastN" [(ngModel)]="firstLastN" autocomplete="off" class="form-control" placeholder="Primer Apellido">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="text" name="secondLastN" [(ngModel)]="secondLastN" autocomplete="off" class="form-control" placeholder="Segundo Apellido">
+                                            <input autocomplete="off" type="text" name="secondLastN" [(ngModel)]="secondLastN" autocomplete="off" class="form-control" placeholder="Segundo Apellido">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" name="email" tabindex="1" [(ngModel)]="email" autocomplete="off" class="form-control" placeholder="Correo Eléctrónico">
+                                        <input autocomplete="off" type="text" name="email" tabindex="1" [(ngModel)]="email" autocomplete="off" class="form-control" placeholder="Correo Eléctrónico">
                                     </div>
                                     <div class="form-group">
-                                        <input type="number" name="telefono" tabindex="2" [(ngModel)]="telefono" autocomplete="off" class="form-control" placeholder="Número de telefono">
+                                        <input autocomplete="off" type="number" name="telefono" tabindex="2" [(ngModel)]="telefono" autocomplete="off" class="form-control" placeholder="Número de telefono">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" [(ngModel)]="password" tabindex="2" autocomplete="off" class="form-control" placeholder="Contraseña">
+                                        <input autocomplete="off" type="password" name="password" [(ngModel)]="password" tabindex="2" autocomplete="off" class="form-control" placeholder="Contraseña">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="confirmPasw" [(ngModel)]="confirmPasw" tabindex="2" autocomplete="off" class="form-control" placeholder="Confirmar Contraseña">
+                                        <input autocomplete="off" type="password" name="confirmPasw" [(ngModel)]="confirmPasw" tabindex="2" autocomplete="off" class="form-control" placeholder="Confirmar Contraseña">
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
@@ -131,14 +129,13 @@
                                     </div>
                                 </form>
                             </div>
-
+                            
                         </div>
                         <br>
                     </div>
                 </div>
-                <br>
+      
             </div>
         </div>
     </div>
 </div>
-<br>

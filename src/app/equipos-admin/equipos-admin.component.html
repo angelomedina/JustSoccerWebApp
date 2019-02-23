@@ -17,7 +17,7 @@
         <div class="item item-3"></div>
         <div class="item item-4"></div>
     </div>
-
+ 
     <!-- Formulario de crear equipo nuevo -->
 
     <div class="elementToFadeInAndOut" style="text-align:center; margin-left:10%;margin-right:10%;border-style:outset; border-radius:20px;border-color:blueviolet; padding: 3% 3% 3% 3%; " *ngIf="add">
@@ -35,7 +35,7 @@
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
         <div class="form-group row">
@@ -142,10 +142,10 @@
  
 
     <!-- Ver los equipos -->
-    <div class="card-columns elementToFadeInAndOut" *ngIf="view">
+    <div class="card-columns elementToFadeInAndOut " style="margin-left:3%" *ngIf="view">
         <div *ngFor="let team of teamList; let i=index;">
-            <div style="text-align:center;" class="card">
-                <img class="card-img-top" src="{{team.data.logoImg}}" alt="Card image cap" width="150px" height="210px">
+            <div style="text-align:center; background-color: rgba(139, 158, 139, 0.5); margin-bottom:10%; width: 310px; border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card ">
+                <img class="card-img-top" style="background-color:white" src="{{team.data.logoImg}}" alt="Card image cap" width="150px" height="210px">
                 <div class="card-body">
                     <h5 class="card-title"> <a href="/teamInfo/{{team.key}}"> {{team.data.name}}  </a> </h5> 
                     <button type="button" (click)="updateTeam(team)"  class="btn btn-warning btn-sm" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" ><i class="fas fa-edit"></i></button>

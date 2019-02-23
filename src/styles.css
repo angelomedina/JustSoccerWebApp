@@ -9,7 +9,7 @@ deeppurple-amber.css
 indigo-pink.css
 pink-bluegrey.css
 purple-green.css
-*/
+*/ 
 
 
 
@@ -407,7 +407,7 @@ div.colorDiv {
 }
 
 .imgCentral{
-    background-image: url('http://www.tcminplay.com/wp-content/uploads/2018/02/stadium-background.jpg');
+    background-image: url('https://million-wallpapers.com/wallpapers/4/9/15498689153547717297.jpg');
     /* Full height */
   height: 100%; 
 
@@ -415,4 +415,15 @@ div.colorDiv {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+
+.activePers{
+    background-color: rgba(196, 191, 191, 0.892);
+    font-size: 19px;
+}
+
+.desactivePers{
+    background-color: white;
+    font-size: 12px;
 }

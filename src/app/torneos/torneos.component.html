@@ -1,19 +1,19 @@
-<div class="main-content body imgCentral" style="height:540px">
+<div class="main-content body elementToFadeInAndOut imgCentral" style="height:530px">
     <div class="container-fluid">
 
         <ul class="nav nav-tabs justify-content-center">
             <li style="margin-right:2%;" class="nav-item">
-                <a id="log" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':read == true}" class="nav-link" (click)="verTorneos()">Ver Torneos </a>
+                <a id="log" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'activePers':read == true, 'desactivePers':read==false}" class="nav-link" (click)="verTorneos()">Ver Torneos </a>
             </li>
             <li style="margin-right:2%;" class="nav-item" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
-                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':create == true}" class="nav-link" (click)="creaTorneo()">Crear Torneo</a>
+                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'activePers':create == true, 'desactivePers':create==false}" class="nav-link" (click)="creaTorneo()">Crear Torneo</a>
             </li>
         </ul>
 
         <br>
-
+ 
         <!-- Crear torno nuevo -->
-        <div style="text-align:center;margin-left:20%; margin-right:20%;margin-top:2%; border-radius:15px; background-color:rgba(179, 174, 174, 0.892); padding: 2% 2% 2% 2%;" *ngIf="create">
+        <div class="elementToFadeInAndOut" style="text-align:center;margin-left:20%; margin-right:20%;margin-top:2%; border-radius:15px; background-color:rgba(179, 174, 174, 0.892); padding: 2% 2% 2% 2%;" *ngIf="create">
             <form id="register-form" role="form" style="text-align:center">
 
                 <div class="form-group">
@@ -48,7 +48,7 @@
 
 
         <!-- Visualizar lista de torneos -->
-        <div style="  margin-left:15%;margin-right:15%;background-color:rgba(155, 242, 158, 0.707); border-radius:30px; padding-bottom:1% ; width: 70%;  height: 450px; overflow-y: scroll;" *ngIf="read">
+        <div class="elementToFadeInAndOut" style="margin-left:15%;margin-right:15%;background-color:rgba(179, 174, 174, 0.892); border-radius:30px; padding-bottom:1% ;" *ngIf="read">
 
             <div *ngFor="let torneo of TournamnetList" style="margin-top:2%;border-radius:15px;">
                 <br>
