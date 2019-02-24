@@ -415,7 +415,7 @@ div.colorDiv {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
+ 
 }
 
 
@@ -428,3 +428,14 @@ div.colorDiv {
     background-color: white;
     font-size: 14px;
 }   
+
+.pagination{
+    background-color: rgba(214, 213, 230, 0.9);
+    text-align: center;
+    margin-left: 30%;
+    margin-right: 20%;
+    padding: 1% 1% 1% 1%;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: rgb(235, 123, 19)
+}

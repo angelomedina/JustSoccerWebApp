@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 })
 export class NotasAdminComponent implements OnInit {
 
+  p: number = 1;
+
   constructor(private notaServ:NotasService, private authServ:AuthService,private storage:AngularFireStorage,
     private http: HttpClient) {
   }

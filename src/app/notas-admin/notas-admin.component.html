@@ -5,18 +5,17 @@
         <div class="alert alert-warning elementToFadeInAndOut" role="alert" *ngIf="notesList.length==0">
             <strong>Cargando notas ....!!</strong>
         </div>
+        <div style="padding: 25% 25% 25% 25%" *ngIf="notesList.length==0" ></div>
 
-
-        <div>
-            <hr style="color:blue;">
-            <span style="color:rgb(92, 59, 17)"> A continuación se muestran las 50 notas deportivas  más recientes de Just Soccer. Para ver más visite el blog principal de</span>
+        <div style="border-color:rgb(191, 192, 107);
+        background-color:rgba(218, 215, 223, 0.9); padding: 1% 0% 1% 2%;border-radius: 20px;">
+            <span style="color:rgb(168, 105, 33);"> A continuación se muestran las 50 notas deportivas  más recientes de Just Soccer. Para ver más visite el blog principal de</span>
             <a href="http://justsoccercr.blogspot.com/" target="_blank"> Just Soccer</a><br>
-            <hr style="color:rgb(47, 47, 87);">
         </div>
 
 
         <div class="card-group elementToFadeInAndOut" *ngIf="readNote">
-            <div *ngFor="let nota of jsonNotas.items; let i=index;">
+            <div *ngFor="let nota of jsonNotas.items| paginate: { itemsPerPage: 9, currentPage: p }    ; let i=index;">
               <div style="margin-left:9%">
                     <div style="margin-top:10%; margin-right: 5%;  border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card">
                        
@@ -29,15 +28,15 @@
                                 <small>Nota escrita por {{nota.author.displayName}}</small><br>
                                 <small style="color:grey">Feha de publicación: {{nota.updated}}</small><br>
                             </div>
-    
-    
                         </div>
-
+ 
               </div>
-                    
-               
             </div>
         </div>
+        <div style="margin-top:4%;" class="pagination" *ngIf="readNote && notesList.length>0">
+            <pagination-controls  responsive="true" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event"></pagination-controls>
+        </div>
+        <div style="padding: 2% 2% 1% 2%" *ngIf="readNote" ></div>
 
 
 

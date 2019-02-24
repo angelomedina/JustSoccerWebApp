@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { EditorModule } from '@tinymce/tinymce-angular';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 // Conexion con FireBase
 import {environment} from '../environments/environment';
@@ -94,6 +95,7 @@ import { RandomComponent } from './random/random.component';
     AngularFireStorageModule,
     AngularFirestoreModule,
     AngularFireDatabaseModule,
+    NgxPaginationModule,
     AngularFireModule.initializeApp(environment.firebaseConfig,'JustSoccerWebApp')
   ],
   providers: [],
