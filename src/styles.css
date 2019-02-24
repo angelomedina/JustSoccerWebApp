@@ -407,7 +407,7 @@ div.colorDiv {
 }
 
 .imgCentral{
-    background-image: url('https://million-wallpapers.com/wallpapers/4/9/15498689153547717297.jpg');
+    background:  url('https://million-wallpapers.com/wallpapers/4/9/15498689153547717297.jpg');
     /* Full height */
   height: 100%; 
 
@@ -415,15 +415,16 @@ div.colorDiv {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
 }
 
 
 .activePers{
     background-color: rgba(196, 191, 191, 0.892);
-    font-size: 19px;
+    font-size: 110%;
 }
 
 .desactivePers{
     background-color: white;
-    font-size: 12px;
-}
+    font-size: 14px;
+}   

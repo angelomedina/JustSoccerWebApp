@@ -1,18 +1,21 @@
-<div class="main-content body elementToFadeInAndOut">
+<div class="main-content body elementToFadeInAndOut imgCentral" style="padding:
+    2% 2% 2% 2%">
     <div class="container-fluid">
 
         <ul class="nav nav-tabs justify-content-center">
             <li style="margin-right:2%;" class="nav-item">
                 <a id="log" style="color:rgb(38, 82,
-                    28);text-decoration:underline;" [ngClass]="{'nav-link
-                    active':ver == true}" class="nav-link"
+                    28);text-decoration:underline;" [ngClass]="{'activePers':ver
+                    == true,'desactivePers':ver == false}" class="nav-link"
                     (click)="verJugadoras()">Ver Lista de Jugadoras del torneo</a>
             </li>
-            <li style="margin-right:2%;" class="nav-item" *ngIf="authServ.userType
+            <li style="margin-right:2%;" class="nav-item"
+                *ngIf="authServ.userType
                 === 'superAdmin' || authServ.userType === 'admin'">
                 <a id="reg" style="color:rgb(38, 82,
-                    28);text-decoration:underline;" [ngClass]="{'nav-link
-                    active':inscribe == true}" class="nav-link"
+                    28);text-decoration:underline;"
+                    [ngClass]="{'activePers':inscribe ==
+                    true,'desactivePers':inscribe == false}" class="nav-link"
                     (click)="inscribirPlayer()">Inscribir jugadoras a equipos</a>
             </li>
         </ul>
@@ -81,43 +84,44 @@
             <form id="register-form" class="elementToFadeInAndOut" role="form"
                 *ngIf="inscribe">
                 <div class="form-row" style="border-style:outset;
-                    border-radius:20px;border-color:blueviolet; padding: 2% 2%
+                    border-radius:20px;border-color:rgb(191, 192, 107);
+                    background-color:rgba(140, 108, 199, 0.7); padding: 2% 2%
                     2% 2%;">
                     <br>
                     <div class="form-group col-md-3">
-                        <label for="sel1" style="font-family: 'Trebuchet MS',
+                        <label for="sel1" style="color:rgb(223, 235, 222); font-family: 'Trebuchet MS',
                             'Lucida Sans Unicode', 'Lucida Grande', 'Lucida
-                            Sans', Arial, sans-serif">Nombre</label>
+                            Sans', Arial, sans-serif;">Nombre</label>
                         <input type="text" name="playerName" tabindex="1"
                             [(ngModel)]="playerName" class="form-control">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="sel1" style="font-family: 'Trebuchet MS',
+                        <label for="sel1" style=" color:rgb(223, 235, 222); font-family: 'Trebuchet MS',
                             'Lucida Sans Unicode', 'Lucida Grande', 'Lucida
-                            Sans', Arial, sans-serif">Primer Apellido</label>
+                            Sans', Arial, sans-serif;">Primer Apellido</label>
                         <input type="text" name="surname1" tabindex="1"
                             [(ngModel)]="surname1" class="form-control">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="sel1" style="font-family: 'Trebuchet MS',
+                        <label for="sel1" style=" color:rgb(223, 235, 222); font-family: 'Trebuchet MS',
                             'Lucida Sans Unicode', 'Lucida Grande', 'Lucida
                             Sans', Arial, sans-serif">Segundo Apellido</label>
                         <input type="text" name="surname2" tabindex="1"
                             [(ngModel)]="surname2" class="form-control">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="sel1" style="font-family: 'Trebuchet MS',
+                        <label for="sel1" style=" color:rgb(223, 235, 222); font-family: 'Trebuchet MS',
                             'Lucida Sans Unicode', 'Lucida Grande', 'Lucida
                             Sans', Arial, sans-serif">Equipo</label>
                         <!-- <input type="text" name="team" tabindex="1" [(ngModel)]="team" class="form-control"> -->
                         <select class="form-control" id="team" name="team"
                             [(ngModel)]="team">
                             <option *ngFor="let team of equiposTable; let
-                                i=index"value="{{team.idTeam}}" selected value>{{team.name}}</option>
+                                i=index" value="{{team.idTeam}}" selected value>{{team.name}}</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label style="font-family: 'Trebuchet MS', 'Lucida Sans
+                        <label style=" color:rgb(223, 235, 222); font-family: 'Trebuchet MS', 'Lucida Sans
                             Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
                             sans-serif">Foto Perfil</label>
                         <input type="file" accept="image/*"
@@ -131,63 +135,89 @@
                     </div>
                     <div style="margin-left:7%;margin-top:4%;" class="form-group
                         col-md-6">
-                        <button type="button" class="btn btn-outline-success"
+                        <button type="button" class="btn btn-success"
                             (click)="inscribirPlayerNew()">Inscribir jugadora al
                             equipo!!</button>
                     </div>
                 </div>
             </form>
         </div>
+        <div *ngIf="inscribe" style="padding: 4% 4% 4% 4%"></div>
+
+
 
         <!-- Mostrar jugadoras del torneo -->
-        <div style="margin-top:2%;margin-left:2%;margin-right:2%" *ngIf="ver">
-            <span style="color:red;">Seleccione un equipo para ver su lista de
-                jugadoras ↲ </span>
-            <div class="form-group col-md-3">
-                <select class="form-control" id="team" name="team"
-                    [(ngModel)]="team"
-                    (change)="obtieneJugadorasEquipo($event)">
-                    <option *ngFor="let team of equiposTable; let i=index"value="{{team.idTeam}}"
-                        selected value>{{team.name}}</option>
-                </select>
+        <div style="padding:2% 2% 1% 2%; display:inline" *ngIf="ver">
+            <div style="border-style:solid;border-color:rgb(191, 192, 107);
+                background-color:
+                rgba(140, 108, 199, 0.7); width: 40%; border-radius: 20px;
+                padding: 1% 1% 1% 1%">
+                <span style="color:rgb(243, 217, 217);">Seleccione un equipo
+                    para ver su lista de
+                    jugadoras ↲ </span>
+                <div class="form-group col-md-6">
+                    <select class="form-control" id="team" name="team"
+                        [(ngModel)]="team"
+                        (change)="obtieneJugadorasEquipo($event)">
+                        <option *ngFor="let team of equiposTable; let i=index"
+                            value="{{team.idTeam}}"
+                            selected value>{{team.name}}</option>
+                    </select>
+
+                </div>
+
             </div>
 
-            <!-- <div *ngIf="inicio" class="elementToFadeInAndOut"> -->
-            <img src="http://www.asopade.org/uniffut/images/quienes-somos-1.jpg"
-                class="responsive" alt="logo uniffut">
-        </div>
+            <div *ngIf="inicio" class="elementToFadeInAndOut"
+                style="margin-top:2%">
+                <img
+                    src="http://www.asopade.org/uniffut/images/quienes-somos-1.jpg"
+                    class="responsive" alt="logo uniffut">
 
-        <div *ngIf="!vacioteam && !inicio"
-            style="margin-left:20%;margin-right:20%;margin-top:1%;
-            border-radius:15px;border-color:rgb(0, 0, 0);border-style:solid;">
-            <table style="text-align:center;" class="table
-                elementToFadeInAndOut" *ngIf="jugadorasEquipo.length>0">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Nombre Completo</th>
-                        <th scope="col">Imagen Perfil</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let player of jugadorasEquipo; let i=index">
-                        <th scope="row">{{player.data.name}}
-                            {{player.data.surnameI}} {{player.data.surnameII}}
-                        </th>
-                        <th scope="row">
-                            <img src="{{player.data.url}}" alt="perfil"
-                                class="img10">
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            </div>
 
-    </div>
-    <div *ngIf="vacioteam" class="elementToFadeInAndOut"
-        style="margin-left:20%;margin-right:20%;
-        margin-top:7%;border-style:double; color:black;padding: 2% 2% 2% 2%;">
-        <span style="text-align:center;color:rgb(204, 124, 38);
-            font-size:22px;"> Equipo seleccionado no dispone de jugadoras
-            inscritas aún!! </span>
+            <div *ngIf="!vacioteam && !inicio"
+                style="margin-left:20%;margin-right:20%;margin-top:4%;
+                border-radius:15px;border-color:rgb(0, 0,
+                0);border-style:solid; background-color:
+                rgba(137, 181, 206, 0.7);">
+                <table style="text-align:center;" class="table
+                    elementToFadeInAndOut" *ngIf="jugadorasEquipo.length>0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre Completo</th>
+                            <th scope="col">Imagen Perfil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let player of jugadorasEquipo; let i=index">
+                            <th scope="row">{{player.data.name}}
+                                {{player.data.surnameI}}
+                                {{player.data.surnameII}}
+                            </th>
+                            <th scope="row">
+                                <img src="{{player.data.url}}" alt="perfil"
+                                    class="img10">
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>  
+        
+
+        <div *ngIf="vacioteam" class="elementToFadeInAndOut"
+            style="margin-left:20%;margin-right:20%;
+            margin-top:4%;border-style:double; color:black;padding: 2% 2% 2%
+            2%;background-color: rgba(209, 183, 96, 0.7);">
+            <span style="text-align:center;color:rgb(49, 36, 24);
+                font-size:22px;"> Equipo seleccionado no dispone de jugadoras
+                inscritas aún!! </span>
+                <img style=" margin-top: 1%;  margin-left: 30%; margin-right: 30%" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjEyOHB4IiB2aWV3Qm94PSIwIDAgNTEyLjAwMDM3IDUxMiIgd2lkdGg9IjEyOHB4Ij48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Im0yNDguOTUzMTI1IDYxLjI3MzQzOGMtNS4zNjcxODctMS4yMzgyODItMTAuNzIyNjU2IDIuMTAxNTYyLTExLjk2NDg0NCA3LjQ2ODc1LTEuMjQyMTg3IDUuMzY3MTg3IDIuMTA1NDY5IDEwLjcyNjU2MiA3LjQ3MjY1NyAxMS45Njg3NSAyNC44MTI1IDUuNzM0Mzc0IDQ3LjQ5MjE4NyAxOC4zMzIwMzEgNjUuNTgyMDMxIDM2LjQyMTg3NCA1My4xODM1OTMgNTMuMTgzNTk0IDUzLjE4MzU5MyAxMzkuNzI2NTYzIDAgMTkyLjkxMDE1Ny01My4xODM1OTQgNTMuMTg3NS0xMzkuNzI2NTYzIDUzLjE4NzUtMTkyLjkxMDE1NyAwLTUzLjE4NzUtNTMuMTgzNTk0LTUzLjE4NzUtMTM5LjcyNjU2MyAwLTE5Mi45MTAxNTcgMTUuMjY5NTMyLTE1LjI2OTUzMSAzMy4zMzk4NDQtMjYuNDA2MjUgNTMuNzEwOTM4LTMzLjEwOTM3NCA1LjIzMDQ2OS0xLjcxODc1IDguMDc4MTI1LTcuMzU1NDY5IDYuMzU5Mzc1LTEyLjU4OTg0NC0xLjcyMjY1Ni01LjIzNDM3NS03LjM2MzI4MS04LjA4MjAzMi0xMi41OTM3NS02LjM1OTM3NS0yMy4zNjcxODcgNy42ODM1OTMtNDQuMDg1OTM3IDIwLjQ1MzEyNS02MS41ODIwMzEgMzcuOTUzMTI1LTYwLjk2NDg0NCA2MC45NjQ4NDQtNjAuOTY0ODQ0IDE2MC4xNjAxNTYgMCAyMjEuMTI1IDMwLjQ4MDQ2OCAzMC40ODA0NjggNzAuNTE5NTMxIDQ1LjcyMjY1NiAxMTAuNTYyNSA0NS43MjI2NTYgNDAuMDM5MDYyLS4wMDM5MDYgODAuMDc4MTI1LTE1LjI0MjE4OCAxMTAuNTYyNS00NS43MjI2NTYgNjAuOTYwOTM3LTYwLjk2NDg0NCA2MC45NjA5MzctMTYwLjE2MDE1NiAwLTIyMS4xMjUtMjAuNzM4MjgyLTIwLjczNDM3NS00Ni43MzgyODItMzUuMTc1NzgyLTc1LjE5OTIxOS00MS43NTM5MDZ6bTAgMCIgZmlsbD0iIzAwMDAwMCIvPjxwYXRoIGQ9Im00OTguNDE0MDYyIDQzMi43MDcwMzEtMTA0LjUzMTI1LTEwNC41MzEyNWM1My42MDE1NjMtODQuMDU0Njg3IDQxLjg2MzI4Mi0xOTQuNDg0Mzc1LTI5LjI2NTYyNC0yNjUuNjE3MTg3LTQwLjMzOTg0NC00MC4zMzk4NDQtOTMuOTc2NTYzLTYyLjU1ODU5NC0xNTEuMDI3MzQ0LTYyLjU1ODU5NC01Ny4wNTQ2ODggMC0xMTAuNjkxNDA2IDIyLjIxODc1LTE1MS4wMzEyNSA2Mi41NTg1OTQtNDAuMzQzNzUgNDAuMzM5ODQ0LTYyLjU1ODU5NCA5My45NzY1NjItNjIuNTU4NTk0IDE1MS4wMzEyNSAwIDU3LjA1MDc4MSAyMi4yMTQ4NDQgMTEwLjY4NzUgNjIuNTU4NTk0IDE1MS4wMjczNDQgNDAuMzM5ODQ0IDQwLjMzOTg0MyA5My45NzI2NTYgNjIuNTU0Njg3IDE1MS4wMjM0MzcgNjIuNTU0Njg3IDQwLjk0NTMxMyAwIDgwLjM4NjcxOS0xMS40ODQzNzUgMTE0LjU5Mzc1LTMzLjI4OTA2M2wxMDQuNTMxMjUgMTA0LjUzMTI1YzguNzQ2MDk0IDguNzUgMjAuNDE0MDYzIDEzLjU2NjQwNyAzMi44NTU0NjkgMTMuNTY2NDA3IDEyLjQzNzUgMCAyNC4xMDU0NjktNC44MTY0MDcgMzIuODU1NDY5LTEzLjU2NjQwNyAxOC4xMDkzNzUtMTguMTE3MTg3IDE4LjEwOTM3NS00Ny41ODk4NDMtLjAwMzkwNy02NS43MDcwMzF6bS0xNC4xMDU0NjggNTEuNjAxNTYzYy00Ljk4MDQ2OSA0Ljk3NjU2Mi0xMS42MzY3MTkgNy43MTg3NS0xOC43NDYwOTQgNy43MTg3NS03LjExMzI4MSAwLTEzLjc2OTUzMS0yLjc0MjE4OC0xOC43NS03LjcxODc1bC0xMTAuMzA0Njg4LTExMC4zMDQ2ODhjLTEuOTI5Njg3LTEuOTMzNTk0LTQuNDg0Mzc0LTIuOTIxODc1LTcuMDU0Njg3LTIuOTIxODc1LTEuOTc2NTYzIDAtMy45NjA5MzcuNTgyMDMxLTUuNjgzNTk0IDEuNzc3MzQ0LTMyLjQxMDE1NiAyMi40ODA0NjktNzAuNTE1NjI1IDM0LjM2MzI4MS0xMTAuMTg3NSAzNC4zNjMyODEtNTEuNzIyNjU2IDAtMTAwLjM0NzY1Ni0yMC4xNDA2MjUtMTM2LjkxNzk2OS01Ni43MTA5MzctNzUuNS03NS41LTc1LjUtMTk4LjM0NzY1NyAwLTI3My44NDc2NTcgMzYuNTc0MjE5LTM2LjU3NDIxOCA4NS4xOTkyMTktNTYuNzE0ODQzIDEzNi45MjU3ODItNTYuNzE0ODQzIDUxLjcyMjY1NiAwIDEwMC4zNDc2NTYgMjAuMTQwNjI1IDEzNi45MjE4NzUgNTYuNzE0ODQzIDY2LjI4MTI1IDY2LjI4NTE1NyA3NS42ODM1OTMgMTcwLjIwNzAzMiAyMi4zNDc2NTYgMjQ3LjEwNTQ2OS0yLjc1IDMuOTY0ODQ0LTIuMjY5NTMxIDkuMzI0MjE5IDEuMTQ0NTMxIDEyLjczODI4MWwxMTAuMzA0Njg4IDExMC4zMDQ2ODhjMTAuMzM1OTM3IDEwLjMzNTkzOCAxMC4zMzU5MzcgMjcuMTU2MjUgMCAzNy40OTYwOTR6bTAgMCIgZmlsbD0iIzAwMDAwMCIvPjxwYXRoIGQ9Im0yNzMuODA0Njg4IDE1My4zNzEwOTRjLTMuODk0NTMyLTMuODk0NTMyLTEwLjIwNzAzMi0zLjg5NDUzMi0xNC4xMDU0NjkgMGwtNDYuMTA5Mzc1IDQ2LjEwOTM3NS00Ni4xMTMyODItNDYuMTA5Mzc1Yy0zLjg5NDUzMS0zLjg5NDUzMi0xMC4yMTA5MzctMy44OTQ1MzItMTQuMTA1NDY4IDAtMy44OTQ1MzIgMy44OTQ1MzEtMy44OTQ1MzIgMTAuMjEwOTM3IDAgMTQuMTA1NDY4bDQ2LjEwOTM3NSA0Ni4xMTMyODItNDYuMTA5Mzc1IDQ2LjEwOTM3NWMtMy44OTQ1MzIgMy44OTQ1MzEtMy44OTQ1MzIgMTAuMjEwOTM3IDAgMTQuMTA1NDY5IDEuOTQ1MzEyIDEuOTQ5MjE4IDQuNSAyLjkyMTg3NCA3LjA1MDc4MSAyLjkyMTg3NCAyLjU1NDY4NyAwIDUuMTA1NDY5LS45NzI2NTYgNy4wNTQ2ODctMi45MjE4NzRsNDYuMTA5Mzc2LTQ2LjEwOTM3NiA0Ni4xMDkzNzQgNDYuMTA5Mzc2YzEuOTQ5MjE5IDEuOTQ5MjE4IDQuNTAzOTA3IDIuOTIxODc0IDcuMDU0Njg4IDIuOTIxODc0IDIuNTU0Njg4IDAgNS4xMDU0NjktLjk3MjY1NiA3LjA1NDY4OC0yLjkyMTg3NCAzLjg5NDUzMS0zLjg5NDUzMiAzLjg5NDUzMS0xMC4yMTA5MzggMC0xNC4xMDU0NjlsLTQ2LjExMzI4Mi00Ni4xMDkzNzUgNDYuMTEzMjgyLTQ2LjExMzI4MmMzLjg5NDUzMS0zLjg5NDUzMSAzLjg5NDUzMS0xMC4yMTA5MzcgMC0xNC4xMDU0Njh6bTAgMCIgZmlsbD0iIzAwMDAwMCIvPjxwYXRoIGQ9Im0yMDYuOTc2NTYyIDc3LjMyODEyNWM1LjQ5MjE4OCAwIDkuOTcyNjU3LTQuNDgwNDY5IDkuOTcyNjU3LTkuOTc2NTYzIDAtNS40OTIxODctNC40ODA0NjktOS45NzI2NTYtOS45NzI2NTctOS45NzI2NTYtNS40OTYwOTMgMC05Ljk3NjU2MiA0LjQ4MDQ2OS05Ljk3NjU2MiA5Ljk3MjY1NiAwIDUuNDk2MDk0IDQuNDgwNDY5IDkuOTc2NTYzIDkuOTc2NTYyIDkuOTc2NTYzem0wIDAiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+Cg==" />
+
+        </div>
+        <div *ngIf="vacioteam" style="padding: 9% 9% 9% 9%"></div>
+        <div *ngIf="!vacioteam" style="padding: 3% 3% 3% 3%"></div>
     </div>
 </div>

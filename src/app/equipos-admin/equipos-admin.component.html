@@ -1,12 +1,12 @@
-<div class="main-content body elementToFadeInAndOut">
+<div class="main-content body elementToFadeInAndOut imgCentral">
     <div>
         <div style="float:left;">
 
         </div>
         <div style="text-align:center">
-            <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:darkblue;">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button></h2>
+            <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:rgb(228, 227, 163);">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button></h2>
             <hr style="color:blueviolet;">
-            <img src="../../assets/imgs/unifutLOGO.png" alt="logoUnifut" height="200" width="250"><br>
+            <img style="background-color:white; border-radius:40px; margin-bottom:2%;" src="../../assets/imgs/unifutLOGO.png" alt="logoUnifut" height="200" width="250"><br>
         </div>
     </div>
 
@@ -20,16 +20,17 @@
  
     <!-- Formulario de crear equipo nuevo -->
 
-    <div class="elementToFadeInAndOut" style="text-align:center; margin-left:10%;margin-right:10%;border-style:outset; border-radius:20px;border-color:blueviolet; padding: 3% 3% 3% 3%; " *ngIf="add">
+    <div class="elementToFadeInAndOut" style="text-align:center; margin-left:10%;margin-right:10%;border-style:outset; border-radius:20px;border-color:rgb(191, 192, 107);
+    background-color:rgba(140, 108, 199, 0.7); padding: 3% 3% 3% 3%; " *ngIf="add">
 
         <div class="form-group row">
-            <label for="inputEmail3">Nombre del equipo</label>
+            <label style="color:white" for="inputEmail3">Nombre del equipo</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" tabindex="4" name="nombre" autocomplete="off" [(ngModel)]="nombre">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Logo del equipo</label>
+            <label style="color:white" for="inputEmail3">Logo del equipo</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="file" accept="image/*" (change)="upload($event)">
                 <div class="progress">
@@ -39,7 +40,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Imagen del estadioo</label>
+            <label style="color:white" for="inputEmail3">Imagen del estadioo</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="file" accept="image/*" (change)="uploadstadium($event)">
                 <div class="progress">
@@ -50,25 +51,25 @@
         </div>
 
         <div class="form-group row">
-            <label for="inputEmail3">Localización</label>
+            <label style="color:white" for="inputEmail3">Localización</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="localization" autocomplete="off" [(ngModel)]="localization">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Copas Ganadas</label>
+            <label style="color:white" for="inputEmail3">Copas Ganadas</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="copas" autocomplete="off" [(ngModel)]="copas">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Descripción</label>
+            <label style="color:white" for="inputEmail3">Descripción</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="descrip" autocomplete="off" [(ngModel)]="descrip">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Fecha de Fundación</label>
+            <label style="color:white" for="inputEmail3">Fecha de Fundación</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="fechaFundac" [(ngModel)]="fechaFundac">
             </div>
@@ -76,16 +77,18 @@
         <div>
                 <button type="button" (click)="cancelAdd()" class="btn btn-warning btn-sm" (click)="addTeam()">Cancelar</button>
             <button type="button" style="margin-left:3%;" class="btn btn-success btn-sm" (click)="addTeam()">Agregar equipo</button><br>
-            <small style="color:red;"> Formulario de registro únicamente para equipos de Primera División  </small>
+            <span style="color:rgb(175, 207, 67); font-size: 90%"> Formulario de registro únicamente para equipos de Primera División  </span>
         </div>
     </div>
+    <div *ngIf="add" style="padding: 3% 3% 3% 3%">   </div>
 
 
     <!-- Formulario para actualizar los datos de un equipo -->
-    <div class="elementToFadeInAndOut" style="text-align:center; margin-left:10%;margin-right:10%;border-style:outset; border-radius:20px;border-color:blueviolet; padding: 3% 3% 3% 3%; " *ngIf="update">
+    <div class="elementToFadeInAndOut" style="text-align:center; margin-left:10%;margin-right:10%;border-style:outset; border-radius:20px;border-color:rgb(191, 192, 107);
+    background-color:rgba(140, 108, 199, 0.7); padding: 3% 3% 3% 3%; " *ngIf="update">
 
         <div class="form-group row">
-            <label for="inputEmail3">Nombre del equipo</label>
+            <label style="color:white" for="inputEmail3">Nombre del equipo</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" tabindex="4" name="nombre" autocomplete="off" [(ngModel)]="nombre">
             </div>
@@ -111,25 +114,25 @@
             </div>
         </div> -->
         <div class="form-group row">
-            <label for="inputEmail3">Localización</label>
+            <label style="color:white" for="inputEmail3">Localización</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="localization" autocomplete="off" [(ngModel)]="localization">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Copas Ganadas</label>
+            <label style="color:white" for="inputEmail3">Copas Ganadas</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="copas" autocomplete="off" [(ngModel)]="copas">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Descripción</label>
+            <label style="color:white" for="inputEmail3">Descripción</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="descrip" autocomplete="off" [(ngModel)]="descrip">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3">Fecha de Fundación</label>
+            <label style="color:white" for="inputEmail3">Fecha de Fundación</label>
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" name="fechaFundac" [(ngModel)]="fechaFundac">
             </div>
@@ -139,21 +142,24 @@
             <button type="button" style="margin-left:3%;" class="btn btn-success btn-sm" (click)="updateT()">Actualizar equipo</button><br>
         </div>
     </div>
+    <div *ngIf="update" style="padding: 3% 3% 3% 3%">   </div>
  
 
     <!-- Ver los equipos -->
     <div class="card-columns elementToFadeInAndOut " style="margin-left:3%" *ngIf="view">
         <div *ngFor="let team of teamList; let i=index;">
-            <div style="text-align:center; background-color: rgba(139, 158, 139, 0.5); margin-bottom:10%; width: 310px; border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card ">
+            <div style="text-align:center; background-color: rgba(139, 158, 139, 0.9); margin-bottom:10%; width: 310px; border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card ">
+                <a href="/teamInfo/{{team.key}}" >  
                 <img class="card-img-top" style="background-color:white" src="{{team.data.logoImg}}" alt="Card image cap" width="150px" height="210px">
+                </a> 
                 <div class="card-body">
-                    <h5 class="card-title"> <a href="/teamInfo/{{team.key}}"> {{team.data.name}}  </a> </h5> 
+                    <h5 class="card-title"> <a href="/teamInfo/{{team.key}}"  style="text-decoration: none; color:red" > {{team.data.name}}  </a> </h5> 
                     <button type="button" (click)="updateTeam(team)"  class="btn btn-warning btn-sm" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" ><i class="fas fa-edit"></i></button>
                     <button type="button" (click)="deleteTeam(team)" style="margin-left:2%" class="btn btn-danger btn-sm" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" ><i class="fas fa-trash-alt"></i></button>
                     
                     <p class="card-text"></p>
                     <!-- <p class="card-text">{{team.data.description}}</p> -->
-                    <p class="card-text"><small class="text-muted">Fecha de fundación: {{team.data.fundation}}</small></p>
+                    <p class="card-text"><span style="color:blue;font-size: 80%;" >Fecha de fundación: {{team.data.fundation}}</span></p>
                 </div>
             </div>
         </div>
