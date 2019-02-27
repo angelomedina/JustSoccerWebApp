@@ -26,4 +26,7 @@ export class PlayersService {
   updatePlayer(player,key){
     this.firebase.database.ref('player/'+key).set(player);
   }
+
+
+  
 }

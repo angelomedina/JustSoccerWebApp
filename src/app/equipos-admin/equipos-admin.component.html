@@ -6,7 +6,9 @@
         <div style="text-align:center">
             <h2 style="text-align:center; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:rgb(228, 227, 163);">Equipos participantes del Futbol Femenino de Primera División CR <button type="button" (click)="addTeamView()" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button></h2>
             <hr style="color:blueviolet;">
-            <img style="background-color:white; border-radius:40px; margin-bottom:2%;" src="../../assets/imgs/unifutLOGO.png" alt="logoUnifut" height="200" width="250"><br>
+            <a href="https://uniffut.com/" target="_blank">
+                <img style="background-color:white; border-radius:40px; margin-bottom:2%; " src="../../assets/imgs/unifutLOGO.png" alt="logoUnifut" height="200" width="250"><br>
+            </a>
         </div>
     </div>
 
@@ -148,7 +150,7 @@
     <!-- Ver los equipos -->
     <div class="card-columns elementToFadeInAndOut " style="margin-left:3%" *ngIf="view">
         <div *ngFor="let team of teamList; let i=index;">
-            <div style="text-align:center; background-color: rgba(139, 158, 139, 0.9); margin-bottom:10%; width: 310px; border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.75);" class="card ">
+            <div style="text-align:center; background-color: rgba(139, 158, 139, 0.9); margin-bottom:10%; width: 310px; border-radius:30px;box-shadow: 9px 9px 17px 2px rgba(0,0,0,0.95);" class="card ">
                 <a href="/teamInfo/{{team.key}}" >  
                 <img class="card-img-top" style="background-color:white" src="{{team.data.logoImg}}" alt="Card image cap" width="150px" height="210px">
                 </a> 

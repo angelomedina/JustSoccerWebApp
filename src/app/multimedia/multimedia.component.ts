@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MultimediaService } from '../services/multimedia.service';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
-import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-multimedia',
@@ -18,6 +18,8 @@ export class MultimediaComponent implements OnInit {
   videosList:any=[];
 
   videoNew:boolean = false;
+  adding:boolean = false;
+  noAdd:boolean= true;
 
 
   ngOnInit() {
@@ -41,6 +43,36 @@ export class MultimediaComponent implements OnInit {
 
   addVideo(){
     this.videoNew=true;
+    this.adding= true;
+    this.noAdd= false;
+  }
+
+  cancelAdd(){
+    this.noAdd = true;
+    this.adding= false; 
+    this.videoNew= false;
+  }
+
+  deleteVideo(video){
+
+    Swal({
+      title: 'Eliminar Video',
+      text: "En serio desea eliminar este video del sistema? No será posible recuperarlo en caso de eliminarlo!!",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminarlo!'
+    }).then((result) => {
+      if (result.value) {
+        Swal(
+          'Elimiando!',
+          'El video ha sido eliminado correctamnete',
+          'success'
+        )
+        this.multiServ.deleteVideo(video.key);
+      }
+    })
+
   }
 
 
@@ -51,11 +83,9 @@ export class MultimediaComponent implements OnInit {
     let json ={
       url:VideoID
     }
-
     this.multiServ.addVideo(json);
     this.videoNew=false;
     Swal("Bien!", "Video agregado Correctamente", "success");
-
 
   }
 

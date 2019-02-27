@@ -25,6 +25,11 @@ export class PlayersComponent implements OnInit {
   tablesList:any=[];
   playerNoInscritas:any =[];
   jugadorasEquipo:any=[];
+  
+  playerTeamActual="";
+  playerStatusActual="";
+  playerKeyActual="";
+  urlActual="";
 
   //Variables NgIf
   ver:boolean=true;
@@ -32,6 +37,7 @@ export class PlayersComponent implements OnInit {
   add:boolean= false;
   vacioteam:boolean=false;
   inicio:boolean= true;
+  updatePl: boolean= false;
 
   //Variables NGModel
   // name="";
@@ -102,6 +108,7 @@ export class PlayersComponent implements OnInit {
     this.ver=true;
     this.inscribe=false;
     this.add=false;
+    this.updatePl= false;
   }
   addPlayer(){
     this.inicio= false;
@@ -109,6 +116,7 @@ export class PlayersComponent implements OnInit {
     this.ver=false;
     this.inscribe=false;
     this.add=true;
+    this.updatePl= false;
   }
 
   inscribirPlayer(){
@@ -116,8 +124,13 @@ export class PlayersComponent implements OnInit {
     this.vacioteam= false;
     this.ver=false;
     this.inscribe=true;
-    this.add=false;
+    this.add=false; this.updatePl= false;
     this.teams = this.tablaUsar.data.teams;
+  }
+
+  cancelUpdate(){
+    this.verJugadoras();
+    this.resetForm();
   }
 
 
@@ -209,21 +222,76 @@ export class PlayersComponent implements OnInit {
     let idT= (<HTMLInputElement>document.getElementById("team")).value;  //Obtiene el id del equipo
     this.urlImg.subscribe(val =>{
         this.urlImagen= val;
-   let json={
-    idTeam:idT,
-    name:this.playerName,
-    surnameI:this.surname1,
-    surnameII:this.surname2,
-    url:this.urlImagen,
-    estado:"Inscrita"
+      let json={
+        idTeam:idT,
+        name:this.playerName,
+        surnameI:this.surname1,
+        surnameII:this.surname2,
+        url:this.urlImagen,
+        estado:"Inscrita"
+        }
+    this.playerServ.addPlayer(json); // agrega jugadora
+    Swal("Bien!", "Jugadora agregada Correctamente", "success");
+    this.resetForm();
+    this.inscribirPlayer();
+    })
+    this.inscribirPlayer();
+    }
+
+  updatePlayer(player){
+  
+    this.updatePl= true;
+    this.urlActual= player.data.url;
+    this.playerKeyActual= player.key;
+    this.playerTeamActual= player.data.idTeam;
+    this.playerStatusActual= player.data.estado;
+    this.playerName=player.data.name;
+    this.surname1=player.data.surnameI;
+    this.surname2= player.data.surnameII;
   }
-  this.playerServ.addPlayer(json); // agrega jugadora
-  Swal("Bien!", "Jugadora agregada Correctamente", "success");
-  this.resetForm();
-  this.inscribirPlayer();
-})
-this.inscribirPlayer();
-}
+
+  updateP(){
+    let json={
+      idTeam: this.playerTeamActual,
+      estado: this.playerStatusActual,
+      name:this.playerName,
+      surnameI: this.surname1,
+      surnameII:this.surname2,
+      url:this.urlActual
+    }
+
+    this.playerServ.updatePlayer(json, this.playerKeyActual);
+    Swal(
+      'Modificada!',
+      'La jugadora ha sido modificada correctamente. Refresque la pantalla para reflejar los cambios!!!!',
+      'success'
+    )
+    this.verJugadoras();
+    
+  }
+
+  deletePlayer(player){
+    Swal({
+      title: 'Eliminar Jugadora',
+      text: "En serio desea eliminar esta jugadora del sistema? No será posible recuperarle en caso de eliminarlo!!",
+      imageUrl: player.data.url,
+      imageWidth: 150,
+      imageHeight: 150,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.value) {
+        Swal(
+          'Eliminado!',
+          'La jugadora ha sido eliminada correctamente. Refresque la pantalla para reflejar los cambios!!!!',
+          'success'
+        )
+        this.playerServ.deletePlayer(player.key);
+      }
+    })
+  }
 
 
 }

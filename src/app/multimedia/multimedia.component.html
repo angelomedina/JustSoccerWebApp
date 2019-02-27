@@ -1,39 +1,51 @@
 <div class="main-content body elementToFadeInAndOut">
     <div class="container-fluid">
 
-        <div class="form-group elementToFadeInAndOut" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
-            <button type="button" class="btn btn-outline-success" (click)="addVideo()">Añadir video nuevo</button>
-            <div *ngIf="videoNew" class="elementToFadeInAndOut" style="border-color:#665442; border-radius:40px;">
+        <div class="form-group elementToFadeInAndOut" >
+            <button  type="button" style="margin-top:2%" class="btn btn-success"
+                *ngIf="noAdd && authServ.userType
+                === 'superAdmin' || authServ.userType === 'admin'"
+                (click)="addVideo()">Añadir video nuevo</button>
+
+            <div *ngIf="videoNew" class="elementToFadeInAndOut" style="padding:
+                2% 1% 2% 1%; background-color: rgba(182, 166, 174, 0.7); border-radius:10px;">
                 <label for="exampleInputEmail1">Url del video (Youtube)</label>
-                <input type="url" class="form-control" id="url" placeholder="url">
-                <small id="emailHelp" class="form-text text-muted">Ingrese una dirección completa url del video a subir</small>
-                <button type="submit" class="btn btn-primary mb-2" (click)="addUrl()">Agregar video</button>
-                <hr>
+                <input type="url" class="form-control" id="url"
+                    placeholder="url">
+                <small id="emailHelp" class="form-text text-muted">Ingrese una
+                    dirección completa url del video a subir. Por ejemplo
+                    https://www.youtube.com/watch?v=xx-ePdR6880</small>
+                <button type="submit" class="btn btn-primary mb-2"
+                    (click)="addUrl()">Agregar video</button>
+                <button type="button" style="margin-left:2%" class="btn
+                    btn-warning" *ngIf="adding" (click)="cancelAdd()">Cancelar</button>
             </div>
 
-        </div>
 
-        <!-- <div style="float:right;">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <small>Los videos pueden demorar en cargar debido a la velocidad de su internet!</small>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+
+
+            <!-- Muestra los videos directos desde youtube -->
+            <div style="text-align:left; margin-left:3%;margin-top:2%;"
+                class="elementToFadeInAndOut imgCentral">
+                <div *ngFor="let video of videosList"
+                    style="float:left;border-style:outset;margin-left:2%;margin-bottom:3%;border-radius:25px;box-shadow:
+                    8px 9px 20px 3px #382f26;">
+                    <!-- Haciendo uso de pipe Sanitizer para mostrar videos de manera segura -->
+                    <iframe width="450" height="330" [src]="video.data.url |
+                        sanitizer:'https://www.youtube.com/embed/'"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media;
+                        gyroscope;
+                        picture-in-picture" allowfullscreen></iframe>
+                        <div style="text-align:center; border-radius: 20px; margin-bottom:1%"  *ngIf="authServ.userType=== 'superAdmin' || authServ.userType === 'admin'" >
+                            <button class="btn btn-danger" (click)="deleteVideo(video)"> Eliminar Video </button>
+                        </div>
+                        
+                    <!-- src="https://www.youtube.com/embed/{{video.data.url}}"  -->
                 </div>
-            </div> -->
-
-
-
-
-
-        <!-- Muestra los videos directos desde youtube -->
-
-        <div style="text-align:left; margin-left:3%;margin-top:2%;" class="elementToFadeInAndOut">
-            <div *ngFor="let video of videosList" style="float:left;border-style:outset;margin-left:2%;margin-bottom:3%;border-radius:25px;box-shadow: 8px 9px 20px 3px #665442;">
-                <!-- Haciendo uso de pipe Sanitizer para mostrar videos de manera segura -->
-                <iframe width="450" height="330" [src]=" video.data.url | sanitizer:'https://www.youtube.com/embed/' " frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <!-- src="https://www.youtube.com/embed/{{video.data.url}}"  -->
+                
             </div>
+            
         </div>
 
     </div>

@@ -23,6 +23,7 @@ export class JornadasComponent implements OnInit {
   formActivate:boolean=true;
   ver:boolean= true;
   addResult:boolean = false;
+  showBtnAdd:boolean= false;
 
   //Listas de datos
   listaIntermedia:any=[];
@@ -53,8 +54,11 @@ export class JornadasComponent implements OnInit {
   sedeMatch="";
   typeJornada="";
 
+
+
   ngOnInit() {
     this.loading= true;
+    this.showBtnAdd= false;
 
     this.tournServ.getTournament().snapshotChanges()
     .subscribe(
@@ -220,6 +224,11 @@ export class JornadasComponent implements OnInit {
 
   muestraForm1(){
     this.formActivate= true;
+  }
+
+  confirmInfo(){
+    this.formActivate= false;
+    this.showBtnAdd= true;
   }
 
   mostrarPartidosJornada(idJornada){

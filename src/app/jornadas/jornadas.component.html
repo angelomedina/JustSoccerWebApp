@@ -1,33 +1,38 @@
-<div class="main-content body elementToFadeInAndOut">
+<div class="main-content body elementToFadeInAndOut imgCentral">
     <div class="container-fluid">
-
+        <br>
         <ul class="nav nav-tabs justify-content-center">
             <li style="margin-right:2%;" class="nav-item">
-                <a id="log" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':ver == true}" class="nav-link" (click)="verJornada()"> Ver Jornadas </a>
+                <a id="log" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'activePers':ver == true, 'desactivePers':ver == false}" class="nav-link" (click)="verJornada()"> Ver Jornadas </a>
             </li>
             <li style="margin-right:2%;" class="nav-item" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
-                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':create == true}" class="nav-link" (click)="addJornada()"> Crear Jornada </a>
+                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'activePers':create == true, 'desactivePers':create == false}" class="nav-link" (click)="addJornada()"> Crear Jornada </a>
             </li>
             <li style="margin-right:2%;" class="nav-item" *ngIf=" authServ.userType === 'superAdmin' || authServ.userType === 'admin'">
-                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'nav-link active':addResult == true}" class="nav-link" (click)="addResultado()"> Agregar resultado de jornada </a>
+                <a id="reg" style="color:rgb(38, 82, 28);text-decoration:underline;" [ngClass]="{'activePers':addResult == true, 'desactivePers':addResult == false}" class="nav-link" (click)="addResultado()"> Agregar resultado de jornada </a>
             </li>
         </ul>
 
-
+ 
         <div class="elementToFadeInAndOut" style="text-align:center;" *ngIf="ver">
-            <div style="margin-left:20%;margin-right:20%; margin-top:3%">
+            <div style="margin-left:20%;margin-right:20%; margin-top:5%; ">
  
 
                 <div class=" elementToFadeInAndOut alert alert-danger" role="alert" *ngIf="jornadaList.length==0">
                     Por el momento no hay jornadas para el torneo actual !
                 </div>
 
+                <!-- Muestra todas las jornadas del sistema -->
                 <div class="list-group elementToFadeInAndOut" *ngIf="jornadaList.length>0">
-                    <button type="button" class="list-group-item list-group-item-action active">
+                    <button style="border-radius:30px;" type="button" class="list-group-item list-group-item-action active">
                       Jornadas del torneo actual
                     </button>
-                    <div *ngFor="let jornada of jornadaList; let i= index;">
-                        <button type="button"  class="list-group-item list-group-item-action" style="color:crimson;   font-weight: bold;" (click)="mostrarPartidosJornada(jornada)">
+                    
+                    <div *ngFor="let jornada of jornadaList; let i= index;"  >
+                        <br>
+                        <button type="button"  class="list-group-item list-group-item-action" 
+                        style="color:rgb(220, 133, 20);font-weight: bold; background-color: rgba(219, 223, 219, 0.8); border-color:rgba(59, 49, 146, 0.3);border-radius: 30px; border-style: solid; border-width: 10px;"
+                         (click)="mostrarPartidosJornada(jornada)">
                             {{jornada.data.name}}
                             <div >
                                <p id="{{jornada.key}}"></p>
@@ -38,14 +43,14 @@
                 </div>
             </div>
         </div>
-
+        <div style="padding: 10% 10% 10% 10%" *ngIf="ver" > </div>
 
 
         <!-- Añade resultados a  Jornada-->
         <div class="elementToFadeInAndOut" style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="addResult">
 
             <div class="alert alert-danger elementToFadeInAndOut" role="alert" *ngIf="jornadasSinResult.length==0">
-                Por el momento no hay partidos por disputarse !
+                Por favor espere mientras se obtienen las jornadas del torneo actual!!
             </div>
 
             <div class="list-group elementToFadeInAndOut" *ngIf="jornadasSinResult.length>0">
@@ -56,104 +61,106 @@
                          <small style="color:grey; margin-left:2%;" > Resultado sin definir</small>
 
                     <form id="res{{i}}" style="visibility:hidden">
-                        <input type="number" id="local{{i}}" placeholder="Resultado equipo local" required="required">
-                        <strong> - - - </strong>
+                        <input  type="number" id="local{{i}}" placeholder="Resultado equipo local" required="required">
+                        <strong style="margin-left:1%; margin-right:1%"> - - - </strong>
                         <input type="number" id="visita{{i}}" placeholder="Resultado equipo visita" required="required">
                         <button type="button" class="btn btn-outline-success btn-sm" (click)="resultadoJornada(match,i)">Agregar Resultado</button>
-
                     </form>
                     </button>
+                    <br>
                 </div>
             </div>
         </div>
 
+        <div style="padding: 10% 10% 10% 10%" *ngIf="addResult" > </div>
+
 
 
         <!-- Crear Jornada nueva -->
-        <div class="elementToFadeInAndOut" style="margin-left:10%; margin-right:10%;margin-top:2%" *ngIf="create">
+        <div class="elementToFadeInAndOut" style=" padding: 2% 2% 2% 2%; margin-left:10%; margin-right:10%;margin-top:2%; border-radius:3%; background-color: rgba(217, 231, 217, 0.8)" *ngIf="create">
             <div>
-                <button (click)="ocultaForm1()" style="background-color:white;float:left;margin-right:2%;" *ngIf="formActivate"><img src="../../assets/icons/up.png" alt="" width="30px;" height="30px;"  ></button>
-                <button (click)="muestraForm1()" style="background-color:white;float:left;margin-right:2%;" *ngIf="!formActivate"><img src="../../assets/icons/down.png" alt="" width="30px;" height="30px;"  ></button>
-                <span style="font-size:30px;color:teal;">Información General de la Jornada</span>
+                <button (click)="ocultaForm1()" style="background-color:rgb(182, 76, 76);float:left;margin-right:2%;" *ngIf="formActivate"><img src="../../assets/icons/up.png" alt="" width="30px;" height="30px;"  ></button>
+                <button (click)="muestraForm1()" style="background-color:rgb(63, 161, 33);float:left;margin-right:2%;" *ngIf="!formActivate"><img src="../../assets/icons/down.png" alt="" width="30px;" height="30px;"  ></button>
+                <span style="font-size:30px;color:rgb(40, 136, 136);">Información General de la Jornada</span>
             </div>
 
             <form class="elementToFadeInAndOut" id="register-form" role="form" *ngIf="formActivate && create">
-                <div class="form-row" style="border-style:outset;">
+                <br>
+                <div class="form-row" style="border-style:solid;border-color: rgb(98, 56, 19);background-color: rgba(142, 177, 142, 0.8); border-radius: 15px; padding: 1% 1% 1% 1%;  ">
 
-                    <br>
                     <div class="form-group col-md-6">
-                        <label for="sel1">Torneo</label>
+                        <label style="color:blue;" for="sel1">Torneo</label>
                         <select class="form-control" id="torneo" name="torneo" [(ngModel)]="torneo">
                            <option *ngFor="let torneo of torneoList;"  value="{{torneo.key}}" >{{torneo.data.name}}</option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Nombre de la Jornada </label>
+                        <label style="color:blue;" >Nombre de la Jornada </label>
                         <input type="text" name="name" tabindex="1" [(ngModel)]="name" class="form-control" placeholder="Jornada #11 / Semifinal#2 ">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Fecha de Inicio</label>
+                        <label style="color:blue;" >Fecha de Inicio</label>
                         <input type="date" name="fecha" tabindex="2" [(ngModel)]="fechaInicio" class="form-control">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Fecha de finalización</label>
+                        <label style="color:blue;" >Fecha de finalización</label>
                         <input type="date" name="fecha" tabindex="2" [(ngModel)]="fechaFin" class="form-control">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="sel1">Tipo de Jornada</label>
+                        <label style="color:blue;" for="sel1">Tipo de Jornada</label>
                         <select class="form-control" id="typeJornada" name="typeJornada" [(ngModel)]="typeJornada">
                          <option value="Regular" >Regular</option>
                          <option value="Semifinal" >Semifinal</option>
                          <option value="Final" >Final</option>
                       </select>
                     </div>
+                    <div style="margin-top:4%;" class="form-group col-md-6">
+                        <button class="btn btn-success" (click)="confirmInfo()"> Confirmar Info General!</button>
+                    </div>
                 </div>
+            </form  > 
 
-            </form>
-            <hr style="border-top: 2px dashed rgb(128, 124, 124);">
-            <br>
-            <div>
-                <button (click)="nuevoPartido()" style="text-align:center; color:green;background-color:burlywood"> <i class="fa fa-check-circle" aria-hidden="true"></i>Añadir Partido a la Jornada</button>
+            <hr style="border-top: 2px dashed rgb(204, 91, 91);">
+     
+            <div  *ngIf="showBtnAdd" >
+                <button (click)="nuevoPartido()" style="text-align:center;"  class="btn btn-warning" > <i class="fa fa-check-circle" aria-hidden="true"></i>Añadir Partido a la Jornada</button>
+                <button   *ngIf="matchReady" style="margin-left:5%" class="btn btn-dark" name="login-submit" id="login-submit" tabindex="2" (click)="createjournal()">Crear Jornada [ {{matchsJornada.length}} partido(s)  ]  </button>
+
                 <br><br>
-                <div *ngIf="newMatch" class="elementToFadeInAndOut" style="border-style:outset; text-align:center; padding-left:1%;padding-right:1%;">
+                <div *ngIf="newMatch" class="elementToFadeInAndOut" style="border-style:solid;border-color: rgb(98, 56, 19);background-color: rgba(142, 177, 142, 0.8); border-radius: 15px; text-align:center; padding:2% 2% 2% 2%">
                     <form action="">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="sel1">Local</label>
+                                <label style="color:blue" for="sel1">Local</label>
                                 <select class="form-control" id="local" name="teamLocal" [(ngModel)]="teamLocal">
                                    <option *ngFor="let team of equiposList;"  value="{{team.key}}" >{{team.data.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="sel1">Visitante</label>
+                                <label style="color:blue" for="sel1">Visitante</label>
                                 <select class="form-control" id="visit" name="teamVisita" [(ngModel)]="teamVisita">
                                    <option *ngFor="let team of equiposList;"  value="{{team.key}}" >{{team.data.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Sede del Partido</label>
+                                <label style="color:blue">Sede del Partido</label>
                                 <input type="text" name="sedeMatch" tabindex="2" [(ngModel)]="sedeMatch" class="form-control" placeholder="Estadio Nombre/Ubicación">
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Fecha y Hora</label>
+                                <label style="color:blue">Fecha y Hora</label>
                                 <input type="text" name="fechaMatch" tabindex="2" [(ngModel)]="fechaMatch" class="form-control" placeholder="22/10/2018 12:00pm">
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-6"  >
                                 <button class="btn btn-success" (click)="addMatch()"> Añadir partido!</button>
                             </div>
                         </div>
                     </form>
-                </div>
+                </div>               
             </div>
 
-            <!-- <div *ngIf "matchsJornada.length>0" *ngFor="let match of matchsJornada">
-                <p>{{match.nameLocalTeam}} VS {{match.nameVisitTeam}} </p>
-            </div> -->
-
-            <br>
-            <div *ngIf="matchReady">
-                <button class="btn btn-dark" name="login-submit" id="login-submit" tabindex="2" (click)="createjournal()">Crear Jornada</button>
-            </div>
-        </div>
+        </div> 
+        <div style="padding: 5% 5% 5% 5%" *ngIf="!showBtnAdd"></div> 
+        <div style="padding: 5% 5% 5% 5%" *ngIf="showBtnAdd"></div> 
+        <div style="padding: 10% 10% 10% 10%" *ngIf="!formActivate"></div>
     </div>
 </div>

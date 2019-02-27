@@ -112,12 +112,13 @@
                     <div class="form-group col-md-3">
                         <label for="sel1" style=" color:rgb(223, 235, 222); font-family: 'Trebuchet MS',
                             'Lucida Sans Unicode', 'Lucida Grande', 'Lucida
-                            Sans', Arial, sans-serif">Equipo</label>
+                            Sans', Arial, sans-serif"> Equipo </label>
                         <!-- <input type="text" name="team" tabindex="1" [(ngModel)]="team" class="form-control"> -->
                         <select class="form-control" id="team" name="team"
                             [(ngModel)]="team">
                             <option *ngFor="let team of equiposTable; let
-                                i=index" value="{{team.idTeam}}" selected value>{{team.name}}</option>
+                                i=index" value="{{team.idTeam}}" selected value>{{team.name}}
+                            </option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
@@ -145,9 +146,37 @@
         <div *ngIf="inscribe" style="padding: 4% 4% 4% 4%"></div>
 
 
+        <!-- Edita informacion de una jugadora  -->
+        <div *ngIf="updatePl" style="border-style:solid;border-color:rgb(191, 192, 107);
+        background-color:rgba(140, 108, 199, 0.7); margin-left: 10%; margin-right: 10%; border-radius: 20px; padding: 2% 2% 2% 2%">
+            <div class="form-group row">
+                <label style="color:white" for="inputEmail3">Nombre</label>
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" name="na me" autocomplete="off" [(ngModel)]="playerName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label style="color:white" for="inputEmail3">Primer Apellido</label>
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" name="last1" [(ngModel)]="surname1">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label style="color:white" for="inputEmail3">Segundo Apellido</label>
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" name="last2" [(ngModel)]="surname2">
+                </div>
+            </div>
+            <div>
+                <button type="button" (click)="cancelUpdate()" class="btn btn-warning btn-sm" >Cancelar</button>
+                <button type="button" style="margin-left:3%;" class="btn btn-success btn-sm" (click)="updateP()">Actualizar Jugadora</button><br>
+            </div>
+        </div>
+        <div *ngIf="updatePl" style="padding: 4% 4% 4% 4%"></div>
+
 
         <!-- Mostrar jugadoras del torneo -->
-        <div style="padding:2% 2% 1% 2%; display:inline" *ngIf="ver">
+        <div style="padding:2% 2% 1% 2%; display:inline" *ngIf="ver && !updatePl">
             <div style="border-style:solid;border-color:rgb(191, 192, 107);
                 background-color:
                 rgba(140, 108, 199, 0.7); width: 40%; border-radius: 20px;
@@ -173,10 +202,11 @@
                 <img
                     src="http://www.asopade.org/uniffut/images/quienes-somos-1.jpg"
                     class="responsive" alt="logo uniffut">
-
             </div>
 
-            <div *ngIf="!vacioteam && !inicio"
+
+            <!-- Muestra lista de Jugadoras por equipo -->
+            <div *ngIf="!vacioteam && !inicio && !updatePl"
                 style="margin-left:20%;margin-right:20%;margin-top:4%;
                 border-radius:15px;border-color:rgb(0, 0,
                 0);border-style:solid; background-color:
@@ -187,6 +217,7 @@
                         <tr>
                             <th scope="col">Nombre Completo</th>
                             <th scope="col">Imagen Perfil</th>
+                            <th scope="col"  *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" >Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -195,9 +226,13 @@
                                 {{player.data.surnameI}}
                                 {{player.data.surnameII}}
                             </th>
-                            <th scope="row">
+                            <th scope="row"   >
                                 <img src="{{player.data.url}}" alt="perfil"
                                     class="img10">
+                            </th>
+                            <th scope="row" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" >
+                                <button type="button" (click)="updatePlayer(player)"  class="btn btn-warning btn-sm" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" ><i class="fas fa-edit"></i></button>
+                                <button type="button" (click)="deletePlayer(player)" style="margin-left:2%" class="btn btn-danger btn-sm" *ngIf="authServ.userType === 'superAdmin' || authServ.userType === 'admin'" ><i class="fas fa-trash-alt"></i></button>
                             </th>
                         </tr>
                     </tbody>
@@ -207,7 +242,8 @@
         </div>  
         
 
-        <div *ngIf="vacioteam" class="elementToFadeInAndOut"
+        <!-- Alerta en caso de que no hayan jugadoras inscritas aun  -->
+        <div *ngIf="vacioteam && !updatePl" class="elementToFadeInAndOut"
             style="margin-left:20%;margin-right:20%;
             margin-top:4%;border-style:double; color:black;padding: 2% 2% 2%
             2%;background-color: rgba(209, 183, 96, 0.7);">
