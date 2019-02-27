@@ -5,12 +5,7 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyB8bvE1AGuIVehyNdKh5Q6kdIc9B9NOo4Q",
-    authDomain: "justsoccer-cr.firebaseapp.com",
-    databaseURL: "https://justsoccer-cr.firebaseio.com",
-    projectId: "justsoccer-cr",
-    storageBucket: "justsoccer-cr.appspot.com",
-    messagingSenderId: "13023670041"
+
   }
 };
 
